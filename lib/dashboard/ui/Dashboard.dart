@@ -13,16 +13,16 @@ import 'package:Eresse/resources/strings_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EntryConfigurations extends StatefulWidget {
+class Dashboard extends StatefulWidget {
 
   bool internetConnection = false;
 
-  EntryConfigurations({Key? key, required this.internetConnection}) : super(key: key);
+  Dashboard({Key? key, required this.internetConnection}) : super(key: key);
 
   @override
-  State<EntryConfigurations> createState() => _EntryConfigurationsState();
+  State<Dashboard> createState() => _DashboardState();
 }
-class _EntryConfigurationsState extends State<EntryConfigurations> {
+class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
