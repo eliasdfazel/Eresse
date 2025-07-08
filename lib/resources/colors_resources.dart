@@ -1,0 +1,67 @@
+/*
+ * Copyright © 2022 By Geeks Empire.
+ *
+ * Created by Elias Fazel
+ * Last modified 7/30/22, 12:28 AM
+ *
+ * Licensed Under MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
+import 'package:flutter/material.dart';
+
+class ColorsResources {
+
+  static const primaryColor = Color.fromARGB(255, 255, 185, 0);
+  static const primaryColorLighter = Color.fromARGB(255, 255, 224, 144);
+  static const primaryColorLightest = Color.fromARGB(255, 255, 237, 219);
+  static const primaryColorDarker = Color.fromARGB(255, 80, 72, 58);
+  static const primaryColorDarkest = Color.fromARGB(255, 40, 35, 30);
+
+  static const Color blue = Color.fromARGB(255, 0, 161, 255);
+  static const Color lightBlue = Color.fromARGB(255, 128, 208, 255);
+  static const Color lightestBlue = Color.fromARGB(255, 220, 238, 255);
+
+  static const Color green = Color.fromARGB(255, 0, 255, 76);
+  static const Color lightGreen = Color.fromARGB(255, 14, 246, 190);
+  static const Color lightestGreen = Color.fromARGB(255, 215, 255, 229);
+
+  static const Color red = Color.fromARGB(255, 255, 0, 72);
+  static const Color lightRed = Color.fromARGB(255, 255, 128, 164);
+  static const Color lightestRed = Color.fromARGB(255, 255, 212, 224);
+
+  static const Color yellow = Color.fromARGB(255, 255, 196, 0);
+  static const Color lightYellow = Color.fromARGB(255, 255, 225, 127);
+  static const Color lightestYellow = Color.fromARGB(255, 255, 245, 218);
+
+  static const Color purple = Color.fromARGB(255, 208, 0, 255);
+  static const Color lightPurple = Color.fromARGB(255, 232, 128, 255);
+  static const Color lightestPurple = Color.fromARGB(255, 247, 210, 255);
+
+  static const Color orange = Color.fromARGB(255, 255, 115, 0);
+  static const Color lightOrange = Color.fromARGB(255, 255, 166, 128);
+  static const Color lightestOrange = Color.fromARGB(255, 255, 222, 209);
+
+  static const Color pink = Color.fromARGB(255, 255, 192, 224);
+
+  static const Color cyan = Color.fromARGB(255, 2, 248, 192);
+  static const Color lightestCyan = Color.fromARGB(255, 201, 255, 242);
+
+  static const goldenColor = Color.fromARGB(255, 246, 201, 14);
+
+  static const Color light = Color.fromARGB(255, 242, 247, 255);
+  static const Color dark = Color.fromARGB(255, 10, 15, 24);
+
+  static const Color premiumDark = Color.fromARGB(255, 60, 67, 77);
+  static const Color premiumLight = Color.fromARGB(255, 213, 224, 243);
+
+  static const Color white = Color.fromARGB(255, 255, 255, 255);
+  static const Color whiteTransparent = Color.fromARGB(201, 255, 255, 255);
+
+  static const Color black = Color.fromARGB(255, 0, 0, 0);
+  static const Color blackTransparent = Color.fromARGB(201, 0, 0, 0);
+
+  static const Color applicationGeeksEmpire = Color.fromARGB(255, 35, 125, 174);
+  static const Color gameGeeksEmpire = Color.fromARGB(255, 174, 35, 87);
+
+}
