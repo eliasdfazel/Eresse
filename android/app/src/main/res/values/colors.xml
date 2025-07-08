@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2025. By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel
+  ~ Last Modified 4/4/25, 4:54 PM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<resources>
+
+    <color name="primaryColorPurple">#340040</color>
+    <color name="primaryColorRed">#F2055C</color>
+    <color name="primaryColorYellow">#EAF205</color>
+    <color name="primaryColorGreen">#05F26C</color>
+    <color name="primaryColorBlue">#07F2F2</color>
+    <color name="primaryColorOrange">#F16006</color>
+
+    <color name="transparent">#00000000</color>
+
+</resources>

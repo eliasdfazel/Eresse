@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "745027684498",
+    "project_id": "arwen-productivity",
+    "storage_bucket": "arwen-productivity.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745027684498:android:8689423deac2d4bb6e3e4b",
+        "android_client_info": {
+          "package_name": "co.geeksempire.eresse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgQpRFio9NVC-eArhYYezqxkw2EQGbSN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,42 +12,16 @@ import 'package:flutter/material.dart';
 
 class ColorsResources {
 
-  static const primaryColor = Color.fromARGB(255, 255, 185, 0);
-  static const primaryColorLighter = Color.fromARGB(255, 255, 224, 144);
-  static const primaryColorLightest = Color.fromARGB(255, 255, 237, 219);
-  static const primaryColorDarker = Color.fromARGB(255, 80, 72, 58);
-  static const primaryColorDarkest = Color.fromARGB(255, 40, 35, 30);
-
-  static const Color blue = Color.fromARGB(255, 0, 161, 255);
-  static const Color lightBlue = Color.fromARGB(255, 128, 208, 255);
-  static const Color lightestBlue = Color.fromARGB(255, 220, 238, 255);
-
-  static const Color green = Color.fromARGB(255, 0, 255, 76);
-  static const Color lightGreen = Color.fromARGB(255, 14, 246, 190);
-  static const Color lightestGreen = Color.fromARGB(255, 215, 255, 229);
-
-  static const Color red = Color.fromARGB(255, 255, 0, 72);
-  static const Color lightRed = Color.fromARGB(255, 255, 128, 164);
-  static const Color lightestRed = Color.fromARGB(255, 255, 212, 224);
-
-  static const Color yellow = Color.fromARGB(255, 255, 196, 0);
-  static const Color lightYellow = Color.fromARGB(255, 255, 225, 127);
-  static const Color lightestYellow = Color.fromARGB(255, 255, 245, 218);
-
-  static const Color purple = Color.fromARGB(255, 208, 0, 255);
-  static const Color lightPurple = Color.fromARGB(255, 232, 128, 255);
-  static const Color lightestPurple = Color.fromARGB(255, 247, 210, 255);
-
-  static const Color orange = Color.fromARGB(255, 255, 115, 0);
-  static const Color lightOrange = Color.fromARGB(255, 255, 166, 128);
-  static const Color lightestOrange = Color.fromARGB(255, 255, 222, 209);
+  static const Color primaryColor = Color.fromARGB(255, 52, 0, 64);
+  static const Color primaryColorRed = Color.fromARGB(255, 242, 5, 92);
+  static const Color primaryColorYellow = Color.fromARGB(255, 234, 242, 5);
+  static const Color primaryColorGreen = Color.fromARGB(255, 5, 242, 108);
+  static const Color primaryColorBlue = Color.fromARGB(255, 7, 242, 242);
+  static const Color primaryColorOrange = Color.fromARGB(255, 241, 96, 6);
 
   static const Color pink = Color.fromARGB(255, 255, 192, 224);
-
   static const Color cyan = Color.fromARGB(255, 2, 248, 192);
-  static const Color lightestCyan = Color.fromARGB(255, 201, 255, 242);
-
-  static const goldenColor = Color.fromARGB(255, 246, 201, 14);
+  static const Color goldenColor = Color.fromARGB(255, 246, 201, 14);
 
   static const Color light = Color.fromARGB(255, 242, 247, 255);
   static const Color dark = Color.fromARGB(255, 10, 15, 24);
