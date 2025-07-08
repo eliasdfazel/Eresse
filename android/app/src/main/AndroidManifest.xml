@@ -2,9 +2,17 @@
 
     <application
         android:label="Eresse"
-        android:name="Eresse"
+        android:name="${applicationName}"
         android:theme="@style/GeeksEmpire.Theme"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+                    android:name="com.google.firebase.messaging.default_notification_icon"
+                    android:resource="@drawable/branding" />
+
+        <meta-data
+                    android:name="com.google.firebase.messaging.default_notification_color"
+                    android:resource="@color/primaryColorPurple" />
 
         <activity
             android:name=".MainActivity"
@@ -18,7 +26,7 @@
 
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
+              android:resource="@style/GeeksEmpire.Theme"
               />
 
             <intent-filter>

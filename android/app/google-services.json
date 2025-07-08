@@ -12,7 +12,28 @@
           "package_name": "co.geeksempire.eresse"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "745027684498-565euqlkaibvamoh95n5eugkk5jdjq27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.geeksempire.eresse",
+            "certificate_hash": "6fa2d23f54167ebdfcb1ce7cb183c0f709f8934e"
+          }
+        },
+        {
+          "client_id": "745027684498-q3pipm0b6uj8kilkakr2o9mr6mdr87s5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.geeksempire.eresse",
+            "certificate_hash": "3fc01af11b50337cbaa4be4b75231cebf8437a4c"
+          }
+        },
+        {
+          "client_id": "745027684498-fa1cs0df4gtrc4ndkdrd02njq53ogen0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBgQpRFio9NVC-eArhYYezqxkw2EQGbSN4"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745027684498-fa1cs0df4gtrc4ndkdrd02njq53ogen0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "745027684498-mepicleg7ahaolel15n6j8r0k33k9a3q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.solitude"
+              }
+            }
+          ]
         }
       }
     }

@@ -2,11 +2,11 @@
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
   <background android:drawable="@drawable/ic_launcher_background"/>
   <foreground>
-    <inset android:drawable="@drawable/ic_launcher_foreground"
-           android:insetBottom="15dp"
-           android:insetLeft="15dp"
-           android:insetRight="15dp"
-           android:insetTop="15dp">
+    <inset android:drawable="@drawable/ic_launcher"
+           android:insetBottom="19dp"
+           android:insetLeft="19dp"
+           android:insetRight="19dp"
+           android:insetTop="19dp">
     </inset>
   </foreground>
 </adaptive-icon>

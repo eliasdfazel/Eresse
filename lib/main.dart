@@ -59,14 +59,15 @@ void main() async {
 
   final connectivityResult = await (Connectivity().checkConnectivity());
 
-  if (connectivityResult == ConnectivityResult.mobile
-      || connectivityResult == ConnectivityResult.wifi
-      || connectivityResult == ConnectivityResult.vpn
-      || connectivityResult == ConnectivityResult.ethernet) {
+  if (connectivityResult.contains(ConnectivityResult.mobile)
+      || connectivityResult.contains(ConnectivityResult.wifi)
+      || connectivityResult.contains(ConnectivityResult.vpn)
+      || connectivityResult.contains(ConnectivityResult.ethernet)) {
 
     try {
 
-      final internetLookup = await InternetAddress.lookup('https://geeks-empire-website.web.app/');
+
+      final internetLookup = await InternetAddress.lookup('geeks-empire-website.web.app');
 
       bool connectionResult = (internetLookup.isNotEmpty && internetLookup[0].rawAddress.isNotEmpty);
 
@@ -74,7 +75,8 @@ void main() async {
 
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-      firebaseMessaging.subscribeToTopic("StatusAI");
+      firebaseMessaging.unsubscribeFromTopic("StatusAI");
+      firebaseMessaging.subscribeToTopic("Eresse");
 
       runApp(
           Phoenix(
@@ -97,8 +99,6 @@ void main() async {
 
     } on SocketException catch (exception) {
       debugPrint(exception.message);
-
-
     }
 
   }

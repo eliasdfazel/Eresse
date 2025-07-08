@@ -30,7 +30,7 @@
         android:width="337dp"
         android:height="337dp"
         android:gravity="center"
-        android:drawable="@drawable/ic_launcher">
+        android:drawable="@mipmap/ic_launcher">
 
     </item>
 

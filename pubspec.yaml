@@ -82,8 +82,6 @@ dependencies:
   ####### ####### #######
   screenshot: ^3.0.0
   share_plus: ^11.0.0
-  status_bar_control:
-    path: 'X:\Xlutter\Libraries\flutter_statusbar_control'
   ####### ####### #######
 
   ####### ####### #######

@@ -47,11 +47,11 @@ class _EntryConfigurationsState extends State<EntryConfigurations> {
             ),
             home: Scaffold(
                 resizeToAvoidBottomInset: false,
-                backgroundColor: ColorsResources.black,
+                backgroundColor: ColorsResources.primaryColor,
                 body: Stack(
                     children: [
-
-
+                      
+                      Text("Eresse")
 
                     ]
                 )

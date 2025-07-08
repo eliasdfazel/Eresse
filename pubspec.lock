@@ -916,13 +916,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.12.1"
-  status_bar_control:
-    dependency: "direct main"
-    description:
-      path: "X:\\Xlutter\\Libraries\\flutter_statusbar_control"
-      relative: false
-    source: path
-    version: "3.2.1"
   stream_channel:
     dependency: transitive
     description:

@@ -70,6 +70,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '745027684498',
     projectId: 'arwen-productivity',
     storageBucket: 'arwen-productivity.firebasestorage.app',
+    androidClientId: '745027684498-565euqlkaibvamoh95n5eugkk5jdjq27.apps.googleusercontent.com',
+    iosClientId: '745027684498-mepicleg7ahaolel15n6j8r0k33k9a3q.apps.googleusercontent.com',
     iosBundleId: 'com.example.solitude',
   );
+
 }

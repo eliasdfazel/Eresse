@@ -11,8 +11,8 @@ plugins {
 android {
     namespace = "co.geeksempire.eresse"
 
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdk 36
+    ndkVersion "25.2.9519653"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -26,8 +26,8 @@ android {
     defaultConfig {
         applicationId = "co.geeksempire.eresse"
 
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdkVersion 26
+        targetSdkVersion 36
 
         versionCode 1
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
@@ -35,10 +35,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("D:\\Xine\\Android\\AppsScreenshotsKeys\\SachielsSignals\\candlesticks.jks")
-            storePassword '*sachiels#signals$'
-            keyAlias 'sachielssignals'
-            keyPassword '*sachiels#signals$'
+            storeFile file("D:\\Xine\\Android\\AppsScreenshotsKeys\\ArwenAI\\arwen.jks")
+            storePassword '*arwen#10296$'
+            keyAlias 'arwenai'
+            keyPassword '*arwen#10296$'
         }
     }
 
@@ -72,4 +72,8 @@ static def getDateDay() {
     def date = new Date()
     def formattedDate = date.format('dd')//yyyyMMdd
     return formattedDate
+}
+
+dependencies {
+    implementation 'com.google.android.material:material:1.12.0'
 }
