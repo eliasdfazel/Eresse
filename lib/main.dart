@@ -10,6 +10,7 @@
 
 import 'dart:io';
 
+import 'package:Eresse/EntryConfigurations.dart';
 import 'package:Eresse/firebase_options.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
@@ -21,8 +22,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-
-import 'EntryConfigurations.dart';
+import 'package:http/http.dart' as http;
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage remoteMessage) async {
@@ -40,15 +40,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  var appCheckProvider = AndroidProvider.playIntegrity;
-
   if (kDebugMode) {
-    appCheckProvider = AndroidProvider.debug;
+    await FirebaseAppCheck.instance.activate(
+      androidProvider: AndroidProvider.debug,
+      webProvider: ReCaptchaV3Provider('6LeNfH0rAAAAAF9xGH-kwf36ABcfPQ9eBDXXHgET'),
+      appleProvider: AppleProvider.deviceCheck,
+    );
+  } else {
+    await FirebaseAppCheck.instance.activate(
+      androidProvider: AndroidProvider.playIntegrity,
+      webProvider: ReCaptchaV3Provider('6LeNfH0rAAAAAF9xGH-kwf36ABcfPQ9eBDXXHgET'),
+      appleProvider: AppleProvider.appAttest,
+    );
   }
-
-  await FirebaseAppCheck.instance.activate(
-    androidProvider: appCheckProvider,
-  );
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -56,28 +60,38 @@ void main() async {
     badge: true,
     sound: true,
   );
+
   print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
 
   final connectivityResult = await (Connectivity().checkConnectivity());
 
-  print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${connectivityResult.first}");
 
   if (connectivityResult.contains(ConnectivityResult.mobile)
       || connectivityResult.contains(ConnectivityResult.wifi)
       || connectivityResult.contains(ConnectivityResult.vpn)
       || connectivityResult.contains(ConnectivityResult.ethernet)) {
 
+    print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${connectivityResult.first}");
+
     try {
 
-      final internetLookup = await InternetAddress.lookup('geeks-empire-website.web.app');
+      final internetLookup = await http.get(Uri.parse('geeks-empire-website.web.app'));
 
-      bool connectionResult = (internetLookup.isNotEmpty && internetLookup[0].rawAddress.isNotEmpty);
+      bool connectionResult = (internetLookup.statusCode == 200);
+      print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${connectionResult}");
 
       await FirebaseAuth.instance.currentUser?.reload();
 
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-      firebaseMessaging.subscribeToTopic("Eresse");
+      if (kIsWeb) {
+
+      } else if (Platform.isAndroid
+          || Platform.isIOS) {
+
+        firebaseMessaging.subscribeToTopic("Eresse");
+
+      }
 
       runApp(
           Phoenix(
