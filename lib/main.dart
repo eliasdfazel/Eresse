@@ -71,7 +71,7 @@ void main() async {
 
     try {
 
-      final internetLookup = await http.get(Uri.parse('geeks-empire-website.web.app'));
+      final internetLookup = await http.get(Uri.parse('https://geeks-empire-website.web.app'));
 
       bool connectionResult = (internetLookup.statusCode == 200);
 

@@ -11,11 +11,11 @@ Widget entryDecorations() {
           constraints: BoxConstraints(
               minWidth: 173,
               minHeight: 173,
-              maxWidth: 373,
-              maxHeight: 373
+              maxWidth: 313,
+              maxHeight: 313
           ),
           child: Image(
-            image: AssetImage('assets/logo.png'),
+            image: AssetImage('assets/logo_blur.png'),
           ),
         )
     )
@@ -31,8 +31,8 @@ Widget decorations() {
           constraints: BoxConstraints(
               minWidth: 173,
               minHeight: 173,
-              maxWidth: 373,
-              maxHeight: 373
+              maxWidth: 313,
+              maxHeight: 313
           ),
           child: Image(
             image: AssetImage('assets/logo_blur.png'),

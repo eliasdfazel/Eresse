@@ -2,6 +2,7 @@ import 'package:Eresse/profile/DI/AuthenticationDI.dart';
 import 'package:Eresse/profile/authentication/Interface/AuthenticationInterface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class EmailAuthentication {
@@ -9,6 +10,7 @@ class EmailAuthentication {
   final AuthenticationDI _authenticationDI = AuthenticationDI();
 
   void start(AuthenticationInterface authenticationInterface) async {
+    debugPrint("Authentication: Start");
 
     final GoogleSignIn signIn = GoogleSignIn.instance;
 
@@ -48,6 +50,8 @@ class EmailAuthentication {
     }).onError((error) => {
 
     });
+
+    signIn.attemptLightweightAuthentication();
 
   }
 
