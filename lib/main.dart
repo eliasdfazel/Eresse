@@ -10,6 +10,7 @@
 
 import 'dart:io';
 
+import 'package:Eresse/dashboard/ui/Dashboard.dart';
 import 'package:Eresse/entry/ui/EntryConfigurations.dart';
 import 'package:Eresse/firebase_options.dart';
 import 'package:Eresse/resources/colors_resources.dart';
@@ -26,7 +27,7 @@ import 'package:http/http.dart' as http;
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage remoteMessage) async {
-  debugPrint("Sachiels Signal Received: ${remoteMessage.data}");
+  debugPrint("Received: ${remoteMessage.data}");
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -87,7 +88,15 @@ void main() async {
         firebaseMessaging.subscribeToTopic("Eresse");
 
       }
+      
+      Widget entryWidget = EntryConfigurations(internetConnection: connectionResult);
 
+      if (FirebaseAuth.instance.currentUser != null) {
+        
+        entryWidget = Dashboard(internetConnection: connectionResult);
+        
+      }
+      
       runApp(
           Phoenix(
               child: MaterialApp(
@@ -102,7 +111,7 @@ void main() async {
                       TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
                     }),
                   ),
-                  home: EntryConfigurations(internetConnection: connectionResult)
+                  home: entryWidget
               )
           )
       );

@@ -7,6 +7,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class EmailAuthentication {
 
+  User? firebaseUser = FirebaseAuth.instance.currentUser;
+
   final AuthenticationDI _authenticationDI = AuthenticationDI();
 
   void start(AuthenticationInterface authenticationInterface) async {

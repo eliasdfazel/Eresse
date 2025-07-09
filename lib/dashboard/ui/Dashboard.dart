@@ -18,7 +18,7 @@ class Dashboard extends StatefulWidget {
 
   bool internetConnection = false;
 
-  Dashboard({Key? key, required this.internetConnection}) : super(key: key);
+  Dashboard({super.key, required this.internetConnection});
 
   @override
   State<Dashboard> createState() => _DashboardState();

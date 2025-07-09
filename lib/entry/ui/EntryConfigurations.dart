@@ -8,10 +8,12 @@
  * https://opensource.org/licenses/MIT
  */
 
+import 'package:Eresse/dashboard/ui/Dashboard.dart';
 import 'package:Eresse/entry/di/EntryDI.dart';
 import 'package:Eresse/profile/authentication/Interface/AuthenticationInterface.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,6 +85,7 @@ class _EntryConfigurationsState extends State<EntryConfigurations> implements Au
   @override
   void profiled(DocumentSnapshot<Object?> documentSnapshot) {
 
+    navigateTo(context, Dashboard(internetConnection: widget.internetConnection));
 
   }
 
