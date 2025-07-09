@@ -44,13 +44,13 @@ void main() async {
     await FirebaseAppCheck.instance.activate(
       androidProvider: AndroidProvider.debug,
       webProvider: ReCaptchaV3Provider('6LeNfH0rAAAAAF9xGH-kwf36ABcfPQ9eBDXXHgET'),
-      appleProvider: AppleProvider.deviceCheck,
+      appleProvider: AppleProvider.appAttest,
     );
   } else {
     await FirebaseAppCheck.instance.activate(
       androidProvider: AndroidProvider.playIntegrity,
       webProvider: ReCaptchaV3Provider('6LeNfH0rAAAAAF9xGH-kwf36ABcfPQ9eBDXXHgET'),
-      appleProvider: AppleProvider.appAttest,
+      appleProvider: AppleProvider.deviceCheck,
     );
   }
 
@@ -61,8 +61,6 @@ void main() async {
     sound: true,
   );
 
-  print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
-
   final connectivityResult = await (Connectivity().checkConnectivity());
 
 
@@ -71,14 +69,11 @@ void main() async {
       || connectivityResult.contains(ConnectivityResult.vpn)
       || connectivityResult.contains(ConnectivityResult.ethernet)) {
 
-    print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${connectivityResult.first}");
-
     try {
 
       final internetLookup = await http.get(Uri.parse('geeks-empire-website.web.app'));
 
       bool connectionResult = (internetLookup.statusCode == 200);
-      print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${connectionResult}");
 
       await FirebaseAuth.instance.currentUser?.reload();
 
