@@ -56,8 +56,11 @@ void main() async {
     badge: true,
     sound: true,
   );
+  print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
 
   final connectivityResult = await (Connectivity().checkConnectivity());
+
+  print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${connectivityResult.first}");
 
   if (connectivityResult.contains(ConnectivityResult.mobile)
       || connectivityResult.contains(ConnectivityResult.wifi)
@@ -65,7 +68,6 @@ void main() async {
       || connectivityResult.contains(ConnectivityResult.ethernet)) {
 
     try {
-
 
       final internetLookup = await InternetAddress.lookup('geeks-empire-website.web.app');
 
@@ -75,7 +77,6 @@ void main() async {
 
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-      firebaseMessaging.unsubscribeFromTopic("StatusAI");
       firebaseMessaging.subscribeToTopic("Eresse");
 
       runApp(

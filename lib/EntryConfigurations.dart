@@ -44,8 +44,8 @@ class _EntryConfigurationsState extends State<EntryConfigurations> {
               fontFamily: 'Ubuntu',
               colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
               pageTransitionsTheme: const PageTransitionsTheme(builders: {
-                TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
               }),
             ),
             home: Scaffold(
@@ -54,7 +54,14 @@ class _EntryConfigurationsState extends State<EntryConfigurations> {
                 body: Stack(
                     children: [
                       
-                      Text("Eresse")
+                      Text(
+                          "Eresse",
+                        style: TextStyle(
+                          color: ColorsResources.premiumLight,
+                          fontSize: 19,
+
+                        ),
+                      )
 
                     ]
                 )

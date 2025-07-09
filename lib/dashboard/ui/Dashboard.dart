@@ -44,8 +44,8 @@ class _DashboardState extends State<Dashboard> {
               fontFamily: 'Ubuntu',
               colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
               pageTransitionsTheme: const PageTransitionsTheme(builders: {
-                TargetPlatform.android: ZoomPageTransitionsBuilder(),
-                TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+                TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
               }),
             ),
             home: Scaffold(
