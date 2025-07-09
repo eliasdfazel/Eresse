@@ -1,0 +1,54 @@
+import 'package:Eresse/profile/DI/AuthenticationDI.dart';
+import 'package:Eresse/profile/authentication/Interface/AuthenticationInterface.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class EmailAuthentication {
+
+  final AuthenticationDI _authenticationDI = AuthenticationDI();
+
+  void start(AuthenticationInterface authenticationInterface) async {
+
+    final GoogleSignIn signIn = GoogleSignIn.instance;
+
+    await signIn.initialize();
+
+    signIn.authenticationEvents.listen((authEvent) async {
+
+        GoogleSignInAccount? googleSignInAccount = switch (authEvent) {
+          GoogleSignInAuthenticationEventSignIn() => authEvent.user,
+          GoogleSignInAuthenticationEventSignOut() => null,
+        };
+
+        final GoogleSignInAuthentication? googleAuthentication = googleSignInAccount?.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuthentication?.idToken,
+          idToken: googleAuthentication?.idToken,
+        );
+
+        FirebaseAuth.instance.signInWithCredential(credential).then((userCredential) {
+
+          authenticationInterface.authenticated(userCredential);
+
+          String? emailAddress = userCredential.user?.email;
+
+          if (emailAddress != null) {
+
+            FirebaseFirestore.instance.doc(_authenticationDI.profileEndpoint.profileDocument(emailAddress))
+              .set({
+                emailAddress: emailAddress.toString()
+              });
+
+          }
+
+        });
+
+    }).onError((error) => {
+
+    });
+
+  }
+
+}

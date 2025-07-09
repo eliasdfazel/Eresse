@@ -10,7 +10,7 @@
 
 import 'dart:io';
 
-import 'package:Eresse/EntryConfigurations.dart';
+import 'package:Eresse/entry/ui/EntryConfigurations.dart';
 import 'package:Eresse/firebase_options.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';

@@ -8,9 +8,13 @@
  * https://opensource.org/licenses/MIT
  */
 
+import 'package:Eresse/entry/di/EntryDI.dart';
+import 'package:Eresse/profile/authentication/Interface/AuthenticationInterface.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,14 +26,20 @@ class EntryConfigurations extends StatefulWidget {
 
   @override
   State<EntryConfigurations> createState() => _EntryConfigurationsState();
+
+
 }
-class _EntryConfigurationsState extends State<EntryConfigurations> {
+class _EntryConfigurationsState extends State<EntryConfigurations> implements AuthenticationInterface {
+
+  final EntryDI _entryDI = EntryDI();
 
   @override
   void initState() {
     super.initState();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    _entryDI.emailAuthentication.start(this);
 
   }
 
@@ -62,6 +72,18 @@ class _EntryConfigurationsState extends State<EntryConfigurations> {
             )
         )
     );
+  }
+
+  @override
+  void authenticated(UserCredential userCredential) {
+
+
+  }
+
+  @override
+  void profiled(DocumentSnapshot<Object?> documentSnapshot) {
+
+
   }
 
 }
