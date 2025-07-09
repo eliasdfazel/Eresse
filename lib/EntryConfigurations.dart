@@ -10,6 +10,7 @@
 
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -53,21 +54,14 @@ class _EntryConfigurationsState extends State<EntryConfigurations> {
             body: Stack(
                 children: [
 
-                  Text(
-                    "Eresse",
-                    style: TextStyle(
-                      color: ColorsResources.premiumLight,
-                      fontSize: 19,
-
-                    ),
-                  )
+                  /* START - Decoration */
+                  entryDecorations(),
+                  /* END - Decoration */
 
                 ]
             )
         )
     );
   }
-
-
 
 }

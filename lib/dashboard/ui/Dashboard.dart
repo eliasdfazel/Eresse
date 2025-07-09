@@ -10,6 +10,7 @@
 
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -53,7 +54,9 @@ class _DashboardState extends State<Dashboard> {
             body: Stack(
                 children: [
 
-                  Text("Eresse")
+                  /* START - Decoration */
+                  decorations(),
+                  /* END - Decoration */
 
                 ]
             )
