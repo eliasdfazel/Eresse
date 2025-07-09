@@ -15,7 +15,7 @@ Widget entryDecorations() {
               maxHeight: 313
           ),
           child: Image(
-            image: AssetImage('assets/logo_blur.png'),
+            image: AssetImage('assets/logo.png'),
           ),
         )
     )
