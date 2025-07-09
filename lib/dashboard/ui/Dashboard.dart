@@ -35,29 +35,27 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: StringsResources.applicationName(),
-            color: ColorsResources.primaryColor,
-            theme: ThemeData(
-              fontFamily: 'Ubuntu',
-              colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
-              pageTransitionsTheme: const PageTransitionsTheme(builders: {
-                TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
-                TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
-              }),
-            ),
-            home: Scaffold(
-                resizeToAvoidBottomInset: false,
-                backgroundColor: ColorsResources.primaryColor,
-                body: Stack(
-                    children: [
-                      
-                      Text("Eresse")
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: StringsResources.applicationName(),
+        color: ColorsResources.primaryColor,
+        theme: ThemeData(
+          fontFamily: 'Ubuntu',
+          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
+            TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+            TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
+          }),
+        ),
+        home: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: ColorsResources.primaryColor,
+            body: Stack(
+                children: [
 
-                    ]
-                )
+                  Text("Eresse")
+
+                ]
             )
         )
     );
