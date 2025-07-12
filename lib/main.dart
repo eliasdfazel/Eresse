@@ -71,9 +71,10 @@ void main() async {
 
     try {
 
-      final internetLookup = await http.get(Uri.parse('https://geeks-empire-website.web.app'));
+      final httpRequest = await http.get(Uri.parse('https://geeks-empire-website.web.app/'))
+          .timeout(Duration(seconds: 7));
 
-      bool connectionResult = (internetLookup.statusCode == 200);
+      bool connectionResult = (httpRequest.statusCode == 200);
 
       await FirebaseAuth.instance.currentUser?.reload();
 

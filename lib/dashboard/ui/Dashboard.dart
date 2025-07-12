@@ -8,9 +8,11 @@
  * https://opensource.org/licenses/MIT
  */
 
+import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
+import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +26,8 @@ class Dashboard extends StatefulWidget {
   State<Dashboard> createState() => _DashboardState();
 }
 class _DashboardState extends State<Dashboard> {
+
+  final DashboardDI _dashboardDI = DashboardDI();
 
   @override
   void initState() {
@@ -57,6 +61,23 @@ class _DashboardState extends State<Dashboard> {
                   /* START - Decoration */
                   decorations(),
                   /* END - Decoration */
+
+                  /* START - Profile */
+                  Positioned(
+                    top: 73,
+                    left: 19,
+                    child: NextedButtons(
+                      buttonTag: "Profile",
+                      imageNetwork: true,
+                      imageResources: _dashboardDI.firebaseUser!.photoURL.toString(),
+                      boxFit: BoxFit.cover,
+                      onTap: () {
+
+
+                      }
+                    )
+                  )
+                  /* END - Profile */
 
                 ]
             )
