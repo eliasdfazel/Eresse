@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>745027684498-mepicleg7ahaolel15n6j8r0k33k9a3q.apps.googleusercontent.com</string>
+	<string>745027684498-83ipsp9kf78coerm1vq5b3mlrdg44oni.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.745027684498-mepicleg7ahaolel15n6j8r0k33k9a3q</string>
+	<string>com.googleusercontent.apps.745027684498-83ipsp9kf78coerm1vq5b3mlrdg44oni</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>745027684498-565euqlkaibvamoh95n5eugkk5jdjq27.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.solitude</string>
+	<string>co.geeksempire.eresse</string>
 	<key>PROJECT_ID</key>
 	<string>arwen-productivity</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:745027684498:ios:e42096d12adc33356e3e4b</string>
+	<string>1:745027684498:ios:784d84a3cfb36a4f6e3e4b</string>
 </dict>
 </plist>

@@ -47,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "745027684498-mepicleg7ahaolel15n6j8r0k33k9a3q.apps.googleusercontent.com",
+              "client_id": "745027684498-83ipsp9kf78coerm1vq5b3mlrdg44oni.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.solitude"
+                "bundle_id": "co.geeksempire.eresse"
               }
             }
           ]
