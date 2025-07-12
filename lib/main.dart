@@ -62,13 +62,12 @@ void main() async {
     sound: true,
   );
 
-  final connectivityResult = await (Connectivity().checkConnectivity());
+  final connectivityResults = await (Connectivity().checkConnectivity());
 
-
-  if (connectivityResult.contains(ConnectivityResult.mobile)
-      || connectivityResult.contains(ConnectivityResult.wifi)
-      || connectivityResult.contains(ConnectivityResult.vpn)
-      || connectivityResult.contains(ConnectivityResult.ethernet)) {
+  if (connectivityResults.contains(ConnectivityResult.mobile)
+      || connectivityResults.contains(ConnectivityResult.wifi)
+      || connectivityResults.contains(ConnectivityResult.vpn)
+      || connectivityResults.contains(ConnectivityResult.ethernet)) {
 
     try {
 
