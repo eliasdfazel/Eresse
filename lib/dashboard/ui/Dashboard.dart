@@ -9,6 +9,7 @@
  */
 
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
+import 'package:Eresse/dashboard/ui/sections/toolbar/ActionsBar.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
@@ -108,8 +109,14 @@ class _DashboardState extends State<Dashboard> {
 
                           }
                       )
-                  )
+                  ),
                   /* END - Preferences */
+
+                  ActionsBar(
+                      onPressed: (_) {
+
+                      }
+                  )
 
                 ]
             )
