@@ -86,8 +86,9 @@ dependencies:
   ####### ####### #######
 
   ####### ####### #######
-  screenshot: ^3.0.0
   share_plus: ^11.0.0
+  shaped_image:
+    path: 'X:\Xlutter\Libraries\shaped_image'
   ####### ####### #######
 
   ####### ####### #######
@@ -95,8 +96,6 @@ dependencies:
   ####### ####### #######
 
   ####### ####### #######
-  webview_flutter: ^4.7.0
-  widget_mask: ^1.0.0+0
   win32: ^5.10.1
   ####### ####### #######
 

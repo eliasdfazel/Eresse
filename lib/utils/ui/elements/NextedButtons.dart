@@ -1,6 +1,6 @@
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
-import 'package:widget_mask/widget_mask.dart';
+import 'package:shaped_image/shaped_image.dart';
 
 class NextedButtons extends StatelessWidget {
 
@@ -14,18 +14,19 @@ class NextedButtons extends StatelessWidget {
   bool imageNetwork;
 
   BoxFit boxFit;
+  double paddingInset;
 
-  NextedButtons({super.key, required this.buttonTag, required this.onTap, required this.imageResources, required this.imageNetwork, required this.boxFit});
+  NextedButtons({super.key, required this.buttonTag, required this.onTap, required this.imageResources, required this.imageNetwork, required this.boxFit, required this.paddingInset});
 
   @override
   Widget build(BuildContext context) {
 
-    ImageProvider imageProvider = AssetImage("assets/logo.png");
+    ImageType imageType = ImageType.ASSET;
 
     if (imageNetwork) {
-      imageProvider = NetworkImage(imageResources);
+      imageType = ImageType.NETWORK;
     } else {
-      imageProvider = AssetImage(imageResources);
+      imageType = ImageType.ASSET;
     }
 
     return SizedBox(
@@ -56,27 +57,12 @@ class NextedButtons extends StatelessWidget {
                   child: SizedBox(
                       height: 49,
                       width: 49,
-                      child: Material(
-                        shadowColor: Colors.transparent,
-                        color: Colors.transparent,
-                        child: InkWell(
-                            splashColor: ColorsResources.premiumLight.withAlpha(73),
-                            splashFactory: InkRipple.splashFactory,
-                            onTap: onTap,
-                            child: WidgetMask(
-                              blendMode: BlendMode.dstATop,
-                              childSaveLayer: true,
-                              mask: const Image(
-                                image: AssetImage("assets/squarcle.png"),
-                                height: 49,
-                                width: 49,
-                              ),
-                              child: Image(
-                                image: imageProvider,
-                                fit: boxFit,
-                              )
-                            )
-                        ),
+                      child: ShapedImage(
+                        imageTye: imageType,
+                        path: imageResources,
+                        shape: Shape.Squarcle,
+                        height: 49,
+                        width: 49,
                       )
                   )
               )

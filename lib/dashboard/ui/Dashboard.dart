@@ -62,6 +62,17 @@ class _DashboardState extends State<Dashboard> {
                   decorations(),
                   /* END - Decoration */
 
+                  /* START - Content */
+                  ListView(
+                      padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      children: [
+
+                      ]
+                  ),
+                  /* END - Content */
+
                   /* START - Profile */
                   Positioned(
                     top: 73,
@@ -71,13 +82,32 @@ class _DashboardState extends State<Dashboard> {
                       imageNetwork: true,
                       imageResources: _dashboardDI.firebaseUser!.photoURL.toString(),
                       boxFit: BoxFit.cover,
+                      paddingInset: 0,
                       onTap: () {
 
 
                       }
                     )
-                  )
+                  ),
                   /* END - Profile */
+
+                  /* START - Preferences */
+                  Positioned(
+                      top: 73,
+                      right: 19,
+                      child: NextedButtons(
+                          buttonTag: "Profile",
+                          imageNetwork: false,
+                          imageResources: "assets/settings.png",
+                          boxFit: BoxFit.contain,
+                          paddingInset: 5,
+                          onTap: () {
+
+
+                          }
+                      )
+                  )
+                  /* END - Preferences */
 
                 ]
             )
