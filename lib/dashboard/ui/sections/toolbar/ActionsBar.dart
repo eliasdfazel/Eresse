@@ -3,13 +3,17 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef Pressed = void Function(String item);
+typedef StartPressed = void Function(String item);
+typedef ArchivePressed = void Function(String item);
+typedef SearchPressed = void Function(String item);
 
 class ActionsBar extends StatelessWidget {
 
-  final Pressed onPressed;
+  final StartPressed startPressed;
+  final ArchivePressed archivePressed;
+  final SearchPressed searchPressed;
 
-  ActionsBar({super.key, required this.onPressed});
+  ActionsBar({super.key, required this.startPressed, required this.archivePressed, required this.searchPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class ActionsBar extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
-        padding: EdgeInsets.only(left: 19, right: 19, bottom: 73),
+        padding: EdgeInsets.only(left: 19, right: 19, bottom: 37),
         child: Container(
           height: 75,
           width: double.infinity,
@@ -34,46 +38,80 @@ class ActionsBar extends StatelessWidget {
               ),
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(19)
+            borderRadius: BorderRadius.circular(19),
+            boxShadow: [
+              BoxShadow(
+                color: ColorsResources.black.withAlpha(73),
+                blurRadius: 37,
+                offset: const Offset(0, 19)
+              )
+            ]
           ),
           child: Blur(
             blur: 13,
             borderRadius: BorderRadius.circular(19),
             blurColor: ColorsResources.premiumDark,
             colorOpacity: 0.73,
-            overlay: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+            overlay: Padding(
+              padding: EdgeInsets.only(left: 11, right: 11),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
 
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: 51,
-                        height: 51,
-                        color: ColorsResources.cyan,
-                      )
-                  ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                            onTap: () => archivePressed(''),
+                            child: SizedBox(
+                                width: 51,
+                                height: 51,
+                                child: Image(
+                                  image: AssetImage("assets/archive.png"),
+                                )
+                            )
+                        )
+                    ),
 
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: 51,
-                        height: 75,
-                        color: ColorsResources.premiumLight.withAlpha(1),
-                      )
-                  ),
+                    Expanded(
+                        flex: 1,
+                        child: InkWell(
+                            onTap: () => startPressed(''),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 19, right: 19),
+                              child: SizedBox(
+                                  height: 75,
+                                  child: Align(
+                                      alignment: Alignment.center,
+                                      child: SizedBox(
+                                        width: 113,
+                                        child: Image(
+                                          image: AssetImage("assets/start.png"),
+                                          fit: BoxFit.contain,
+                                        )
+                                      )
+                                  )
+                              )
+                            )
+                        )
+                    ),
 
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        width: 51,
-                        height: 51,
-                        color: ColorsResources.cyan,
-                      )
-                  ),
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: InkWell(
+                            onTap: () => archivePressed(''),
+                            child: SizedBox(
+                                width: 51,
+                                height: 51,
+                                child: Image(
+                                  image: AssetImage("assets/search.png"),
+                                )
+                            )
+                        )
+                    ),
 
-                ]
+                  ]
+              )
             ),
             child: SizedBox(
               height: 75,

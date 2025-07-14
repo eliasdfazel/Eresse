@@ -113,7 +113,13 @@ class _DashboardState extends State<Dashboard> {
                   /* END - Preferences */
 
                   ActionsBar(
-                      onPressed: (_) {
+                      startPressed: (_) {
+
+                      },
+                      searchPressed: (_) {
+
+                      },
+                      archivePressed: (_) {
 
                       }
                   )
