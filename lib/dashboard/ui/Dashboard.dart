@@ -70,6 +70,8 @@ class _DashboardState extends State<Dashboard> {
                       shrinkWrap: true,
                       children: [
 
+
+
                       ]
                   ),
                   /* END - Content */
@@ -112,6 +114,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   /* END - Preferences */
 
+                  /* START - Actions Bar */
                   ActionsBar(
                       startPressed: (_) {
 
@@ -123,6 +126,7 @@ class _DashboardState extends State<Dashboard> {
 
                       }
                   )
+                  /* END - Actions Bar */
 
                 ]
             )
