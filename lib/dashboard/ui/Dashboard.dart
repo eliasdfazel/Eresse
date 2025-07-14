@@ -83,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
                       imageResources: _dashboardDI.firebaseUser!.photoURL.toString(),
                       boxFit: BoxFit.cover,
                       paddingInset: 0,
-                      onTap: () {
+                      onPressed: (data) {
 
 
                       }
@@ -96,12 +96,12 @@ class _DashboardState extends State<Dashboard> {
                       top: 73,
                       right: 19,
                       child: NextedButtons(
-                          buttonTag: "Profile",
+                          buttonTag: "Preferences",
                           imageNetwork: false,
                           imageResources: "assets/settings.png",
                           boxFit: BoxFit.contain,
                           paddingInset: 5,
-                          onTap: () {
+                          onPressed: (data) {
 
 
                           }

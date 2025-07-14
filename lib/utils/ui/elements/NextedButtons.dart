@@ -2,9 +2,11 @@ import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:shaped_image/shaped_image.dart';
 
+typedef Pressed = void Function(String item);
+
 class NextedButtons extends StatelessWidget {
 
-  final VoidCallback onTap;
+  final Pressed onPressed;
 
   String buttonTag;
 
@@ -16,7 +18,7 @@ class NextedButtons extends StatelessWidget {
   BoxFit boxFit;
   double paddingInset;
 
-  NextedButtons({super.key, required this.buttonTag, required this.onTap, required this.imageResources, required this.imageNetwork, required this.boxFit, required this.paddingInset});
+  NextedButtons({super.key, required this.buttonTag, required this.onPressed, required this.imageResources, required this.imageNetwork, required this.boxFit, required this.paddingInset});
 
   @override
   Widget build(BuildContext context) {
@@ -32,42 +34,45 @@ class NextedButtons extends StatelessWidget {
     return SizedBox(
         height: 51,
         width: 51,
-        child: Stack(
-            children: [
+        child: InkWell(
+          onTap: () => onPressed(buttonTag),
+          child: Stack(
+              children: [
 
-              const Image(
-                image: AssetImage("assets/squarcle.png"),
-                height: 51,
-                width: 51,
-                color: ColorsResources.premiumLight,
-              ),
-
-              Align(
-                alignment: Alignment.center,
-                child: const Image(
+                const Image(
                   image: AssetImage("assets/squarcle.png"),
-                  height: 49,
-                  width: 49,
-                  color: ColorsResources.primaryColor,
+                  height: 51,
+                  width: 51,
+                  color: ColorsResources.premiumLight,
                 ),
-              ),
 
-              Align(
+                Align(
                   alignment: Alignment.center,
-                  child: SizedBox(
-                      height: 49,
-                      width: 49,
-                      child: ShapedImage(
-                        imageTye: imageType,
-                        path: imageResources,
-                        shape: Shape.Squarcle,
+                  child: const Image(
+                    image: AssetImage("assets/squarcle.png"),
+                    height: 49,
+                    width: 49,
+                    color: ColorsResources.primaryColor,
+                  ),
+                ),
+
+                Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
                         height: 49,
                         width: 49,
-                      )
-                  )
-              )
+                        child: ShapedImage(
+                          imageTye: imageType,
+                          path: imageResources,
+                          shape: Shape.Squarcle,
+                          height: 49,
+                          width: 49,
+                        )
+                    )
+                )
 
-            ]
+              ]
+          )
         )
     );
   }
