@@ -12,8 +12,10 @@ import 'dart:async';
 
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
 import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
+import 'package:Eresse/discussions/ui/sections/ToolsBar.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -117,6 +119,23 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   ),
                   /* END - Content */
 
+                  /* START - Back */
+                  Positioned(
+                      top: 73,
+                      left: 19,
+                      child: InkWell(
+                        onTap: () {
+
+                          navigatePop(context);
+
+                        },
+                        child: Image(
+                          image: AssetImage("assets/back.png"),
+                        )
+                      )
+                  ),
+                  /* END - Back */
+
                   /* START - Actions Bar */
                   ActionsBar(
                       queryPressed: (_) {
@@ -125,6 +144,19 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                       },
                       decisionPressed: (_) {
+
+                      }
+                  ),
+                  /* END - Actions Bar */
+
+                  /* START - Actions Bar */
+                  ToolsBar(
+                      askPressed: (_) {
+
+
+
+                      },
+                      archivePressed: (_) {
 
                       }
                   ),

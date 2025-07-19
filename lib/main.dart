@@ -71,7 +71,7 @@ void main() async {
 
     try {
 
-      final httpRequest = await http.get(Uri.parse('https://geeks-empire-website.web.app/'))
+      final httpRequest = await http.get(Uri.parse('https://8.8.8.8'))
           .timeout(Duration(seconds: 7));
 
       bool connectionResult = (httpRequest.statusCode == 200);
