@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:Eresse/arwen/di/AskDI.dart';
+import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
 import 'package:http/http.dart' as http;
 
 class AskQuery {
@@ -14,8 +15,9 @@ class AskQuery {
     };
 
     final apiKey = await askDI.credentialsIO.generateApiKey();
+    final apiEndpoint = await askDI.arwenEndpoints.retrieveEndpoint(ArwenEndpoints.aiTextEndpoint) + apiKey;
 
-    final aiHttpRequest = http.Request('POST', Uri.parse(await askDI.arwenEndpoints.retrieveEndpoint(apiKey)));
+    final aiHttpRequest = http.Request('POST', Uri.parse(apiEndpoint));
     aiHttpRequest.body = json.encode({
       "system_instruction": {
         "parts": [
@@ -68,7 +70,7 @@ class AskQuery {
     });
     aiHttpRequest.headers.addAll(aiHeaders);
 
-    http.StreamedResponse aiGenerativeHttpResponse = await aiHttpRequest.send().timeout(Duration(seconds: 7));
+    http.StreamedResponse aiGenerativeHttpResponse = await aiHttpRequest.send().timeout(Duration(seconds: 13));
 
     if (aiGenerativeHttpResponse.statusCode == 200) {
 
@@ -79,10 +81,10 @@ class AskQuery {
       final aiGenerativeContent = List.from(aiGenerativeJson['candidates']).first['content'];
 
       final aiGenerativeResult = List.from(aiGenerativeContent['parts']).first['text'];
-      print(">>>>>>>>>>>>>> " + aiGenerativeResult);
 
-      final successTip = jsonEncode(aiGenerativeResult);
-      print(">>>>>>>>>>>>>> " + successTip);
+      final Map<String, dynamic> successTip = jsonDecode(aiGenerativeResult);
+
+      return successTip['guidance'];
 
     }
 
