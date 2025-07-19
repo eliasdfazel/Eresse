@@ -100,9 +100,9 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   decorations(),
                   /* END - Decoration */
 
-                  /* START - Decoration */
+                  /* START - Network */
                   _networkShield
-                  /* END - Decoration */
+                  /* END - Network */
 
                 ]
             )

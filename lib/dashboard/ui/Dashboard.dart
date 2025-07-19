@@ -8,13 +8,17 @@
  * https://opensource.org/licenses/MIT
  */
 
+import 'dart:async';
+
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/toolbar/ActionsBar.dart';
 import 'package:Eresse/dashboard/ui/sections/toolbar/SuccessTip.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,9 +31,20 @@ class Dashboard extends StatefulWidget {
   @override
   State<Dashboard> createState() => _DashboardState();
 }
-class _DashboardState extends State<Dashboard> {
+class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
   final DashboardDI _dashboardDI = DashboardDI();
+
+  /*
+   * Start - Network Listener
+   */
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
+
+  Widget _networkShield = Container();
+  /*
+   * End - Network Listener
+   */
 
   String successTipContent = '';
 
@@ -39,8 +54,32 @@ class _DashboardState extends State<Dashboard> {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
+    /*
+     * Start - Network Listener
+     */
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen((List<ConnectivityResult> connectivityResults) async {
+
+      _dashboardDI.networking.networkCheckpoint(this, connectivityResults);
+
+    });
+    /*
+     * End - Network Listener
+     */
+
     retrieveSuccessTip();
 
+  }
+
+  @override
+  void dispose() {
+    /*
+     * Start - Network Listener
+     */
+    _connectivitySubscription?.cancel();
+    /*
+     * End - Network Listener
+     */
+    super.dispose();
   }
 
   @override
@@ -137,13 +176,43 @@ class _DashboardState extends State<Dashboard> {
                       archivePressed: (_) {
 
                       }
-                  )
+                  ),
                   /* END - Actions Bar */
+
+                  /* START - Network */
+                  _networkShield
+                  /* END - Network */
 
                 ]
             )
         )
     );
+  }
+
+  @override
+  void networkEnabled() {
+
+    Future.delayed(const Duration(milliseconds: 777), () {
+
+      setState(() {
+
+        _networkShield = _dashboardDI.networking.offlineMode();
+
+      });
+
+    });
+
+  }
+
+  @override
+  void networkDisabled() {
+
+    setState(() {
+
+      _networkShield = Container();
+
+    });
+
   }
 
   void retrieveSuccessTip() async {
