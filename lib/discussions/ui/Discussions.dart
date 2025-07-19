@@ -11,19 +11,21 @@
 import 'dart:async';
 
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
+import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Discussions extends StatefulWidget {
 
-  bool internetConnection = false;
+  User firebaseUser;
 
-  Discussions({super.key});
+  Discussions({super.key, required this.firebaseUser});
 
   @override
   State<Discussions> createState() => _DiscussionsState();
@@ -100,6 +102,34 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   decorations(),
                   /* END - Decoration */
 
+                  /* START - Content */
+                  ListView(
+                      padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      children: [
+
+
+
+
+
+                      ]
+                  ),
+                  /* END - Content */
+
+                  /* START - Actions Bar */
+                  ActionsBar(
+                      queryPressed: (_) {
+
+
+
+                      },
+                      decisionPressed: (_) {
+
+                      }
+                  ),
+                  /* END - Actions Bar */
+
                   /* START - Network */
                   _networkShield
                   /* END - Network */
@@ -113,13 +143,9 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
   @override
   void networkEnabled() {
 
-    Future.delayed(const Duration(milliseconds: 777), () {
+    setState(() {
 
-      setState(() {
-
-        _networkShield = _discussionsDI.networking.offlineMode();
-
-      });
+      _networkShield = Container();
 
     });
 
@@ -128,9 +154,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
   @override
   void networkDisabled() {
 
-    setState(() {
+    Future.delayed(const Duration(milliseconds: 777), () {
 
-      _networkShield = Container();
+      setState(() {
+
+        _networkShield = _discussionsDI.networking.offlineMode();
+
+      });
 
     });
 

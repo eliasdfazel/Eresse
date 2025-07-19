@@ -11,10 +11,12 @@
 import 'dart:async';
 
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
-import 'package:Eresse/dashboard/ui/sections/toolbar/ActionsBar.dart';
-import 'package:Eresse/dashboard/ui/sections/toolbar/SuccessTip.dart';
+import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
+import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
+import 'package:Eresse/discussions/ui/Discussions.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
@@ -169,6 +171,12 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                   ActionsBar(
                       startPressed: (_) {
 
+                        if (_dashboardDI.firebaseUser != null) {
+
+                          navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!));
+
+                        }
+
                       },
                       searchPressed: (_) {
 
@@ -192,13 +200,9 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
   @override
   void networkEnabled() {
 
-    Future.delayed(const Duration(milliseconds: 777), () {
+    setState(() {
 
-      setState(() {
-
-        _networkShield = _dashboardDI.networking.offlineMode();
-
-      });
+      _networkShield = Container();
 
     });
 
@@ -207,9 +211,13 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
   @override
   void networkDisabled() {
 
-    setState(() {
+    Future.delayed(const Duration(milliseconds: 777), () {
 
-      _networkShield = Container();
+      setState(() {
+
+        _networkShield = _dashboardDI.networking.offlineMode();
+
+      });
 
     });
 
