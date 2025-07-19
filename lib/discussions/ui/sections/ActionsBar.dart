@@ -13,7 +13,7 @@ class ActionsBar extends StatelessWidget {
 
   ActionsBar({super.key, required this.queryPressed, required this.decisionPressed});
 
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
