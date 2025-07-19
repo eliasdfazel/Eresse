@@ -13,7 +13,7 @@ class PreferencesIO {
   
   Future<String?> read(String keyValue) async {
 
-    return (await _sharedPreferences).getString(keyValue.decode());
+    return (await _sharedPreferences).getString(keyValue.encode());
   }
 
 }

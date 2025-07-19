@@ -36,6 +36,8 @@ class _DashboardState extends State<Dashboard> {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
+    retrieveSuccessTip();
+
   }
 
   @override
@@ -134,6 +136,13 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
+  void retrieveSuccessTip() async {
 
+    final successTip =  await _dashboardDI.askQuery.retrieveSuccessTips();
+
+
+
+
+  }
 
 }
