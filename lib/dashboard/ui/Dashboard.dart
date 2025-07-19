@@ -131,7 +131,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                   /* START - Profile */
                   Positioned(
-                    top: 73,
+                    top: 51,
                     left: 19,
                     child: NextedButtons(
                       buttonTag: "Profile",

@@ -21,7 +21,7 @@ class ActionsBar extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
-        padding: EdgeInsets.only(left: 19, right: 19, bottom: 37),
+        padding: EdgeInsets.only(left: 19, right: 19, bottom: 51),
         child: Container(
           height: 75,
           width: double.infinity,

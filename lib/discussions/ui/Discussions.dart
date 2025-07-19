@@ -121,17 +121,17 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   /* START - Back */
                   Positioned(
-                      top: 73,
+                      top: 51,
                       left: 19,
                       child: InkWell(
-                        onTap: () {
+                          onTap: () {
 
-                          navigatePop(context);
+                            navigatePop(context);
 
-                        },
-                        child: Image(
-                          image: AssetImage("assets/back.png"),
-                        )
+                          },
+                          child: Image(
+                            image: AssetImage("assets/back.png"),
+                          )
                       )
                   ),
                   /* END - Back */
