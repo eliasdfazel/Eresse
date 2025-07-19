@@ -77,6 +77,11 @@ class _DashboardState extends State<Dashboard> {
 
                         SuccessTip(content: successTipContent),
 
+                        Divider(
+                          height: 37,
+                          color: Colors.transparent,
+                        ),
+
 
 
                       ]
