@@ -10,6 +10,7 @@
 
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/toolbar/ActionsBar.dart';
+import 'package:Eresse/dashboard/ui/sections/toolbar/SuccessTip.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
@@ -29,6 +30,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
 
   final DashboardDI _dashboardDI = DashboardDI();
+
+  String successTipContent = '';
 
   @override
   void initState() {
@@ -71,6 +74,8 @@ class _DashboardState extends State<Dashboard> {
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       children: [
+
+                        SuccessTip(content: successTipContent),
 
 
 
@@ -140,10 +145,15 @@ class _DashboardState extends State<Dashboard> {
 
     final successTip =  await _dashboardDI.askQuery.retrieveSuccessTips();
 
+    if (successTip != null) {
 
+      setState(() {
 
+        successTipContent = successTip;
 
+      });
 
+    }
 
   }
 

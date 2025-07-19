@@ -48,7 +48,7 @@ class ActionsBar extends StatelessWidget {
             ]
           ),
           child: Blur(
-            blur: 13,
+            blur: 19,
             borderRadius: BorderRadius.circular(19),
             blurColor: ColorsResources.premiumDark,
             colorOpacity: 0.73,

@@ -20,6 +20,11 @@ class StringsResources {
     return "Eresse - Achieve Super Consciousness Mind In Solitude";
   }
 
+  static String successTipTitle() {
+
+    return "Success Tip";
+  }
+
   static String applicationLink() {
 
     return "https://play.google.com/store/apps/details?id=co.geeksempire.eresse";
