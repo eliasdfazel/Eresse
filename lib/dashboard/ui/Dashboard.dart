@@ -100,7 +100,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
           }),
         ),
         home: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             backgroundColor: ColorsResources.primaryColor,
             body: Stack(
                 children: [
@@ -111,7 +111,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                   /* START - Content */
                   ListView(
-                      padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
+                      padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       children: [

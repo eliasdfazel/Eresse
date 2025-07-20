@@ -95,7 +95,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
           }),
         ),
         home: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             backgroundColor: ColorsResources.primaryColor,
             body: Stack(
                 children: [
