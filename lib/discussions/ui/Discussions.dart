@@ -151,6 +151,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   ),
                   /* END - Actions Bar */
 
+
+                  
                   /* START - Actions Bar */
                   ToolsBar(
                       askPressed: (content) {
