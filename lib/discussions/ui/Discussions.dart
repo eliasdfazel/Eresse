@@ -53,7 +53,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
    * End - Network Listener
    */
 
-  List<Widget> itemsWidget = [];
+  List<DocumentSnapshot> dialogues = [];
 
 
   @override
@@ -74,7 +74,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
      * End - Network Listener
      */
 
-    processItems();
+    processDialogues();
 
   }
 
@@ -116,11 +116,33 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   /* END - Decoration */
 
                   /* START - Content */
-                  ListView(
+                  ListView.builder(
                       padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      children: itemsWidget
+                      itemCount: dialogues.length,
+                      itemBuilder: (context, index) {
+
+                        DialogueDataStructure dialogueDataStructure = DialogueDataStructure(dialogues[index]);
+
+                        Widget element = Container();
+
+                        switch (dialogueDataStructure.contentType()) {
+                          case ContentType.queryType: {
+
+                            element = QueryElement(queryPressed: (data) {}, queryDataStructure: dialogueDataStructure);
+
+                          }
+                          case ContentType.decisionType: {
+
+                          }
+                          case ContentType.askType: {
+
+                          }
+                        }
+
+                        return element;
+                      }
                   ),
                   /* END - Content */
 
@@ -217,7 +239,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
       FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
           .add(generate(contentType, content)).then((documentSnapshot) async {
 
-            processLastItem(await documentSnapshot.get());
+            processLastDialogue(await documentSnapshot.get());
 
           });
 
@@ -225,7 +247,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future processItems() async {
+  Future processDialogues() async {
 
     FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
       .orderBy(DialogueDataStructure.timestampKey, descending: false)
@@ -236,13 +258,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
           for (final element in querySnapshot.docs) {
             print(DialogueDataStructure(element).documentId());
 
-            itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: DialogueDataStructure(element)));
+            dialogues.add(element);
 
           }
 
           setState(() {
 
-            itemsWidget = itemsWidget;
+            dialogues = dialogues;
 
           });
 
@@ -252,11 +274,11 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future processLastItem(documentSnapshot) async {
+  Future processLastDialogue(documentSnapshot) async {
 
     setState(() {
 
-      itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: DialogueDataStructure(documentSnapshot)));
+      dialogues.add(documentSnapshot);
 
     });
 
