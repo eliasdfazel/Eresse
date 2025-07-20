@@ -1,4 +1,5 @@
 import 'package:Eresse/resources/colors_resources.dart';
+import 'package:Eresse/resources/strings_resources.dart';
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
@@ -19,9 +20,9 @@ class ActionsBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Positioned(
-        bottom: 51,
-        left: 19,
-        right: 19,
+      bottom: 51,
+      left: 19,
+      right: 19,
       child: Container(
           height: 75,
           width: double.infinity,
@@ -75,18 +76,38 @@ class ActionsBar extends StatelessWidget {
 
                         Expanded(
                             flex: 1,
-                            child: TextField(
-                              controller: _textController,
-                              style: TextStyle(
-                                  color: ColorsResources.premiumLight
-                              ),
+                            child: Container(
+                              padding: EdgeInsets.only(left: 13, right: 13),
+                              child: TextField(
+                                controller: _textController,
+                                cursorRadius: Radius.circular(99),
+                                autofocus: true,
+                                cursorColor: ColorsResources.primaryColor,
+                                maxLines: 3,
+                                style: TextStyle(
+                                  color: ColorsResources.premiumLight,
+                                  fontSize: 19,
+                                  height: 1.73
+                                ),
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: StringsResources.expressIdeaTitle(),
+                                    hintMaxLines: 1,
+                                    hintFadeDuration: const Duration(milliseconds: 357),
+                                    hintStyle: TextStyle(
+                                        color: ColorsResources.premiumLight.withAlpha(137),
+                                        fontSize: 19
+                                    )
+                                ),
+                              )
                             )
                         ),
 
                         Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
-                                onTap: () => decisionPressed(_textController.text),
+                                onTap: () => queryPressed(_textController.text),
                                 child: SizedBox(
                                     width: 51,
                                     height: 51,

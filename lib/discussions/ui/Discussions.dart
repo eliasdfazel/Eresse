@@ -138,12 +138,14 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   /* START - Actions Bar */
                   ActionsBar(
-                      queryPressed: (_) {
+                      queryPressed: (content) {
+                        debugPrint('Query: $content');
 
 
 
                       },
-                      decisionPressed: (_) {
+                      decisionPressed: (content) {
+                        debugPrint('Decision: $content');
 
                       }
                   ),
@@ -151,12 +153,10 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   /* START - Actions Bar */
                   ToolsBar(
-                      askPressed: (_) {
-
-
+                      askPressed: (content) {
 
                       },
-                      archivePressed: (_) {
+                      archivePressed: (content) {
 
                       }
                   ),

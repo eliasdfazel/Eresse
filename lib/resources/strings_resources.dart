@@ -25,6 +25,11 @@ class StringsResources {
     return "Success Tip";
   }
 
+  static String expressIdeaTitle() {
+
+    return "Express Idea";
+  }
+
   static String applicationLink() {
 
     return "https://play.google.com/store/apps/details?id=co.geeksempire.eresse";
