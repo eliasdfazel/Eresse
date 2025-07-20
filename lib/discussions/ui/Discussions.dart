@@ -10,7 +10,7 @@
 
 import 'dart:async';
 
-import 'package:Eresse/discussions/data/ItemDataStructure.dart';
+import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
 import 'package:Eresse/discussions/ui/elements/QueryElement.dart';
 import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
@@ -228,21 +228,21 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
   Future processItems() async {
 
     FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
+      .orderBy(DialogueDataStructure.timestampKey, descending: false)
       .get(GetOptions(source: Source.server)).then((querySnapshot) {
 
         if (querySnapshot.docs.isNotEmpty) {
 
           for (final element in querySnapshot.docs) {
-            print(ItemDataStructure(element).documentId());
+            print(DialogueDataStructure(element).documentId());
 
-            itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: ItemDataStructure(element)));
-
+            itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: DialogueDataStructure(element)));
 
           }
 
           setState(() {
 
-            itemsWidget;
+            itemsWidget = itemsWidget;
 
           });
 
@@ -254,14 +254,11 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   Future processLastItem(documentSnapshot) async {
 
-    itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: ItemDataStructure(documentSnapshot)));
-
     setState(() {
 
-      itemsWidget;
+      itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: DialogueDataStructure(documentSnapshot)));
 
     });
-
 
   }
 

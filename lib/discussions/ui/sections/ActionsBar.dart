@@ -81,7 +81,7 @@ class ActionsBar extends StatelessWidget {
                               child: TextField(
                                 controller: _textController,
                                 cursorRadius: Radius.circular(99),
-                                autofocus: true,
+                                autofocus: false,
                                 cursorColor: ColorsResources.primaryColor,
                                 maxLines: 3,
                                 style: TextStyle(

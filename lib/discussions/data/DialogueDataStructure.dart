@@ -7,14 +7,14 @@ enum ContentType {
 dynamic generate(ContentType contentType, String content) {
 
   return {
-    ItemDataStructure.timestampKey: Timestamp.now(),
-    ItemDataStructure.contentTypeKey: contentType.name,
-    ItemDataStructure.contentKey: content,
+    DialogueDataStructure.timestampKey: Timestamp.now(),
+    DialogueDataStructure.contentTypeKey: contentType.name,
+    DialogueDataStructure.contentKey: content,
 
   };
 }
 
-class ItemDataStructure {
+class DialogueDataStructure {
 
   static const String timestampKey = "timestamp";
 
@@ -25,7 +25,7 @@ class ItemDataStructure {
 
   Map<String, dynamic> _queryDocumentData = <String, dynamic>{};
 
-  ItemDataStructure(DocumentSnapshot documentSnapshot) {
+  DialogueDataStructure(DocumentSnapshot documentSnapshot) {
 
     _documentSnapshot = documentSnapshot;
 
@@ -40,7 +40,7 @@ class ItemDataStructure {
 
   ContentType contentType() {
 
-    final typeOfContent = _queryDocumentData[ItemDataStructure.contentTypeKey];
+    final typeOfContent = _queryDocumentData[DialogueDataStructure.contentTypeKey];
 
     ContentType contentType = ContentType.queryType;
 
@@ -70,12 +70,12 @@ class ItemDataStructure {
 
   String content() {
 
-    return _queryDocumentData[ItemDataStructure.contentKey];
+    return _queryDocumentData[DialogueDataStructure.contentKey];
   }
 
   String timestamp() {
 
-    return _queryDocumentData[ItemDataStructure.timestampKey];
+    return _queryDocumentData[DialogueDataStructure.timestampKey];
   }
 
 }

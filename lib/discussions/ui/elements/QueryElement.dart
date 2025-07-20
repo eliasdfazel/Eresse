@@ -1,14 +1,14 @@
-import 'package:Eresse/discussions/data/ItemDataStructure.dart';
+import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef QueryPressed = void Function(ItemDataStructure queryDataStructure);
+typedef QueryPressed = void Function(DialogueDataStructure queryDataStructure);
 
 class QueryElement extends StatelessWidget {
 
   /// Serial Data
-  final ItemDataStructure queryDataStructure;
+  final DialogueDataStructure queryDataStructure;
 
   final QueryPressed queryPressed;
 
