@@ -112,9 +112,12 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                       shrinkWrap: true,
                       children: [
 
-
-
-
+                        // QueryElement(
+                        //     queryDataStructure: "Geeks Empire - Eresse",
+                        //     queryPressed: (data) {
+                        //
+                        //     }
+                        // ),
 
                       ]
                   ),
@@ -154,8 +157,6 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   ),
                   /* END - Actions Bar */
 
-
-                  
                   /* START - Actions Bar */
                   Toolbar(
                       askPressed: (content) {
