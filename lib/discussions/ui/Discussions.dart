@@ -12,12 +12,13 @@ import 'dart:async';
 
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
 import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
-import 'package:Eresse/discussions/ui/sections/ToolsBar.dart';
+import 'package:Eresse/discussions/ui/sections/Toolbar.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
+import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -123,15 +124,17 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   Positioned(
                       top: 51,
                       left: 19,
-                      child: InkWell(
-                          onTap: () {
+                      child: NextedButtons(
+                          buttonTag: "Back",
+                          onPressed: (data) {
 
                             navigatePop(context);
 
                           },
-                          child: Image(
-                            image: AssetImage("assets/back.png"),
-                          )
+                          imageResources: "assets/back.png",
+                          imageNetwork: false,
+                          boxFit: BoxFit.none,
+                          paddingInset: 0
                       )
                   ),
                   /* END - Back */
@@ -154,7 +157,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   
                   /* START - Actions Bar */
-                  ToolsBar(
+                  Toolbar(
                       askPressed: (content) {
 
                       },
