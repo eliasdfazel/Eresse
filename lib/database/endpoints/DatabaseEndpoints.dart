@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class Databaseendpoints {
+class DatabaseEndpoints {
 
-  String discussionCollection(User firebaseUser,) {
+  String discussionsCollection(User firebaseUser,) {
 
     return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions";
   }
@@ -12,6 +12,7 @@ class Databaseendpoints {
     return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId/Content";
   }
 
+  /// Metadata of Discussion - Result, Summary, Timestamp
   String discussionInformationDocument(User firebaseUser, String discussionId) {
 
     return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId";

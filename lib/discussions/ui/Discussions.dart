@@ -10,7 +10,9 @@
 
 import 'dart:async';
 
+import 'package:Eresse/discussions/data/ItemDataStructure.dart';
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
+import 'package:Eresse/discussions/ui/elements/QueryElement.dart';
 import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
 import 'package:Eresse/discussions/ui/sections/Toolbar.dart';
 import 'package:Eresse/resources/colors_resources.dart';
@@ -19,6 +21,7 @@ import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +31,9 @@ class Discussions extends StatefulWidget {
 
   User firebaseUser;
 
-  Discussions({super.key, required this.firebaseUser});
+  String discussionId;
+
+  Discussions({super.key, required this.firebaseUser, required this.discussionId});
 
   @override
   State<Discussions> createState() => _DiscussionsState();
@@ -48,6 +53,9 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
    * End - Network Listener
    */
 
+  List<Widget> itemsWidget = [];
+
+
   @override
   void initState() {
     super.initState();
@@ -65,6 +73,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
     /*
      * End - Network Listener
      */
+
+    processItems();
 
   }
 
@@ -110,16 +120,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                       padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      children: [
-
-                        // QueryElement(
-                        //     queryDataStructure: "Geeks Empire - Eresse",
-                        //     queryPressed: (data) {
-                        //
-                        //     }
-                        // ),
-
-                      ]
+                      children: itemsWidget
                   ),
                   /* END - Content */
 
@@ -147,11 +148,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                       queryPressed: (content) {
                         debugPrint('Query: $content');
 
-
+                        storeContent(ContentType.queryType, content);
 
                       },
                       decisionPressed: (content) {
                         debugPrint('Decision: $content');
+
+                        storeContent(ContentType.decisionType, content);
 
                       }
                   ),
@@ -159,7 +162,10 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   /* START - Actions Bar */
                   Toolbar(
-                      askPressed: (content) {
+                      askPressed: (question) {
+
+                        // Call AI
+                        // and Store Answer
 
                       },
                       archivePressed: (content) {
@@ -201,6 +207,61 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
       });
 
     });
+
+  }
+
+  Future storeContent(ContentType contentType, String content) async {
+
+    if (_discussionsDI.firebaseUser != null) {
+
+      FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
+          .add(generate(contentType, content)).then((documentSnapshot) async {
+
+            processLastItem(await documentSnapshot.get());
+
+          });
+
+    }
+
+  }
+
+  Future processItems() async {
+
+    FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
+      .get(GetOptions(source: Source.server)).then((querySnapshot) {
+
+        if (querySnapshot.docs.isNotEmpty) {
+
+          for (final element in querySnapshot.docs) {
+            print(ItemDataStructure(element).documentId());
+
+            itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: ItemDataStructure(element)));
+
+
+          }
+
+          setState(() {
+
+            itemsWidget;
+
+          });
+
+        }
+
+      });
+
+  }
+
+  Future processLastItem(documentSnapshot) async {
+
+    itemsWidget.add(QueryElement(queryPressed: (data) {}, queryDataStructure: ItemDataStructure(documentSnapshot)));
+
+    setState(() {
+
+      itemsWidget;
+
+    });
+
 
   }
 

@@ -173,7 +173,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                         if (_dashboardDI.firebaseUser != null) {
 
-                          navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!));
+                          navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!, discussionId: '1753040249914'/*DateTime.now().millisecondsSinceEpoch.toString()*/));
 
                         }
 
