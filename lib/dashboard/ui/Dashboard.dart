@@ -30,9 +30,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Dashboard extends StatefulWidget {
 
-  bool internetConnection = false;
-
-  Dashboard({super.key, required this.internetConnection});
+  Dashboard({super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();

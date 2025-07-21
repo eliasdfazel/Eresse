@@ -8,32 +8,45 @@
  * https://opensource.org/licenses/MIT
  */
 
+import 'dart:async';
+
 import 'package:Eresse/dashboard/ui/Dashboard.dart';
 import 'package:Eresse/entry/di/EntryDI.dart';
 import 'package:Eresse/profile/authentication/Interface/AuthenticationInterface.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
+import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class EntryConfigurations extends StatefulWidget {
 
-  bool internetConnection = false;
-
-  EntryConfigurations({Key? key, required this.internetConnection}) : super(key: key);
+  EntryConfigurations({Key? key}) : super(key: key);
 
   @override
   State<EntryConfigurations> createState() => _EntryConfigurationsState();
 
 
 }
-class _EntryConfigurationsState extends State<EntryConfigurations> implements AuthenticationInterface {
+class _EntryConfigurationsState extends State<EntryConfigurations> implements NetworkInterface, AuthenticationInterface {
 
   final EntryDI _entryDI = EntryDI();
+
+  /*
+   * Start - Network Listener
+   */
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
+
+  Widget _networkShield = Container();
+  /*
+   * End - Network Listener
+   */
 
   @override
   void initState() {
@@ -43,6 +56,30 @@ class _EntryConfigurationsState extends State<EntryConfigurations> implements Au
 
     _entryDI.emailAuthentication.start(this);
 
+    /*
+     * Start - Network Listener
+     */
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen((List<ConnectivityResult> connectivityResults) async {
+
+      _entryDI.networking.networkCheckpoint(this, connectivityResults);
+
+    });
+    /*
+     * End - Network Listener
+     */
+
+  }
+
+  @override
+  void dispose() {
+    /*
+     * Start - Network Listener
+     */
+    _connectivitySubscription?.cancel();
+    /*
+     * End - Network Listener
+     */
+    super.dispose();
   }
 
   @override
@@ -70,10 +107,38 @@ class _EntryConfigurationsState extends State<EntryConfigurations> implements Au
                   entryDecorations(),
                   /* END - Decoration */
 
+                  _networkShield
+
                 ]
             )
         )
     );
+  }
+
+  @override
+  void networkEnabled() {
+
+    setState(() {
+
+      _networkShield = Container();
+
+    });
+
+  }
+
+  @override
+  void networkDisabled() {
+
+    Future.delayed(const Duration(milliseconds: 777), () {
+
+      setState(() {
+
+        _networkShield = _entryDI.networking.offlineMode();
+
+      });
+
+    });
+
   }
 
   @override
@@ -85,7 +150,7 @@ class _EntryConfigurationsState extends State<EntryConfigurations> implements Au
   @override
   void profiled(DocumentSnapshot<Object?> documentSnapshot) {
 
-    navigateTo(context, Dashboard(internetConnection: widget.internetConnection));
+    navigateTo(context, Dashboard());
 
   }
 

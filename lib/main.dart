@@ -23,7 +23,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:http/http.dart' as http;
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage remoteMessage) async {
@@ -71,12 +70,7 @@ void main() async {
 
     try {
 
-      final httpRequest = await http.get(Uri.parse('https://8.8.8.8'))
-          .timeout(Duration(seconds: 7));
-
-      bool connectionResult = (httpRequest.statusCode == 200);
-
-      await FirebaseAuth.instance.currentUser?.reload();
+      FirebaseAuth.instance.currentUser?.reload();
 
       FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -89,11 +83,11 @@ void main() async {
 
       }
       
-      Widget entryWidget = EntryConfigurations(internetConnection: connectionResult);
+      Widget entryWidget = EntryConfigurations();
 
       if (FirebaseAuth.instance.currentUser != null) {
         
-        entryWidget = Dashboard(internetConnection: connectionResult);
+        entryWidget = Dashboard();
         
       }
       
