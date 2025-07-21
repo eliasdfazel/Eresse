@@ -182,7 +182,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                   /* START - Preferences */
                   Positioned(
-                      top: 73,
+                      top: 51,
                       right: 19,
                       child: NextedButtons(
                           buttonTag: "Preferences",
