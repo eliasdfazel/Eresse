@@ -41,7 +41,7 @@ class DiscussionElement extends StatelessWidget {
                             style: TextStyle(
                               color: ColorsResources.premiumLight,
                               fontSize: 19,
-                              letterSpacing: 3.7,
+                              letterSpacing: 1.9,
                             )
                           ),
 

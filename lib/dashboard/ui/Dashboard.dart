@@ -135,11 +135,29 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                         ),
 
                         Divider(
-                          height: 37,
+                          height: 51,
                           color: Colors.transparent,
                         ),
 
                         /* END - Discussion Archive */
+                        Padding(
+                          padding: EdgeInsets.only(left: 37, right: 37),
+                          child: Text(
+                            StringsResources.openDiscussionsTitle().toUpperCase(),
+                            style: TextStyle(
+                              color: ColorsResources.premiumLight.withAlpha(179),
+                              fontSize: 15,
+                              letterSpacing: 3.7,
+                              fontFamily: 'Anurati'
+                            ),
+                          )
+                        ),
+
+                        Divider(
+                          height: 11,
+                          color: Colors.transparent,
+                        ),
+
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
