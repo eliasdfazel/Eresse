@@ -63,7 +63,11 @@ class ActionsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                                onTap: () => decisionPressed(_textController.text),
+                                onTap: () {
+
+                                  decisionPressed(_textController.text);
+
+                                },
                                 child: SizedBox(
                                     width: 51,
                                     height: 51,
@@ -107,7 +111,11 @@ class ActionsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
-                                onTap: () => queryPressed(_textController.text),
+                                onTap: () {
+
+                                  queryPressed(_textController.text);
+
+                                },
                                 child: SizedBox(
                                     width: 51,
                                     height: 51,

@@ -55,7 +55,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
    * End - Network Listener
    */
 
-  ScrollController _scrollController = ScrollController();
+  final _scrollController = ScrollController();
   
   List<DocumentSnapshot> dialogues = [];
 
