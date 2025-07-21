@@ -3,22 +3,22 @@ import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef QueryPressed = void Function(DialogueDataStructure queryDataStructure);
+typedef DecisionPressed = void Function(DialogueDataStructure queryDataStructure);
 
-class QueryElement extends StatelessWidget {
+class DecisionElement extends StatelessWidget {
 
   final DialogueDataStructure queryDataStructure;
 
-  final QueryPressed queryPressed;
+  final DecisionPressed decisionPressed;
 
-  const QueryElement({super.key, required this.queryPressed, required this.queryDataStructure});
+  const DecisionElement({super.key, required this.decisionPressed, required this.queryDataStructure});
 
   @override
   Widget build(BuildContext context) {
 
     return Container(
-      padding: EdgeInsets.only(right: 19, top: 11, bottom: 11),
-      alignment: Alignment.centerRight,
+      padding: EdgeInsets.only(left: 19, top: 11, bottom: 11),
+      alignment: Alignment.centerLeft,
       child: FractionallySizedBox(
         widthFactor: 0.7,
         child: Container(
@@ -29,27 +29,27 @@ class QueryElement extends StatelessWidget {
                 border: GradientBoxBorder(
                   gradient: LinearGradient(
                       colors: [
-                        ColorsResources.queryColor,
-                        ColorsResources.queryColor.withAlpha(0)
+                        ColorsResources.decisionColor,
+                        ColorsResources.decisionColor.withAlpha(0)
                       ],
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight
                   ),
                   width: 1.73,
                 ),
                 borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(11),
-                    topLeft: Radius.circular(19),
+                    topRight: Radius.circular(19),
+                    topLeft: Radius.circular(11),
                     bottomRight: Radius.circular(19),
                     bottomLeft: Radius.circular(19)
                 ),
                 gradient: LinearGradient(
                     colors: [
-                      ColorsResources.queryColor.withAlpha(173),
-                      ColorsResources.queryColor.withAlpha(137)
+                      ColorsResources.decisionColor.withAlpha(173),
+                      ColorsResources.decisionColor.withAlpha(137)
                     ],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight
                 )
             ),
             child: Padding(
@@ -57,7 +57,7 @@ class QueryElement extends StatelessWidget {
                 child: InkWell(
                     onLongPress: () {
 
-                      queryPressed(queryDataStructure);
+                      decisionPressed(queryDataStructure);
 
                     },
                     child: Text(

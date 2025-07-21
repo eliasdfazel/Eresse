@@ -12,6 +12,8 @@ import 'dart:async';
 
 import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
+import 'package:Eresse/discussions/ui/elements/AskElement.dart';
+import 'package:Eresse/discussions/ui/elements/DecisionElement.dart';
 import 'package:Eresse/discussions/ui/elements/QueryElement.dart';
 import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
 import 'package:Eresse/discussions/ui/sections/Toolbar.dart';
@@ -53,6 +55,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
    * End - Network Listener
    */
 
+  ScrollController _scrollController = ScrollController();
+  
   List<DocumentSnapshot> dialogues = [];
 
 
@@ -117,6 +121,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   /* START - Content */
                   ListView.builder(
+                      controller: _scrollController,
                       padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
@@ -135,8 +140,12 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                           }
                           case ContentType.decisionType: {
 
+                            element = DecisionElement(decisionPressed: (data) {}, queryDataStructure: dialogueDataStructure);
+
                           }
                           case ContentType.askType: {
+
+                            element = AskElement(askPressed: (data) {}, queryDataStructure: dialogueDataStructure);
 
                           }
                         }
@@ -256,7 +265,6 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
         if (querySnapshot.docs.isNotEmpty) {
 
           for (final element in querySnapshot.docs) {
-            print(DialogueDataStructure(element).documentId());
 
             dialogues.add(element);
 
@@ -267,6 +275,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
             dialogues = dialogues;
 
           });
+
+          _scrollToEnd();
 
         }
 
@@ -279,6 +289,18 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
     setState(() {
 
       dialogues.add(documentSnapshot);
+
+    });
+
+    _scrollToEnd();
+
+  }
+
+  void _scrollToEnd() {
+
+    Future.delayed(const Duration(milliseconds: 777), () {
+
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 137), curve: Curves.easeOut);
 
     });
 
