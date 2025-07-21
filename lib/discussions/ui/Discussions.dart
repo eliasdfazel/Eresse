@@ -28,6 +28,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Discussions extends StatefulWidget {
 
@@ -59,6 +60,10 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
   
   List<DocumentSnapshot> dialogues = [];
 
+  Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
+      size: 51,
+      color: ColorsResources.premiumLight.withAlpha(73)
+  );
 
   @override
   void initState() {
@@ -174,6 +179,16 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                   ),
                   /* END - Back */
 
+                  Positioned(
+                      top: 51,
+                      left: 19,
+                      right: 19,
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: loadingAnimation
+                      )
+                  ),
+
                   /* START - Actions Bar */
                   ActionsBar(
                       queryPressed: (content) {
@@ -273,6 +288,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
           setState(() {
 
             dialogues = dialogues;
+
+            loadingAnimation = Container();
 
           });
 

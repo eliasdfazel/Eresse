@@ -26,6 +26,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -54,6 +55,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
   String successTipContent = '';
 
   List<DocumentSnapshot> discussions = [];
+
+  Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
+      size: 51,
+      color: ColorsResources.premiumLight.withAlpha(73)
+  );
 
   @override
   void initState() {
@@ -159,7 +165,6 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                       ]
                   ),
-
                   /* END - Content */
 
                   /* START - Profile */
@@ -199,6 +204,16 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                       )
                   ),
                   /* END - Preferences */
+
+                  Positioned(
+                      top: 51,
+                      left: 19,
+                      right: 19,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: loadingAnimation
+                      )
+                  ),
 
                   /* START - Actions Bar */
                   ActionsBar(
@@ -290,6 +305,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
             setState(() {
 
               discussions;
+
+              loadingAnimation = Container();
 
             });
 
