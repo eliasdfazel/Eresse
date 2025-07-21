@@ -1,8 +1,8 @@
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
-typedef ArchivePressed = void Function(String item);
-typedef AskPressed = void Function(String item);
+typedef ArchivePressed = void Function(String element);
+typedef AskPressed = void Function(String element);
 
 class Toolbar extends StatefulWidget {
 

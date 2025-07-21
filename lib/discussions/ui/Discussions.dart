@@ -117,7 +117,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
                   /* START - Content */
                   ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
+                      padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: dialogues.length,

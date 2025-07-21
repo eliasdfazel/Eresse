@@ -1,16 +1,17 @@
+import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:flutter/material.dart';
 
-typedef SuccessTipPressed = void Function(String element);
+typedef DiscussionPressed = void Function(DiscussionDataStructure element);
 
-class SuccessTip extends StatelessWidget {
+class DiscussionElement extends StatelessWidget {
 
-  final SuccessTipPressed successTipPressed;
+  final DiscussionDataStructure discussionDataStructure;
 
-  final String content;
+  final DiscussionPressed discussionPressed;
 
-  const SuccessTip({super.key, required this.content, required this.successTipPressed});
+  const DiscussionElement({super.key, required this.discussionDataStructure, required this.discussionPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class SuccessTip extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.only(left: 19, right: 19),
             child: InkWell(
-              onTap: () => successTipPressed(content),
+              onTap: () => discussionPressed(discussionDataStructure),
               child: Container(
                   height: 173,
                   width: double.infinity,
@@ -51,7 +52,7 @@ class SuccessTip extends StatelessWidget {
                           ),
 
                           Text(
-                            content,
+                            discussionDataStructure.documentId(),
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               color: ColorsResources.premiumLight,

@@ -4,8 +4,8 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef QueryPressed = void Function(String item);
-typedef DecisionPressed = void Function(String item);
+typedef QueryPressed = void Function(String element);
+typedef DecisionPressed = void Function(String element);
 
 class ActionsBar extends StatelessWidget {
 

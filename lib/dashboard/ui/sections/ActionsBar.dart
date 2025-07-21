@@ -3,9 +3,9 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef StartPressed = void Function(String item);
-typedef ArchivePressed = void Function(String item);
-typedef SearchPressed = void Function(String item);
+typedef StartPressed = void Function(String element);
+typedef ArchivePressed = void Function(String element);
+typedef SearchPressed = void Function(String element);
 
 class ActionsBar extends StatelessWidget {
 

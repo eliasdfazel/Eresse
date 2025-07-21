@@ -7,7 +7,6 @@ typedef QueryPressed = void Function(DialogueDataStructure queryDataStructure);
 
 class QueryElement extends StatelessWidget {
 
-  /// Serial Data
   final DialogueDataStructure queryDataStructure;
 
   final QueryPressed queryPressed;

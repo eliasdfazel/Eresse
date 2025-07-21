@@ -12,7 +12,9 @@ import 'dart:async';
 
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
+import 'package:Eresse/dashboard/ui/sections/DiscussionElement.dart';
 import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
+import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
 import 'package:Eresse/discussions/ui/Discussions.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
@@ -20,6 +22,7 @@ import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +52,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
    */
 
   String successTipContent = '';
+
+  List<DocumentSnapshot> discussions = [];
 
   @override
   void initState() {
@@ -113,20 +118,47 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                   ListView(
                       padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
                       physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
+                      shrinkWrap: false,
                       children: [
 
-                        SuccessTip(content: successTipContent),
+                        SuccessTip(
+                          content: successTipContent,
+                          successTipPressed: (data) {
+
+                          },
+                        ),
 
                         Divider(
                           height: 37,
                           color: Colors.transparent,
                         ),
 
+                        /* END - Discussion Archive */
+                        ListView.builder(
+                            padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: discussions.length,
+                            itemBuilder: (context, index) {
 
+                              DiscussionDataStructure discussionDataStructure = DiscussionDataStructure(discussions[index]);
+
+                              return DiscussionElement(discussionDataStructure: discussionDataStructure, discussionPressed: (data) {
+
+                                if (_dashboardDI.firebaseUser != null) {
+
+                                  navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!, discussionId: data.documentId()));
+
+                                }
+
+                              });
+                            }
+                        ),
+                        /* END - Discussion Archive */
 
                       ]
                   ),
+
                   /* END - Content */
 
                   /* START - Profile */
@@ -173,7 +205,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                         if (_dashboardDI.firebaseUser != null) {
 
-                          navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!, discussionId: '1753040249914'/*DateTime.now().millisecondsSinceEpoch.toString()*/));
+                          navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!, discussionId: DateTime.now().millisecondsSinceEpoch.toString()));
 
                         }
 
@@ -234,6 +266,33 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
         successTipContent = successTip;
 
       });
+
+    }
+
+  }
+
+  void retrieveDiscussions() {
+
+    if (_dashboardDI.firebaseUser != null) {
+
+      FirebaseFirestore.instance.collection(_dashboardDI.databaseEndpoints.discussionsCollection(_dashboardDI.firebaseUser!))
+        .get(GetOptions(source: Source.server)).then((querySnapshot) {
+
+          if (querySnapshot.docs.isNotEmpty) {
+
+            for (final element in querySnapshot.docs) {
+
+            }
+
+            setState(() {
+
+              discussions;
+
+            });
+
+          }
+
+        });
 
     }
 

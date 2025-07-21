@@ -2,7 +2,7 @@ import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:shaped_image/shaped_image.dart';
 
-typedef Pressed = void Function(String item);
+typedef Pressed = void Function(String element);
 
 class NextedButtons extends StatelessWidget {
 

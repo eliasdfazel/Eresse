@@ -18,9 +18,9 @@ class DatabaseEndpoints {
     return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId";
   }
 
-  String discussionItemDocument(User firebaseUser, String discussionId, String itemId) {
+  String discussionElementDocument(User firebaseUser, String discussionId, String elementId) {
 
-    return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId/Content/$itemId";
+    return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId/Content/$elementId";
   }
 
 }
