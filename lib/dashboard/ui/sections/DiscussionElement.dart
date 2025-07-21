@@ -50,15 +50,43 @@ class DiscussionElement extends StatelessWidget {
                             color: Colors.transparent,
                           ),
 
-                          Text(
-                            discussionDataStructure.discussionSummary(),
-                            textAlign: TextAlign.start,
-                            maxLines: 3,
-                            style: TextStyle(
-                              color: ColorsResources.premiumLight,
-                              fontSize: 15,
-                              letterSpacing: 1.73,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+
+                              Expanded(
+                                flex: 1,
+                                child: Text(
+                                  discussionDataStructure.discussionSummary(),
+                                  textAlign: TextAlign.start,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    color: ColorsResources.premiumLight,
+                                    fontSize: 15,
+                                    letterSpacing: 1.73,
+                                  ),
+                                )
+                              ),
+
+                              SizedBox(
+                                height: 63,
+                                child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: SizedBox(
+                                        height: 23,
+                                        width: 23,
+                                        child: Image(
+                                          image: AssetImage("assets/squarcle.png"),
+                                          height: 23,
+                                          width: 23,
+                                          color: discussionDataStructure.statusIndicator(),
+                                        )
+                                    )
+                                )
+                              )
+
+                            ],
                           ),
 
                         ],

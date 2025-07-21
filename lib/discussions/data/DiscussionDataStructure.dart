@@ -1,16 +1,20 @@
+import 'dart:ui';
+
+import 'package:Eresse/resources/colors_resources.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum DiscussionStatus {
   discussionOpen, discussionSuccess, discussionFailed,
 }
 
-dynamic generate(String discussionId, String discussionTitle, String discussionSummary) {
+dynamic generate(String discussionId, String discussionTitle, String discussionSummary, DiscussionStatus discussionStatus) {
 
   return {
     DiscussionDataStructure.createdTimestampKey: Timestamp.now(),
     DiscussionDataStructure.discussionIdKey: discussionId,
     DiscussionDataStructure.discussionTitleKey: discussionTitle,
     DiscussionDataStructure.discussionSummaryKey: discussionSummary,
+    DiscussionDataStructure.discussionStatusKey: discussionStatus.name,
   };
 }
 
@@ -44,6 +48,54 @@ class DiscussionDataStructure {
   String discussionId() {
 
     return _queryDocumentData[DiscussionDataStructure.discussionIdKey];
+  }
+
+  DiscussionStatus discussionStatus() {
+
+    final typeOfStatus = _queryDocumentData[DiscussionDataStructure.discussionStatusKey];
+
+    DiscussionStatus statusType = DiscussionStatus.discussionOpen;
+
+    switch (typeOfStatus) {
+      case "discussionOpen": {
+
+        statusType = DiscussionStatus.discussionOpen;
+
+        break;
+      }
+      case "discussionSuccess": {
+
+        statusType = DiscussionStatus.discussionSuccess;
+
+        break;
+      }
+      case "discussionFailed": {
+
+        statusType = DiscussionStatus.discussionFailed;
+
+        break;
+      }
+    }
+
+    return statusType;
+  }
+
+  Color statusIndicator() {
+
+    switch (discussionStatus()) {
+      case DiscussionStatus.discussionOpen: {
+
+        return ColorsResources.openColor;
+      }
+      case DiscussionStatus.discussionSuccess: {
+
+        return ColorsResources.successColor;
+      }
+      case DiscussionStatus.discussionFailed: {
+
+        return ColorsResources.failedColor;
+      }
+    }
   }
 
   String discussionSummary() {
