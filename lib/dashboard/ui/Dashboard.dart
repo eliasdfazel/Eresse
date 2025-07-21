@@ -75,6 +75,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
     retrieveSuccessTip();
 
+    retrieveDiscussions();
+
   }
 
   @override
@@ -118,7 +120,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                   ListView(
                       padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
                       physics: const BouncingScrollPhysics(),
-                      shrinkWrap: false,
+                      shrinkWrap: true,
                       children: [
 
                         SuccessTip(
@@ -135,7 +137,6 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                         /* END - Discussion Archive */
                         ListView.builder(
-                            padding: const EdgeInsets.fromLTRB(0, 173, 0, 173),
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: discussions.length,
@@ -281,6 +282,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
           if (querySnapshot.docs.isNotEmpty) {
 
             for (final element in querySnapshot.docs) {
+
+              discussions.add(element);
 
             }
 

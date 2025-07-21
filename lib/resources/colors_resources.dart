@@ -18,6 +18,10 @@ class ColorsResources {
   static const Color queryColor = Color.fromARGB(255, 186, 225, 255);
   static const Color decisionColor = Color.fromARGB(255, 186, 255, 201);
 
+  static const Color openColor = Color.fromARGB(255, 181, 255, 255);
+  static const Color successColor = Color.fromARGB(255, 186, 255, 201);
+  static const Color failedColor = Color.fromARGB(255, 255, 185, 211);
+
   static const Color primaryColorRed = Color.fromARGB(255, 242, 5, 92);
   static const Color primaryColorYellow = Color.fromARGB(255, 234, 242, 5);
   static const Color primaryColorGreen = Color.fromARGB(255, 5, 242, 108);

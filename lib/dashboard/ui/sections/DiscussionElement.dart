@@ -1,6 +1,5 @@
 import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
-import 'package:Eresse/resources/strings_resources.dart';
 import 'package:flutter/material.dart';
 
 typedef DiscussionPressed = void Function(DiscussionDataStructure element);
@@ -19,14 +18,15 @@ class DiscussionElement extends StatelessWidget {
     return Align(
         alignment: Alignment.topCenter,
         child: Padding(
-            padding: EdgeInsets.only(left: 19, right: 19),
+            padding: EdgeInsets.only(left: 19, right: 19, bottom: 19),
             child: InkWell(
               onTap: () => discussionPressed(discussionDataStructure),
               child: Container(
-                  height: 173,
+                  height: 137,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(19),
+                    color: ColorsResources.premiumDark.withAlpha(179)
                   ),
                   child: Padding(
                       padding: EdgeInsets.all(19),
@@ -36,14 +36,13 @@ class DiscussionElement extends StatelessWidget {
                         children: [
 
                           Text(
-                            StringsResources.successTipTitle().toUpperCase(),
-                            textAlign: TextAlign.start,
+                            discussionDataStructure.discussionTitle(),
+                            maxLines: 1,
                             style: TextStyle(
                               color: ColorsResources.premiumLight,
                               fontSize: 19,
-                              letterSpacing: 7.3,
-                              fontFamily: 'Anurati',
-                            ),
+                              letterSpacing: 3.7,
+                            )
                           ),
 
                           Divider(
@@ -52,8 +51,9 @@ class DiscussionElement extends StatelessWidget {
                           ),
 
                           Text(
-                            discussionDataStructure.documentId(),
+                            discussionDataStructure.discussionSummary(),
                             textAlign: TextAlign.start,
+                            maxLines: 3,
                             style: TextStyle(
                               color: ColorsResources.premiumLight,
                               fontSize: 15,

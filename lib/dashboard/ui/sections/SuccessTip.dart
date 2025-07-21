@@ -26,6 +26,7 @@ class SuccessTip extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(19),
+                    color: ColorsResources.premiumDark.withAlpha(179)
                   ),
                   child: Padding(
                       padding: EdgeInsets.all(19),
