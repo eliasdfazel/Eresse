@@ -10,6 +10,10 @@ abstract class NetworkInterface {
 
 class Networking {
 
+  static const networkStatus = 'networkStatus';
+  static const networkHeaders = 'networkHeaders';
+  static const networkBody = 'networkBody';
+
   Networking() {
 
     /*
@@ -29,17 +33,29 @@ class Networking {
         || connectivityResults.contains(ConnectivityResult.vpn)
         || connectivityResults.contains(ConnectivityResult.ethernet)) {
 
-      final internetLookup = await http.get(Uri.parse('https://geeks-empire-website.web.app'));
+      final firstInternetLookup = await getRequest('https://8.8.8.8/');
 
-      bool internetConnected = (internetLookup.statusCode == 200);
+      bool firstInternetConnection = (int.parse(firstInternetLookup[Networking.networkStatus].toString()) == 200);
 
-      if (internetConnected) {
+      if (firstInternetConnection) {
 
         networkInterface.networkEnabled();
 
       } else {
 
-        networkInterface.networkDisabled();
+        final secondInternetLookup = await getRequest('https://1.1.1.1/');
+
+        bool secondInternetConnection = (int.parse(secondInternetLookup[Networking.networkStatus].toString()) == 200);
+
+        if (secondInternetConnection) {
+
+          networkInterface.networkEnabled();
+
+        } else {
+
+          networkInterface.networkDisabled();
+
+        }
 
       }
 
@@ -49,6 +65,17 @@ class Networking {
 
     }
 
+  }
+
+  Future<Map<String, dynamic>> getRequest(String networkEndpoint) async {
+
+    final internetLookup = await http.get(Uri.parse(networkEndpoint));
+
+    return {
+      Networking.networkStatus: internetLookup.statusCode,
+      Networking.networkHeaders: internetLookup.headers,
+      Networking.networkBody: internetLookup.body,
+    };
   }
 
   Widget offlineMode() {
