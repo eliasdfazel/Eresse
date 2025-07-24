@@ -24,7 +24,7 @@ class RetrieveQueries {
 
     final querySnapshot = await FirebaseFirestore.instance.collection(_databaseEndpoints.discussionContentCollection(firebaseUser, discussionId))
       .orderBy(DialogueDataStructure.timestampKey, descending: false)
-      .get(const GetOptions(source: Source.server));
+      .get();
 
     if (querySnapshot.docs.isNotEmpty) {
 
@@ -37,6 +37,14 @@ class RetrieveQueries {
     }
 
     return dialogues;
+  }
+
+  void cacheDialogues(User firebaseUser, String discussionId) async {
+
+    FirebaseFirestore.instance.collection(_databaseEndpoints.discussionContentCollection(firebaseUser, discussionId))
+        .orderBy(DialogueDataStructure.timestampKey, descending: false)
+        .get(const GetOptions(source: Source.server));
+
   }
 
 }

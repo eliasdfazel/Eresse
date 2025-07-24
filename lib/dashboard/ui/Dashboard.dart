@@ -313,6 +313,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
         for (final element in querySnapshot.docs) {
 
+          _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, element.id);
+
           discussions.add(element);
 
         }
