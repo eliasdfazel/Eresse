@@ -194,13 +194,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
                       queryPressed: (content) {
                         debugPrint('Query: $content');
 
-                        storeContent(ContentType.queryType, content);
+                        insertDialogues(ContentType.queryType, content);
 
                       },
                       decisionPressed: (content) {
                         debugPrint('Decision: $content');
 
-                        storeContent(ContentType.decisionType, content);
+                        insertDialogues(ContentType.decisionType, content);
 
                       }
                   ),
@@ -256,16 +256,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future storeContent(ContentType contentType, String content) async {
+  Future insertDialogues(ContentType contentType, String content) async {
 
     if (_discussionsDI.firebaseUser != null) {
 
-      FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
-          .add(generate(contentType, content)).then((documentSnapshot) async {
+      final documentReference = await _discussionsDI.insertQueries.insertDialogues(_discussionsDI.firebaseUser!, widget.discussionId, contentType, content);
 
-            processLastDialogue(await documentSnapshot.get());
-
-          });
+      processLastDialogue(await documentReference.get());
 
     }
 
@@ -273,31 +270,23 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   Future processDialogues() async {
 
-    FirebaseFirestore.instance.collection(_discussionsDI.databaseEndpoints.discussionContentCollection(_discussionsDI.firebaseUser!, widget.discussionId))
-      .orderBy(DialogueDataStructure.timestampKey, descending: false)
-      .get(GetOptions(source: Source.server)).then((querySnapshot) {
+    if (_discussionsDI.firebaseUser != null) {
 
-        if (querySnapshot.docs.isNotEmpty) {
+      final retrievedDialogues = await _discussionsDI.retrieveQueries.retrieveDialogues(_discussionsDI.firebaseUser!, widget.discussionId);
 
-          for (final element in querySnapshot.docs) {
+      dialogues.clear();
 
-            dialogues.add(element);
+      setState(() {
 
-          }
+        dialogues.addAll(retrievedDialogues);
 
-          setState(() {
-
-            dialogues = dialogues;
-
-            loadingAnimation = Container();
-
-          });
-
-          _scrollToEnd();
-
-        }
+        loadingAnimation = Container();
 
       });
+
+      _scrollToEnd();
+
+    }
 
   }
 
