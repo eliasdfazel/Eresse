@@ -19,6 +19,13 @@ dynamic discussionMetadata(String discussionId, String discussionTitle, String d
   };
 }
 
+dynamic discussionUpdateMetadata() {
+
+  return {
+    DiscussionDataStructure.updatedTimestampKey: Timestamp.now()
+  };
+}
+
 class DiscussionDataStructure {
 
   static const String createdTimestampKey = "createdTimestamp";

@@ -30,4 +30,12 @@ class InsertQueries {
     return resultCallback;
   }
 
+  Future<dynamic> updateDiscussionMetadata(User firebaseUser, String discussionId) async {
+
+    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
+        .update(discussionUpdateMetadata());
+
+    return resultCallback;
+  }
+
 }

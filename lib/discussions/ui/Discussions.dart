@@ -292,6 +292,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
         _scrollToEnd();
 
+        _discussionsDI.insertQueries.updateDiscussionMetadata(_discussionsDI.firebaseUser!, widget.discussionId);
+
       }
 
     }
