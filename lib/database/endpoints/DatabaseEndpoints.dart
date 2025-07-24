@@ -13,7 +13,7 @@ class DatabaseEndpoints {
   }
 
   /// Metadata of Discussion - Result, Summary, Timestamp
-  String discussionInformationDocument(User firebaseUser, String discussionId) {
+  String discussionMetadataDocument(User firebaseUser, String discussionId) {
 
     return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId";
   }

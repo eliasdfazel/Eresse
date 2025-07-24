@@ -7,10 +7,11 @@ enum DiscussionStatus {
   discussionOpen, discussionSuccess, discussionFailed,
 }
 
-dynamic generate(String discussionId, String discussionTitle, String discussionSummary, DiscussionStatus discussionStatus) {
+dynamic discussionMetadata(String discussionId, String discussionTitle, String discussionSummary, DiscussionStatus discussionStatus) {
 
   return {
     DiscussionDataStructure.createdTimestampKey: Timestamp.now(),
+    DiscussionDataStructure.updatedTimestampKey: Timestamp.now(),
     DiscussionDataStructure.discussionIdKey: discussionId,
     DiscussionDataStructure.discussionTitleKey: discussionTitle,
     DiscussionDataStructure.discussionSummaryKey: discussionSummary,
@@ -21,6 +22,7 @@ dynamic generate(String discussionId, String discussionTitle, String discussionS
 class DiscussionDataStructure {
 
   static const String createdTimestampKey = "createdTimestamp";
+  static const String updatedTimestampKey = "updatedTimestamp";
 
   static const String discussionIdKey = "discussionId";
   static const String discussionTitleKey = "discussionTitle";

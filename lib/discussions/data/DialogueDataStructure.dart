@@ -4,7 +4,7 @@ enum ContentType {
   queryType, decisionType, askType
 }
 
-dynamic generate(ContentType contentType, String content) {
+dynamic dialogueDataStructure(ContentType contentType, String content) {
 
   return {
     DialogueDataStructure.timestampKey: Timestamp.now(),

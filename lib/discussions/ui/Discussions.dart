@@ -268,23 +268,31 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future processDialogues() async {
+  void processDialogues() async {
 
     if (_discussionsDI.firebaseUser != null) {
 
       final retrievedDialogues = await _discussionsDI.retrieveQueries.retrieveDialogues(_discussionsDI.firebaseUser!, widget.discussionId);
 
-      dialogues.clear();
+      if (retrievedDialogues.isEmpty) {
 
-      setState(() {
+        _discussionsDI.insertQueries.insertDiscussionMetadata(_discussionsDI.firebaseUser!, widget.discussionId);
 
-        dialogues.addAll(retrievedDialogues);
+      } else {
 
-        loadingAnimation = Container();
+        dialogues.clear();
 
-      });
+        setState(() {
 
-      _scrollToEnd();
+          dialogues.addAll(retrievedDialogues);
+
+          loadingAnimation = Container();
+
+        });
+
+        _scrollToEnd();
+
+      }
 
     }
 
