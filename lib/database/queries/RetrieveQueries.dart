@@ -12,7 +12,7 @@ class RetrieveQueries {
 
     final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.discussionsCollection(firebaseUser))
       .limit(7)
-      .where(DiscussionDataStructure.discussionStatusKey == DiscussionStatus.discussionOpen.name)
+      .where(DiscussionDataStructure.discussionStatusKey, isEqualTo: DiscussionStatus.discussionOpen.name)
       .get(GetOptions(source: Source.server));
 
     return querySnapshot;
