@@ -29,14 +29,14 @@ class ActionsBar extends StatelessWidget {
               border: GradientBoxBorder(
                 gradient: LinearGradient(
                     colors: [
-                      ColorsResources.black.withAlpha(137),
+                      ColorsResources.premiumDark.withAlpha(179),
                       ColorsResources.premiumDark.withAlpha(0),
-                      ColorsResources.black.withAlpha(137),
+                      ColorsResources.premiumDark.withAlpha(179),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight
                 ),
-                width: 1,
+                width: 1
               ),
               borderRadius: BorderRadius.circular(19),
               boxShadow: [
@@ -51,7 +51,7 @@ class ActionsBar extends StatelessWidget {
               blur: 19,
               borderRadius: BorderRadius.circular(19),
               blurColor: ColorsResources.premiumDark,
-              colorOpacity: 0.73,
+              colorOpacity: 0.37,
               overlay: Padding(
                   padding: EdgeInsets.only(left: 11, right: 11),
                   child: Row(

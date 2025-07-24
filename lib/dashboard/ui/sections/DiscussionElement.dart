@@ -26,7 +26,7 @@ class DiscussionElement extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(19),
-                    color: ColorsResources.premiumDark.withAlpha(179)
+                    color: ColorsResources.premiumDark.withAlpha(103)
                   ),
                   child: Padding(
                       padding: EdgeInsets.all(19),
