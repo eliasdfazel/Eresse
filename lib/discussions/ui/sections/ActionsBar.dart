@@ -82,16 +82,18 @@ class ActionsBar extends StatelessWidget {
                             flex: 1,
                             child: Container(
                               padding: EdgeInsets.only(left: 13, right: 13),
+                              alignment: Alignment.centerLeft,
                               child: TextField(
                                 controller: _textController,
                                 cursorRadius: Radius.circular(99),
                                 autofocus: false,
                                 cursorColor: ColorsResources.primaryColor,
-                                maxLines: 3,
+                                maxLines: null,
                                 style: TextStyle(
                                   color: ColorsResources.premiumLight,
                                   fontSize: 19,
-                                  height: 1.73
+                                  height: 1.51,
+                                  overflow: TextOverflow.fade
                                 ),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
