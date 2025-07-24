@@ -30,9 +30,9 @@ class ActionsBar extends StatelessWidget {
               border: GradientBoxBorder(
                 gradient: LinearGradient(
                     colors: [
-                      ColorsResources.black.withAlpha(137),
+                      ColorsResources.premiumDark.withAlpha(179),
                       ColorsResources.premiumDark.withAlpha(0),
-                      ColorsResources.black.withAlpha(137),
+                      ColorsResources.premiumDark.withAlpha(179),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight
@@ -52,7 +52,7 @@ class ActionsBar extends StatelessWidget {
               blur: 19,
               borderRadius: BorderRadius.circular(19),
               blurColor: ColorsResources.premiumDark,
-              colorOpacity: 0.73,
+              colorOpacity: 0.37,
               overlay: Padding(
                   padding: EdgeInsets.only(left: 11, right: 11),
                   child: Row(
@@ -88,6 +88,7 @@ class ActionsBar extends StatelessWidget {
                                 cursorRadius: Radius.circular(99),
                                 autofocus: false,
                                 cursorColor: ColorsResources.primaryColor,
+                                minLines: 1,
                                 maxLines: null,
                                 style: TextStyle(
                                   color: ColorsResources.premiumLight,
