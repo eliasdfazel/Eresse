@@ -1,5 +1,5 @@
 import 'package:Eresse/arwen/ask/AskQuery.dart';
-import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
+import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,8 +9,8 @@ class DashboardDI {
 
   Networking networking = Networking();
 
-  AskQuery askQuery = AskQuery();
+  RetrieveQueries retrieveQueries = RetrieveQueries();
 
-  DatabaseEndpoints databaseEndpoints = DatabaseEndpoints();
+  AskQuery askQuery = AskQuery();
 
 }

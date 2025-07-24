@@ -303,32 +303,29 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
   }
 
-  void retrieveDiscussions() {
+  void retrieveDiscussions() async {
 
     if (_dashboardDI.firebaseUser != null) {
 
-      FirebaseFirestore.instance.collection(_dashboardDI.databaseEndpoints.discussionsCollection(_dashboardDI.firebaseUser!))
-        .get(GetOptions(source: Source.server)).then((querySnapshot) {
+     final querySnapshot = await _dashboardDI.retrieveQueries.retrieveDiscussions(_dashboardDI.firebaseUser!);
 
-          if (querySnapshot.docs.isNotEmpty) {
+      if (querySnapshot.docs.isNotEmpty) {
 
-            for (final element in querySnapshot.docs) {
+        for (final element in querySnapshot.docs) {
 
-              discussions.add(element);
+          discussions.add(element);
 
-            }
+        }
 
-            setState(() {
+        setState(() {
 
-              discussions;
+          discussions;
 
-              loadingAnimation = Container();
-
-            });
-
-          }
+          loadingAnimation = Container();
 
         });
+
+      }
 
     }
 
