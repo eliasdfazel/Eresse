@@ -22,53 +22,64 @@ class QueryElement extends StatelessWidget {
       child: FractionallySizedBox(
         widthFactor: 0.7,
         child: Container(
-            constraints: BoxConstraints(
-              minHeight: 73
-            ),
-            decoration: BoxDecoration(
-                border: GradientBoxBorder(
-                  gradient: LinearGradient(
-                      colors: [
-                        ColorsResources.queryColor,
-                        ColorsResources.queryColor.withAlpha(0)
-                      ],
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft
-                  ),
-                  width: 1.73,
-                ),
+          decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(11),
                     topLeft: Radius.circular(19),
                     bottomRight: Radius.circular(19),
                     bottomLeft: Radius.circular(19)
                 ),
-                gradient: LinearGradient(
-                    colors: [
-                      ColorsResources.queryColor.withAlpha(173),
-                      ColorsResources.queryColor.withAlpha(137)
-                    ],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft
-                )
+                color: ColorsResources.premiumDark.withAlpha(199)
             ),
-            child: Padding(
-                padding: EdgeInsets.all(11),
-                child: InkWell(
-                    onLongPress: () {
+          child: Container(
+              constraints: BoxConstraints(
+                  minHeight: 73
+              ),
+              decoration: BoxDecoration(
+                  border: GradientBoxBorder(
+                    gradient: LinearGradient(
+                        colors: [
+                          ColorsResources.queryColor,
+                          ColorsResources.queryColor.withAlpha(0)
+                        ],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft
+                    ),
+                    width: 1.73,
+                  ),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(11),
+                      topLeft: Radius.circular(19),
+                      bottomRight: Radius.circular(19),
+                      bottomLeft: Radius.circular(19)
+                  ),
+                  gradient: LinearGradient(
+                      colors: [
+                        ColorsResources.queryColor.withAlpha(37),
+                        ColorsResources.queryColor.withAlpha(0)
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft
+                  )
+              ),
+              child: Padding(
+                  padding: EdgeInsets.all(11),
+                  child: InkWell(
+                      onLongPress: () {
 
-                      queryPressed(queryDataStructure);
+                        queryPressed(queryDataStructure);
 
-                    },
-                    child: Text(
-                      queryDataStructure.content(),
-                      style: TextStyle(
-                        color: ColorsResources.premiumDark,
-                        fontSize: 13
-                      ),
-                    )
-                )
-            )
+                      },
+                      child: Text(
+                        queryDataStructure.content() + "00000000000000000000000000000000000000000000000",
+                        style: TextStyle(
+                            color: ColorsResources.premiumLight,
+                            fontSize: 13
+                        ),
+                      )
+                  )
+              )
+          )
         )
       )
     );

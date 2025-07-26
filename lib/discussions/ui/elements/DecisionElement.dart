@@ -22,53 +22,64 @@ class DecisionElement extends StatelessWidget {
       child: FractionallySizedBox(
         widthFactor: 0.7,
         child: Container(
-            constraints: BoxConstraints(
-              minHeight: 73
-            ),
-            decoration: BoxDecoration(
-                border: GradientBoxBorder(
-                  gradient: LinearGradient(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(19),
+                  topLeft: Radius.circular(11),
+                  bottomRight: Radius.circular(19),
+                  bottomLeft: Radius.circular(19)
+              ),
+              color: ColorsResources.premiumDark.withAlpha(199)
+          ),
+          child: Container(
+              constraints: BoxConstraints(
+                  minHeight: 73
+              ),
+              decoration: BoxDecoration(
+                  border: GradientBoxBorder(
+                    gradient: LinearGradient(
+                        colors: [
+                          ColorsResources.decisionColor,
+                          ColorsResources.decisionColor.withAlpha(0)
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight
+                    ),
+                    width: 1.73,
+                  ),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(19),
+                      topLeft: Radius.circular(11),
+                      bottomRight: Radius.circular(19),
+                      bottomLeft: Radius.circular(19)
+                  ),
+                  gradient: RadialGradient(
                       colors: [
-                        ColorsResources.decisionColor,
+                        ColorsResources.decisionColor.withAlpha(37),
                         ColorsResources.decisionColor.withAlpha(0)
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight
-                  ),
-                  width: 1.73,
-                ),
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(19),
-                    topLeft: Radius.circular(11),
-                    bottomRight: Radius.circular(19),
-                    bottomLeft: Radius.circular(19)
-                ),
-                gradient: LinearGradient(
-                    colors: [
-                      ColorsResources.decisionColor.withAlpha(173),
-                      ColorsResources.decisionColor.withAlpha(137)
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight
-                )
-            ),
-            child: Padding(
-                padding: EdgeInsets.all(11),
-                child: InkWell(
-                    onLongPress: () {
+                      center: Alignment.topLeft,
+                      radius: 3
+                  )
+              ),
+              child: Padding(
+                  padding: EdgeInsets.all(11),
+                  child: InkWell(
+                      onLongPress: () {
 
-                      decisionPressed(queryDataStructure);
+                        decisionPressed(queryDataStructure);
 
-                    },
-                    child: Text(
-                      queryDataStructure.content(),
-                      style: TextStyle(
-                        color: ColorsResources.premiumDark,
-                        fontSize: 13
-                      ),
-                    )
-                )
-            )
+                      },
+                      child: Text(
+                        queryDataStructure.content(),
+                        style: TextStyle(
+                            color: ColorsResources.premiumLight,
+                            fontSize: 13
+                        ),
+                      )
+                  )
+              )
+          )
         )
       )
     );

@@ -18,15 +18,21 @@ class ColorsResources {
   static const Color queryColor = Color.fromARGB(255, 186, 225, 255);
   static const Color decisionColor = Color.fromARGB(255, 186, 255, 201);
 
-  static const Color openColor = Color.fromARGB(255, 181, 255, 255);
+  static const Color openColor = Color.fromARGB(255, 186, 225, 255);
   static const Color successColor = Color.fromARGB(255, 186, 255, 201);
-  static const Color failedColor = Color.fromARGB(255, 255, 185, 211);
+  static const Color failedColor = Color.fromARGB(255, 255, 179, 186);
 
-  static const Color primaryColorRed = Color.fromARGB(255, 242, 5, 92);
-  static const Color primaryColorYellow = Color.fromARGB(255, 234, 242, 5);
-  static const Color primaryColorGreen = Color.fromARGB(255, 5, 242, 108);
-  static const Color primaryColorBlue = Color.fromARGB(255, 7, 242, 242);
-  static const Color primaryColorOrange = Color.fromARGB(255, 241, 96, 6);
+  static const Color primaryColorRed = Color.fromARGB(255, 255, 179, 186);
+  static const Color primaryColorYellow = Color.fromARGB(255, 255, 255, 186);
+  static const Color primaryColorGreen = Color.fromARGB(255, 186, 255, 201);
+  static const Color primaryColorBlue = Color.fromARGB(255, 186, 225, 255);
+  static const Color primaryColorOrange = Color.fromARGB(255, 255, 223, 186);
+
+  static const Color pastelColorRed = Color.fromARGB(255, 242, 5, 92);
+  static const Color pastelColorYellow = Color.fromARGB(255, 234, 242, 5);
+  static const Color pastelColorGreen = Color.fromARGB(255, 5, 242, 108);
+  static const Color pastelColorBlue = Color.fromARGB(255, 7, 242, 242);
+  static const Color pastelColorOrange = Color.fromARGB(255, 241, 96, 6);
 
   static const Color pink = Color.fromARGB(255, 255, 192, 224);
   static const Color cyan = Color.fromARGB(255, 2, 248, 192);
