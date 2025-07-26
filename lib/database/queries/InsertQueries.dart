@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
+import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
 import 'package:Eresse/database/structures/DiscussionSqlDataStructure.dart';
@@ -14,14 +15,16 @@ class InsertQueries {
 
   final DatabaseEndpoints _databaseEndpoints = DatabaseEndpoints();
 
-  final SetupDatabase setupDatabase = SetupDatabase();
+  final SetupDatabase _setupDatabase = SetupDatabase();
+
+  final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
   /// content = discussionJsonContent
   Future<DiscussionSqlDataStructure> insertDialogues(User firebaseUser, String discussionId, ContentType contentType, String content) async {
 
-    final databaseInstance = await setupDatabase.initializeDatabase();
+    final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var discussionSqlDataStructure = await setupDatabase.rowExists(databaseInstance, discussionId);
+    var discussionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, discussionId);
 
 
     if (discussionSqlDataStructure != null) {
@@ -49,7 +52,7 @@ class InsertQueries {
 
     }
 
-    await setupDatabase.closeDatabase(databaseInstance);
+    await _setupDatabase.closeDatabase(databaseInstance);
 
     return discussionSqlDataStructure;
 
