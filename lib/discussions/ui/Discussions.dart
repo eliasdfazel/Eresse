@@ -308,7 +308,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future processLastDialogue(documentSnapshot) async {
+  Future processLastDialogue(DocumentSnapshot documentSnapshot) async {
 
     setState(() {
 
@@ -320,7 +320,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future updateDiscussionContext(dialogues) async {
+  Future updateDiscussionContext(List<DocumentSnapshot> dialogues) async {
 
     // Send Dialogues To AI and Ask for Summary and Title
     final discussionTitle = '';
