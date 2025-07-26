@@ -24,16 +24,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class EntryConfigurations extends StatefulWidget {
+class Entry extends StatefulWidget {
 
-  EntryConfigurations({Key? key}) : super(key: key);
+  const Entry({Key? key}) : super(key: key);
 
   @override
-  State<EntryConfigurations> createState() => _EntryConfigurationsState();
+  State<Entry> createState() => _EntryState();
 
 
 }
-class _EntryConfigurationsState extends State<EntryConfigurations> implements NetworkInterface, AuthenticationInterface {
+class _EntryState extends State<Entry> implements NetworkInterface, AuthenticationInterface {
 
   final EntryDI _entryDI = EntryDI();
 

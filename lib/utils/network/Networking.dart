@@ -26,7 +26,7 @@ class Networking {
 
   }
 
-  void networkCheckpoint(NetworkInterface networkInterface, List<ConnectivityResult> connectivityResults) async {
+  Future<void> networkCheckpoint(NetworkInterface networkInterface, List<ConnectivityResult> connectivityResults) async {
 
     if (connectivityResults.contains(ConnectivityResult.mobile)
         || connectivityResults.contains(ConnectivityResult.wifi)

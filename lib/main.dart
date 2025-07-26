@@ -11,7 +11,7 @@
 import 'dart:io';
 
 import 'package:Eresse/dashboard/ui/Dashboard.dart';
-import 'package:Eresse/entry/ui/EntryConfigurations.dart';
+import 'package:Eresse/entry/ui/Entry.dart';
 import 'package:Eresse/firebase_options.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
@@ -83,11 +83,11 @@ void main() async {
 
       }
       
-      Widget entryWidget = EntryConfigurations();
+      Widget startupView = Entry();
 
       if (FirebaseAuth.instance.currentUser != null) {
         
-        entryWidget = Dashboard();
+        startupView = Dashboard();
         
       }
       
@@ -105,7 +105,7 @@ void main() async {
                       TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
                     }),
                   ),
-                  home: entryWidget
+                  home: startupView
               )
           )
       );
