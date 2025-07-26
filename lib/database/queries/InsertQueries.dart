@@ -22,8 +22,6 @@ class InsertQueries {
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
         .set(discussionMetadata(
           discussionId,
-          '',
-          '',
           DiscussionStatus.discussionOpen
     ));
 
@@ -34,6 +32,17 @@ class InsertQueries {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
         .update(discussionUpdateMetadata());
+
+    return resultCallback;
+  }
+
+  Future<dynamic> updateDiscussionContext(User firebaseUser, String discussionId, String discussionTitle, String discussionSummary) async {
+
+    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
+        .update(discussionUpdateContext(
+          discussionTitle: discussionTitle,
+          discussionSummary: discussionSummary
+        ));
 
     return resultCallback;
   }

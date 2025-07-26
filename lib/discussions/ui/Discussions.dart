@@ -11,6 +11,7 @@
 import 'dart:async';
 
 import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
+import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
 import 'package:Eresse/discussions/ui/elements/AskElement.dart';
 import 'package:Eresse/discussions/ui/elements/DecisionElement.dart';
@@ -294,6 +295,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
         _discussionsDI.insertQueries.updateDiscussionMetadata(_discussionsDI.firebaseUser!, widget.discussionId);
 
+        //  Summary and Title
+        if (dialogues.length >= DiscussionDataStructure.contextThreshold) {
+
+          updateDiscussionContext(dialogues);
+
+        }
+
       }
 
     }
@@ -309,6 +317,16 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
     });
 
     _scrollToEnd();
+
+  }
+
+  Future updateDiscussionContext(dialogues) async {
+
+    // Send Dialogues To AI and Ask for Summary and Title
+    final discussionTitle = '';
+    final discussionSummary = '';
+
+    _discussionsDI.insertQueries.updateDiscussionContext(_discussionsDI.firebaseUser!, widget.discussionId, discussionTitle, discussionSummary);
 
   }
 

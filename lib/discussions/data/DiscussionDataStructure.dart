@@ -7,14 +7,13 @@ enum DiscussionStatus {
   discussionOpen, discussionSuccess, discussionFailed,
 }
 
-dynamic discussionMetadata(String discussionId, String discussionTitle, String discussionSummary, DiscussionStatus discussionStatus) {
+dynamic discussionMetadata(String discussionId, DiscussionStatus discussionStatus) {
 
   return {
     DiscussionDataStructure.createdTimestampKey: Timestamp.now(),
     DiscussionDataStructure.updatedTimestampKey: Timestamp.now(),
     DiscussionDataStructure.discussionIdKey: discussionId,
-    DiscussionDataStructure.discussionTitleKey: discussionTitle,
-    DiscussionDataStructure.discussionSummaryKey: discussionSummary,
+
     DiscussionDataStructure.discussionStatusKey: discussionStatus.name,
   };
 }
@@ -22,7 +21,15 @@ dynamic discussionMetadata(String discussionId, String discussionTitle, String d
 dynamic discussionUpdateMetadata() {
 
   return {
-    DiscussionDataStructure.updatedTimestampKey: Timestamp.now()
+    DiscussionDataStructure.updatedTimestampKey: Timestamp.now(),
+  };
+}
+
+dynamic discussionUpdateContext({String discussionTitle = 'N/A', String discussionSummary = 'N/A'}) {
+
+  return {
+    DiscussionDataStructure.discussionTitleKey: discussionTitle,
+    DiscussionDataStructure.discussionSummaryKey: discussionSummary,
   };
 }
 
@@ -36,6 +43,8 @@ class DiscussionDataStructure {
   static const String discussionSummaryKey = "discussionSummary";
 
   static const String discussionStatusKey = "discussionStatus";
+
+  static const int contextThreshold = 7;
 
   DocumentSnapshot? _documentSnapshot;
 
