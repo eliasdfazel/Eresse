@@ -71,7 +71,7 @@ class QueryElement extends StatelessWidget {
 
                       },
                       child: Text(
-                        queryDataStructure.content() + "00000000000000000000000000000000000000000000000",
+                        queryDataStructure.content(),
                         style: TextStyle(
                             color: ColorsResources.premiumLight,
                             fontSize: 13
