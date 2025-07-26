@@ -1,13 +1,14 @@
 import 'dart:core';
 
+import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
-import 'package:Eresse/database/setup/SetupDatabase.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
 import 'package:Eresse/database/structures/DiscussionSqlDataStructure.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sqflite/sql.dart';
 
 class InsertQueries {
 
@@ -22,12 +23,13 @@ class InsertQueries {
 
     var discussionSqlDataStructure = await setupDatabase.rowExists(databaseInstance, discussionId);
 
+
     if (discussionSqlDataStructure != null) {
 
       discussionSqlDataStructure.setDiscussionJsonContent(content);
       discussionSqlDataStructure.setUpdatedTimestamp(now().toString());
 
-      databaseInstance.update(DiscussionSqlDataStructure.discussionsTable(), discussionSqlDataStructure.toMap());
+      await databaseInstance.update(DiscussionSqlDataStructure.discussionsTable(), discussionSqlDataStructure.toMap());
 
     } else {
 
@@ -41,9 +43,13 @@ class InsertQueries {
           discussionJsonContent: content
       );
 
-      databaseInstance.insert(DiscussionSqlDataStructure.discussionsTable(), discussionSqlDataStructure.toMap());
+      await databaseInstance.insert(DiscussionSqlDataStructure.discussionsTable(),
+          discussionSqlDataStructure.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
 
     }
+
+    await setupDatabase.closeDatabase(databaseInstance);
 
     return discussionSqlDataStructure;
 

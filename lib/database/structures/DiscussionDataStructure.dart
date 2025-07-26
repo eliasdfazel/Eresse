@@ -14,7 +14,8 @@ dynamic discussionMetadata(String discussionId, DiscussionStatus discussionStatu
     DiscussionDataStructure.createdTimestampKey: now(),
     DiscussionDataStructure.updatedTimestampKey: now(),
     DiscussionDataStructure.discussionIdKey: discussionId,
-
+    DiscussionDataStructure.discussionTitleKey: 'N/A',
+    DiscussionDataStructure.discussionSummaryKey: 'N/A',
     DiscussionDataStructure.discussionStatusKey: discussionStatus.name,
   };
 }

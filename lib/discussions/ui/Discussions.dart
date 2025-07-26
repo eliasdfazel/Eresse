@@ -263,7 +263,6 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
       final documentReference = await _discussionsDI.insertQueries.insertDialogues(_discussionsDI.firebaseUser!, widget.discussionId, contentType, content);
 
-      print(">>> ${documentReference}");
       // processLastDialogue(await documentReference.get());
 
     }

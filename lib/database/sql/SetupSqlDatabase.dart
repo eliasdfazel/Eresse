@@ -11,12 +11,13 @@ class SetupDatabase {
           await database.execute(
               '''
               CREATE TABLE IF NOT EXISTS ${DiscussionSqlDataStructure.discussionsTable()} ( 
-                discussionId INTEGER PRIMARY KEY, 
-                createdTimestamp INTEGER NOT NULL,
-                updatedTimestamp INTEGER NOT NULL,
+                discussionId TEXT PRIMARY KEY, 
+                createdTimestamp TEXT NOT NULL,
+                updatedTimestamp TEXT NOT NULL,
+                discussionTitle TEXT NOT NULL,
                 discussionSummary TEXT NOT NULL,
                 discussionStatus TEXT NOT NULL,
-                discussionJsonContent TEXT NOT NULL,
+                discussionJsonContent TEXT NOT NULL
               )
             '''
           );
@@ -39,9 +40,11 @@ class SetupDatabase {
 
     DiscussionSqlDataStructure? discussionSqlDataStructure;
 
-    Map<String, Object?> discussionSqlDataStructureMap = (await databaseInstance.rawQuery('SELECT * FROM ${DiscussionSqlDataStructure.discussionsTable()} WHERE discussionId IN $discussionId')).first;
+    final rowsResults = (await databaseInstance.rawQuery('SELECT * FROM ${DiscussionSqlDataStructure.discussionsTable()} WHERE discussionId = $discussionId'));
 
-    if (discussionSqlDataStructureMap.isNotEmpty) {
+    if (rowsResults.isNotEmpty) {
+
+      Map<String, Object?> discussionSqlDataStructureMap = rowsResults.first;
 
       discussionSqlDataStructure = DiscussionSqlDataStructure.fromMap(discussionSqlDataStructureMap);
 
