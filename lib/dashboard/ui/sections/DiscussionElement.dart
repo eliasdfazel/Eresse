@@ -1,4 +1,4 @@
-import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
+import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 

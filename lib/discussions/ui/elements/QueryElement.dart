@@ -1,4 +1,4 @@
-import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
+import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';

@@ -1,6 +1,6 @@
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
-import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
-import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
+import 'package:Eresse/database/structures/DialogueDataStructure.dart';
+import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

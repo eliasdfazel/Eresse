@@ -1,3 +1,4 @@
+import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum ContentType {
@@ -7,7 +8,7 @@ enum ContentType {
 dynamic dialogueDataStructure(ContentType contentType, String content) {
 
   return {
-    DialogueDataStructure.timestampKey: Timestamp.now(),
+    DialogueDataStructure.timestampKey: now(),
     DialogueDataStructure.contentTypeKey: contentType.name,
     DialogueDataStructure.contentKey: content,
 

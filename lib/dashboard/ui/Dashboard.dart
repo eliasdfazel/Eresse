@@ -14,7 +14,7 @@ import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
 import 'package:Eresse/dashboard/ui/sections/DiscussionElement.dart';
 import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
-import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
+import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
 import 'package:Eresse/discussions/ui/Discussions.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';

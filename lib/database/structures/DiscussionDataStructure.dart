@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:Eresse/resources/colors_resources.dart';
+import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum DiscussionStatus {
@@ -10,8 +11,8 @@ enum DiscussionStatus {
 dynamic discussionMetadata(String discussionId, DiscussionStatus discussionStatus) {
 
   return {
-    DiscussionDataStructure.createdTimestampKey: Timestamp.now(),
-    DiscussionDataStructure.updatedTimestampKey: Timestamp.now(),
+    DiscussionDataStructure.createdTimestampKey: now(),
+    DiscussionDataStructure.updatedTimestampKey: now(),
     DiscussionDataStructure.discussionIdKey: discussionId,
 
     DiscussionDataStructure.discussionStatusKey: discussionStatus.name,
@@ -21,7 +22,7 @@ dynamic discussionMetadata(String discussionId, DiscussionStatus discussionStatu
 dynamic discussionUpdateMetadata() {
 
   return {
-    DiscussionDataStructure.updatedTimestampKey: Timestamp.now(),
+    DiscussionDataStructure.updatedTimestampKey: now(),
   };
 }
 

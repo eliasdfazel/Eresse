@@ -10,8 +10,8 @@
 
 import 'dart:async';
 
-import 'package:Eresse/discussions/data/DialogueDataStructure.dart';
-import 'package:Eresse/discussions/data/DiscussionDataStructure.dart';
+import 'package:Eresse/database/structures/DialogueDataStructure.dart';
+import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
 import 'package:Eresse/discussions/di/DiscussionsDI.dart';
 import 'package:Eresse/discussions/ui/elements/AskElement.dart';
 import 'package:Eresse/discussions/ui/elements/DecisionElement.dart';
@@ -263,7 +263,8 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
       final documentReference = await _discussionsDI.insertQueries.insertDialogues(_discussionsDI.firebaseUser!, widget.discussionId, contentType, content);
 
-      processLastDialogue(await documentReference.get());
+      print(">>> ${documentReference}");
+      // processLastDialogue(await documentReference.get());
 
     }
 
