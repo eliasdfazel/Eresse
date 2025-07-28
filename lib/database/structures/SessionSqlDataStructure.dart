@@ -29,7 +29,7 @@ class SessionSqlDataStructure {
 
   String sessionStatus;
 
-  String? sessionJsonContent;
+  String sessionJsonContent;
 
   SessionSqlDataStructure({
     required this.sessionId,
@@ -109,7 +109,7 @@ class SessionSqlDataStructure {
 
   String getSessionJsonContent() {
 
-    return sessionJsonContent ?? '[]';
+    return (sessionJsonContent.isEmpty) ? '[]' : sessionJsonContent;
   }
 
   void setUpdatedTimestamp(String updatedTimestamp) {

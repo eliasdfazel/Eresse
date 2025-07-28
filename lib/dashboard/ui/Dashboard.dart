@@ -169,7 +169,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                                 if (_dashboardDI.firebaseUser != null) {
 
-                                  navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId()));
+                                  navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId())).then((data) {
+
+                                    retrieveSessions();
+
+                                  });
 
                                 }
 
@@ -236,7 +240,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                         if (_dashboardDI.firebaseUser != null) {
 
-                          navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString()));
+                          navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString())).then((data) {
+
+                            retrieveSessions();
+
+                          });
 
                         }
 

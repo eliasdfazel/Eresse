@@ -39,10 +39,10 @@ class InsertQueries {
           sessionId: sessionId,
           createdTimestamp: now().toString(),
           updatedTimestamp: now().toString(),
-          sessionTitle: '',
-          sessionSummary: '',
+          sessionTitle: 'N/A',
+          sessionSummary: 'N/A',
           sessionStatus: SessionStatus.sessionOpen.name,
-          sessionJsonContent: content
+          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, content)
       );
 
       await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),

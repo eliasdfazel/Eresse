@@ -122,6 +122,9 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
     /*
      * End - Network Listener
      */
+
+    FocusManager.instance.primaryFocus?.unfocus();
+
     super.dispose();
   }
 
@@ -336,13 +339,19 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     }
 
+    setState(() {
+
+      loadingAnimation = Container();
+
+    });
+
   }
 
-  Future processLastDialogue(DialogueSqlDataStructure dialogueSqlDataStructure) async {
+  Future processLastDialogue(Map<String, dynamic> lastDialogue) async {
 
     setState(() {
 
-      dialogues.add(dialogueSqlDataStructure);
+      dialogues.add(DialogueSqlDataStructure.fromMap(lastDialogue));
 
     });
 

@@ -7,6 +7,8 @@ class DialoguesJSON {
 
   Future<String> insertDialogueJson(String sessionJsonContent, ContentType contentType, String content) async {
 
+    print('>>> ' + sessionJsonContent);
+
     final iterableJson = jsonDecode(sessionJsonContent);
 
     final dialogueJsonArray = List.from(iterableJson);
@@ -18,6 +20,7 @@ class DialoguesJSON {
 
   Future<List<DialogueSqlDataStructure>> retrieveDialogues(String sessionJsonContent) async {
 
+    print(sessionJsonContent);
     List<DialogueSqlDataStructure> dialogues = [];
 
     final iterableJson = jsonDecode(sessionJsonContent);
