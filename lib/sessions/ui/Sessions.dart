@@ -23,6 +23,7 @@ import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
+import 'package:Eresse/utils/ui/actions/ElementsActions.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -66,6 +67,10 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       color: ColorsResources.premiumLight.withAlpha(73)
   );
 
+  Widget toolbar = Container();
+
+  DialogueDataStructure? selectedDataStructure;
+
   @override
   void initState() {
     super.initState();
@@ -85,6 +90,23 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
      */
 
     processDialogues();
+
+    toolbar = Toolbar(
+        askPressed: (question) {
+
+          // Call AI
+          // and Store Answer
+          askingProcess();
+
+        },
+        archivePressed: (content) {
+
+          // check for result
+          // archive it with success/failed result
+          archivingProcess();
+
+        }
+    );
 
   }
 
@@ -141,17 +163,23 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                         switch (dialogueDataStructure.contentType()) {
                           case ContentType.queryType: {
 
-                            element = QueryElement(queryPressed: (data) {}, queryDataStructure: dialogueDataStructure);
+                            element = QueryElement(queryPressed: (data) {
+
+                            }, queryDataStructure: dialogueDataStructure);
 
                           }
                           case ContentType.decisionType: {
 
-                            element = DecisionElement(decisionPressed: (data) {}, queryDataStructure: dialogueDataStructure);
+                            element = DecisionElement(decisionPressed: (data) {
+
+                            }, queryDataStructure: dialogueDataStructure);
 
                           }
                           case ContentType.askType: {
 
-                            element = AskElement(askPressed: (data) {}, queryDataStructure: dialogueDataStructure);
+                            element = AskElement(askPressed: (data) {
+
+                            }, queryDataStructure: dialogueDataStructure);
 
                           }
                         }
@@ -208,17 +236,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                   /* END - Actions Bar */
 
                   /* START - Actions Bar */
-                  Toolbar(
-                      askPressed: (question) {
-
-                        // Call AI
-                        // and Store Answer
-
-                      },
-                      archivePressed: (content) {
-
-                      }
-                  ),
+                  toolbar,
                   /* END - Actions Bar */
 
                   /* START - Network */
@@ -291,7 +309,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         });
 
-        _scrollToEnd();
+        scrollToEnd(_scrollController);
 
         _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId);
 
@@ -316,7 +334,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     });
 
-    _scrollToEnd();
+    scrollToEnd(_scrollController);
 
   }
 
@@ -330,13 +348,23 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  void _scrollToEnd() {
+  Future askingProcess() async {
 
-    Future.delayed(const Duration(milliseconds: 777), () {
+    if (selectedDataStructure != null) {
 
-      _scrollController.animateTo(_scrollController.position.maxScrollExtent, duration: const Duration(milliseconds: 137), curve: Curves.easeOut);
+    } else {
 
-    });
+    }
+
+  }
+
+  Future archivingProcess() async {
+
+    if (selectedDataStructure != null) {
+
+    } else {
+
+    }
 
   }
 

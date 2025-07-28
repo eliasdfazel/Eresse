@@ -42,6 +42,7 @@ class _Toolbar extends State<Toolbar> {
                   AnimatedOpacity(
                     opacity: toolbarOpacity,
                     duration: const Duration(milliseconds: 375),
+                    curve: Curves.easeIn,
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,4 +132,5 @@ class _Toolbar extends State<Toolbar> {
       )
     );
   }
+
 }
