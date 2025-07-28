@@ -28,7 +28,7 @@ class InsertQueries {
 
     if (sessionSqlDataStructure != null) {
 
-      sessionSqlDataStructure.setSessionJsonContent(await _dialoguesJSON.insertDialogueJson(content));
+      sessionSqlDataStructure.setSessionJsonContent(await _dialoguesJSON.insertDialogueJson(sessionSqlDataStructure.getSessionJsonContent(), contentType, content));
       sessionSqlDataStructure.setUpdatedTimestamp(now().toString());
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());

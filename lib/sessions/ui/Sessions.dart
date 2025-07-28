@@ -11,6 +11,7 @@
 import 'dart:async';
 
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
+import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
@@ -25,7 +26,6 @@ import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/actions/ElementsActions.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   final _scrollController = ScrollController();
   
-  List<DocumentSnapshot> dialogues = [];
+  List<DialogueSqlDataStructure> dialogues = [];
 
   Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
       size: 51,
@@ -71,7 +71,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   double toolbarOpacity = 0;
 
-  DialogueDataStructure? selectedDialogue;
+  DialogueSqlDataStructure? selectedDialogue;
 
   @override
   void initState() {
@@ -159,18 +159,16 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                       itemCount: dialogues.length,
                       itemBuilder: (context, index) {
 
-                        DialogueDataStructure dialogueDataStructure = DialogueDataStructure(dialogues[index]);
-
                         Widget element = Container();
 
-                        switch (dialogueDataStructure.contentType()) {
+                        switch (dialogues[index].contentTypeIndicator()) {
                           case ContentType.queryType: {
 
                             element = QueryElement(queryPressed: (data) {
 
                               selectDialogue(data);
 
-                            }, queryDataStructure: dialogueDataStructure);
+                            }, queryDataStructure: dialogues[index]);
 
                           }
                           case ContentType.decisionType: {
@@ -180,14 +178,14 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                               selectDialogue(data);
 
-                            }, queryDataStructure: dialogueDataStructure);
+                            }, queryDataStructure: dialogues[index]);
 
                           }
                           case ContentType.askType: {
 
                             element = AskElement(askPressed: (data) {
 
-                            }, queryDataStructure: dialogueDataStructure);
+                            }, queryDataStructure: dialogues[index]);
 
                           }
                         }
@@ -335,7 +333,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  Future processLastDialogue(DocumentSnapshot documentSnapshot) async {
+  Future processLastDialogue(DialogueSqlDataStructure documentSnapshot) async {
 
     setState(() {
 
@@ -347,7 +345,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  Future updateSessionContext(List<DocumentSnapshot> dialogues) async {
+  Future updateSessionContext(List<DialogueSqlDataStructure> dialogues) async {
 
     // Send Dialogues To AI and Ask for Summary and Title
     final sessionTitle = '';
@@ -377,7 +375,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  void selectDialogue(DialogueDataStructure dialogueDataStructure) {
+  void selectDialogue(DialogueSqlDataStructure dialogueDataStructure) {
 
     selectedDialogue = dialogueDataStructure;
 

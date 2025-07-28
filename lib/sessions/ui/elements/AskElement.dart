@@ -1,13 +1,13 @@
-import 'package:Eresse/database/structures/DialogueDataStructure.dart';
+import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef AskPressed = void Function(DialogueDataStructure queryDataStructure);
+typedef AskPressed = void Function(DialogueSqlDataStructure queryDataStructure);
 
 class AskElement extends StatelessWidget {
 
-  final DialogueDataStructure queryDataStructure;
+  final DialogueSqlDataStructure queryDataStructure;
 
   final AskPressed askPressed;
 
@@ -49,7 +49,7 @@ class AskElement extends StatelessWidget {
 
                   },
                   child: Text(
-                    queryDataStructure.content(),
+                    queryDataStructure.getContent(),
                     style: TextStyle(
                         color: ColorsResources.premiumLight,
                         fontSize: 13

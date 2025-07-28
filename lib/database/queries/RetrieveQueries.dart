@@ -2,6 +2,7 @@ import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart' show DialoguesJSON;
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
+import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,11 +22,6 @@ class RetrieveQueries {
 
     final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
 
-    for (var element in allSessions) {
-
-    }
-    // databaseInstance.query(table)
-
     return allSessions;
   }
   
@@ -39,7 +35,24 @@ class RetrieveQueries {
     return querySnapshot;
   }
 
-  Future<List<DocumentSnapshot>> retrieveDialogues(User firebaseUser, String sessionId) async {
+  Future<List<DialogueSqlDataStructure>> retrieveDialogues(User firebaseUser, String sessionId) async {
+
+    List<DialogueSqlDataStructure> dialogues = [];
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      dialogues.addAll(await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent()));
+
+    }
+
+    return dialogues;
+  }
+
+  Future<List<DocumentSnapshot>> _retrieveDialogues(User firebaseUser, String sessionId) async {
 
     List<DocumentSnapshot> dialogues = [];
 

@@ -11,11 +11,12 @@ dynamic dialogueDataStructure(ContentType contentType, String content) {
     DialogueDataStructure.timestampKey: now(),
     DialogueDataStructure.contentTypeKey: contentType.name,
     DialogueDataStructure.contentKey: content,
-
   };
 }
 
 class DialogueDataStructure {
+
+  static const String dialogueIdKey = "dialogueId";
 
   static const String timestampKey = "timestamp";
 
