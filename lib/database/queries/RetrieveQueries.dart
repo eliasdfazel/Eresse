@@ -1,6 +1,9 @@
+import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
+import 'package:Eresse/database/json/DialoguesJSON.dart' show DialoguesJSON;
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
+import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,7 +11,34 @@ class RetrieveQueries {
 
   final DatabaseEndpoints _databaseEndpoints = DatabaseEndpoints();
 
-  Future<QuerySnapshot> retrieveSessions(User firebaseUser) async {
+  final SetupDatabase _setupDatabase = SetupDatabase();
+
+  final DialoguesJSON _dialoguesJSON = DialoguesJSON();
+  
+  Future<List<Map<String, dynamic>>> retrieveSessions(User firebaseUser) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
+
+
+    print('>>> $allSessions');
+
+    for (var element in allSessions) {
+
+      print('>>> element; ${element}');
+
+
+    }
+
+
+
+    // databaseInstance.query(table)
+
+    return allSessions;
+  }
+  
+  Future<QuerySnapshot> _retrieveSessions(User firebaseUser) async {
 
     final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.sessionsCollection(firebaseUser))
       .limit(7)
