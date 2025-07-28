@@ -25,9 +25,9 @@ class StringsResources {
     return "Success Tip";
   }
 
-  static String openDiscussionsTitle() {
+  static String openSessionsTitle() {
 
-    return "Open Discussions";
+    return "Open Sessions";
   }
 
   static String expressIdeaTitle() {

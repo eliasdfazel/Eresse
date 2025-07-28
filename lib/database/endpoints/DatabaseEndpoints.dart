@@ -2,25 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseEndpoints {
 
-  String discussionsCollection(User firebaseUser,) {
+  String sessionsCollection(User firebaseUser,) {
 
-    return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions";
+    return "Eresse/${firebaseUser.email!.toUpperCase()}/Sessions";
   }
 
-  String discussionContentCollection(User firebaseUser, String discussionId) {
+  String sessionContentCollection(User firebaseUser, String sessionId) {
 
-    return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId/Content";
+    return "Eresse/${firebaseUser.email!.toUpperCase()}/Sessions/$sessionId/Content";
   }
 
-  /// Metadata of Discussion - Result, Summary, Timestamp
-  String discussionMetadataDocument(User firebaseUser, String discussionId) {
+  /// Metadata of Session - Result, Summary, Timestamp
+  String sessionMetadataDocument(User firebaseUser, String sessionId) {
 
-    return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId";
+    return "Eresse/${firebaseUser.email!.toUpperCase()}/Sessions/$sessionId";
   }
 
-  String discussionElementDocument(User firebaseUser, String discussionId, String elementId) {
+  String sessionElementDocument(User firebaseUser, String sessionId, String elementId) {
 
-    return "Eresse/${firebaseUser.email!.toUpperCase()}/Discussions/$discussionId/Content/$elementId";
+    return "Eresse/${firebaseUser.email!.toUpperCase()}/Sessions/$sessionId/Content/$elementId";
   }
 
 }

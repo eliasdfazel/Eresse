@@ -1,6 +1,6 @@
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
-import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,21 +8,21 @@ class RetrieveQueries {
 
   final DatabaseEndpoints _databaseEndpoints = DatabaseEndpoints();
 
-  Future<QuerySnapshot> retrieveDiscussions(User firebaseUser) async {
+  Future<QuerySnapshot> retrieveSessions(User firebaseUser) async {
 
-    final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.discussionsCollection(firebaseUser))
+    final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.sessionsCollection(firebaseUser))
       .limit(7)
-      .where(DiscussionDataStructure.discussionStatusKey, isEqualTo: DiscussionStatus.discussionOpen.name)
+      .where(SessionDataStructure.sessionStatusKey, isEqualTo: SessionStatus.sessionOpen.name)
       .get(GetOptions(source: Source.server));
 
     return querySnapshot;
   }
 
-  Future<List<DocumentSnapshot>> retrieveDialogues(User firebaseUser, String discussionId) async {
+  Future<List<DocumentSnapshot>> retrieveDialogues(User firebaseUser, String sessionId) async {
 
     List<DocumentSnapshot> dialogues = [];
 
-    final querySnapshot = await FirebaseFirestore.instance.collection(_databaseEndpoints.discussionContentCollection(firebaseUser, discussionId))
+    final querySnapshot = await FirebaseFirestore.instance.collection(_databaseEndpoints.sessionContentCollection(firebaseUser, sessionId))
       .orderBy(DialogueDataStructure.timestampKey, descending: false)
       .get();
 
@@ -39,9 +39,9 @@ class RetrieveQueries {
     return dialogues;
   }
 
-  void cacheDialogues(User firebaseUser, String discussionId) async {
+  void cacheDialogues(User firebaseUser, String sessionId) async {
 
-    FirebaseFirestore.instance.collection(_databaseEndpoints.discussionContentCollection(firebaseUser, discussionId))
+    FirebaseFirestore.instance.collection(_databaseEndpoints.sessionContentCollection(firebaseUser, sessionId))
         .orderBy(DialogueDataStructure.timestampKey, descending: false)
         .get(const GetOptions(source: Source.server));
 

@@ -3,7 +3,7 @@ import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class DiscussionsDI {
+class SessionsDI {
 
   User? firebaseUser = FirebaseAuth.instance.currentUser;
 

@@ -1,16 +1,16 @@
-import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
-typedef DiscussionPressed = void Function(DiscussionDataStructure element);
+typedef SessionPressed = void Function(SessionDataStructure element);
 
-class DiscussionElement extends StatelessWidget {
+class SessionElement extends StatelessWidget {
 
-  final DiscussionDataStructure discussionDataStructure;
+  final SessionDataStructure sessionDataStructure;
 
-  final DiscussionPressed discussionPressed;
+  final SessionPressed sessionPressed;
 
-  const DiscussionElement({super.key, required this.discussionDataStructure, required this.discussionPressed});
+  const SessionElement({super.key, required this.sessionDataStructure, required this.sessionPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class DiscussionElement extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.only(left: 19, right: 19, bottom: 19),
             child: InkWell(
-              onTap: () => discussionPressed(discussionDataStructure),
+              onTap: () => sessionPressed(sessionDataStructure),
               child: Container(
                   height: 137,
                   width: double.infinity,
@@ -36,7 +36,7 @@ class DiscussionElement extends StatelessWidget {
                         children: [
 
                           Text(
-                            discussionDataStructure.discussionTitle(),
+                            sessionDataStructure.sessionTitle(),
                             maxLines: 1,
                             style: TextStyle(
                               color: ColorsResources.premiumLight,
@@ -58,7 +58,7 @@ class DiscussionElement extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: Text(
-                                  discussionDataStructure.discussionSummary(),
+                                  sessionDataStructure.sessionSummary(),
                                   textAlign: TextAlign.start,
                                   maxLines: 3,
                                   style: TextStyle(
@@ -80,7 +80,7 @@ class DiscussionElement extends StatelessWidget {
                                           image: AssetImage("assets/squarcle.png"),
                                           height: 23,
                                           width: 23,
-                                          color: discussionDataStructure.statusIndicator(),
+                                          color: sessionDataStructure.statusIndicator(),
                                         )
                                     )
                                 )

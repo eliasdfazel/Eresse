@@ -1,4 +1,4 @@
-import 'package:Eresse/database/structures/DiscussionSqlDataStructure.dart';
+import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -6,18 +6,18 @@ class SetupDatabase {
 
   Future<Database> initializeDatabase() async {
 
-    Database databaseInstance = await openDatabase(join(await getDatabasesPath(), DiscussionSqlDataStructure.discussionDatabase()), version: 13,
+    Database databaseInstance = await openDatabase(join(await getDatabasesPath(), SessionSqlDataStructure.sessionsDatabase()), version: 13,
         onCreate: (Database database, int version) async {
           await database.execute(
               '''
-              CREATE TABLE IF NOT EXISTS ${DiscussionSqlDataStructure.discussionsTable()} ( 
-                discussionId TEXT PRIMARY KEY, 
+              CREATE TABLE IF NOT EXISTS ${SessionSqlDataStructure.sessionsTable()} ( 
+                sessionId TEXT PRIMARY KEY, 
                 createdTimestamp TEXT NOT NULL,
                 updatedTimestamp TEXT NOT NULL,
-                discussionTitle TEXT NOT NULL,
-                discussionSummary TEXT NOT NULL,
-                discussionStatus TEXT NOT NULL,
-                discussionJsonContent TEXT NOT NULL
+                sessionTitle TEXT NOT NULL,
+                sessionSummary TEXT NOT NULL,
+                sessionStatus TEXT NOT NULL,
+                sessionJsonContent TEXT NOT NULL
               )
             '''
           );
@@ -36,21 +36,21 @@ class SetupDatabase {
 
   }
 
-  Future<DiscussionSqlDataStructure?> rowExists(Database databaseInstance, String discussionId) async {
+  Future<SessionSqlDataStructure?> rowExists(Database databaseInstance, String sessionId) async {
 
-    DiscussionSqlDataStructure? discussionSqlDataStructure;
+    SessionSqlDataStructure? sessionSqlDataStructure;
 
-    final rowsResults = (await databaseInstance.rawQuery('SELECT * FROM ${DiscussionSqlDataStructure.discussionsTable()} WHERE discussionId = $discussionId'));
+    final rowsResults = (await databaseInstance.rawQuery('SELECT * FROM ${SessionSqlDataStructure.sessionsTable()} WHERE sessionId = $sessionId'));
 
     if (rowsResults.isNotEmpty) {
 
-      Map<String, Object?> discussionSqlDataStructureMap = rowsResults.first;
+      Map<String, Object?> sessionSqlDataStructureMap = rowsResults.first;
 
-      discussionSqlDataStructure = DiscussionSqlDataStructure.fromMap(discussionSqlDataStructureMap);
+      sessionSqlDataStructure = SessionSqlDataStructure.fromMap(sessionSqlDataStructureMap);
 
     }
 
-    return discussionSqlDataStructure;
+    return sessionSqlDataStructure;
   }
 
 }

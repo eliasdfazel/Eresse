@@ -12,12 +12,12 @@ import 'dart:async';
 
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
-import 'package:Eresse/dashboard/ui/sections/DiscussionElement.dart';
+import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
 import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
-import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
-import 'package:Eresse/discussions/ui/Discussions.dart';
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/sessions/ui/Sessions.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
@@ -52,7 +52,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
   String successTipContent = '';
 
-  List<DocumentSnapshot> discussions = [];
+  List<DocumentSnapshot> sessions = [];
 
   Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
       size: 51,
@@ -79,7 +79,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
     retrieveSuccessTip();
 
-    retrieveDiscussions();
+    retrieveSessions();
 
   }
 
@@ -139,11 +139,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                           color: Colors.transparent,
                         ),
 
-                        /* END - Discussion Archive */
+                        /* END - Session Archive */
                         Padding(
                           padding: EdgeInsets.only(left: 37, right: 37),
                           child: Text(
-                            StringsResources.openDiscussionsTitle().toUpperCase(),
+                            StringsResources.openSessionsTitle().toUpperCase(),
                             style: TextStyle(
                               color: ColorsResources.premiumLight.withAlpha(179),
                               fontSize: 15,
@@ -161,23 +161,23 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: discussions.length,
+                            itemCount: sessions.length,
                             itemBuilder: (context, index) {
 
-                              DiscussionDataStructure discussionDataStructure = DiscussionDataStructure(discussions[index]);
+                              SessionDataStructure sessionDataStructure = SessionDataStructure(sessions[index]);
 
-                              return DiscussionElement(discussionDataStructure: discussionDataStructure, discussionPressed: (data) {
+                              return SessionElement(sessionDataStructure: sessionDataStructure, sessionPressed: (data) {
 
                                 if (_dashboardDI.firebaseUser != null) {
 
-                                  navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!, discussionId: data.documentId()));
+                                  navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.documentId()));
 
                                 }
 
                               });
                             }
                         ),
-                        /* END - Discussion Archive */
+                        /* END - Session Archive */
 
                       ]
                   ),
@@ -237,7 +237,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
                         if (_dashboardDI.firebaseUser != null) {
 
-                          navigateTo(context, Discussions(firebaseUser: _dashboardDI.firebaseUser!, discussionId: DateTime.now().millisecondsSinceEpoch.toString()));
+                          navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: DateTime.now().millisecondsSinceEpoch.toString()));
 
                         }
 
@@ -303,11 +303,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
   }
 
-  void retrieveDiscussions() async {
+  void retrieveSessions() async {
 
     if (_dashboardDI.firebaseUser != null) {
 
-     final querySnapshot = await _dashboardDI.retrieveQueries.retrieveDiscussions(_dashboardDI.firebaseUser!);
+     final querySnapshot = await _dashboardDI.retrieveQueries.retrieveSessions(_dashboardDI.firebaseUser!);
 
       if (querySnapshot.docs.isNotEmpty) {
 
@@ -315,13 +315,13 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
           _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, element.id);
 
-          discussions.add(element);
+          sessions.add(element);
 
         }
 
         setState(() {
 
-          discussions;
+          sessions;
 
           loadingAnimation = Container();
 

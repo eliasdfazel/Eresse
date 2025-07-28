@@ -11,15 +11,15 @@
 import 'dart:async';
 
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
-import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
-import 'package:Eresse/discussions/di/DiscussionsDI.dart';
-import 'package:Eresse/discussions/ui/elements/AskElement.dart';
-import 'package:Eresse/discussions/ui/elements/DecisionElement.dart';
-import 'package:Eresse/discussions/ui/elements/QueryElement.dart';
-import 'package:Eresse/discussions/ui/sections/ActionsBar.dart';
-import 'package:Eresse/discussions/ui/sections/Toolbar.dart';
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/sessions/di/SessionsDI.dart';
+import 'package:Eresse/sessions/ui/elements/AskElement.dart';
+import 'package:Eresse/sessions/ui/elements/DecisionElement.dart';
+import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
+import 'package:Eresse/sessions/ui/sections/ActionsBar.dart';
+import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
@@ -31,20 +31,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class Discussions extends StatefulWidget {
+class Sessions extends StatefulWidget {
 
   User firebaseUser;
 
-  String discussionId;
+  String sessionId;
 
-  Discussions({super.key, required this.firebaseUser, required this.discussionId});
+  Sessions({super.key, required this.firebaseUser, required this.sessionId});
 
   @override
-  State<Discussions> createState() => _DiscussionsState();
+  State<Sessions> createState() => _SessionsState();
 }
-class _DiscussionsState extends State<Discussions> implements NetworkInterface {
+class _SessionsState extends State<Sessions> implements NetworkInterface {
 
-  final DiscussionsDI _discussionsDI = DiscussionsDI();
+  final SessionsDI _sessionsDI = SessionsDI();
 
   /*
    * Start - Network Listener
@@ -77,7 +77,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
      */
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen((List<ConnectivityResult> connectivityResults) async {
 
-      _discussionsDI.networking.networkCheckpoint(this, connectivityResults);
+      _sessionsDI.networking.networkCheckpoint(this, connectivityResults);
 
     });
     /*
@@ -249,7 +249,7 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
       setState(() {
 
-        _networkShield = _discussionsDI.networking.offlineMode();
+        _networkShield = _sessionsDI.networking.offlineMode();
 
       });
 
@@ -259,9 +259,9 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   Future insertDialogues(ContentType contentType, String content) async {
 
-    if (_discussionsDI.firebaseUser != null) {
+    if (_sessionsDI.firebaseUser != null) {
 
-      final documentReference = await _discussionsDI.insertQueries.insertDialogues(_discussionsDI.firebaseUser!, widget.discussionId, contentType, content);
+      final documentReference = await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType, content);
 
       // processLastDialogue(await documentReference.get());
 
@@ -271,13 +271,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   void processDialogues() async {
 
-    if (_discussionsDI.firebaseUser != null) {
+    if (_sessionsDI.firebaseUser != null) {
 
-      final retrievedDialogues = await _discussionsDI.retrieveQueries.retrieveDialogues(_discussionsDI.firebaseUser!, widget.discussionId);
+      final retrievedDialogues = await _sessionsDI.retrieveQueries.retrieveDialogues(_sessionsDI.firebaseUser!, widget.sessionId);
 
       if (retrievedDialogues.isEmpty) {
 
-        _discussionsDI.insertQueries.insertDiscussionMetadata(_discussionsDI.firebaseUser!, widget.discussionId);
+        _sessionsDI.insertQueries.insertSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId);
 
       } else {
 
@@ -293,12 +293,12 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
         _scrollToEnd();
 
-        _discussionsDI.insertQueries.updateDiscussionMetadata(_discussionsDI.firebaseUser!, widget.discussionId);
+        _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId);
 
         //  Summary and Title
-        if (dialogues.length >= DiscussionDataStructure.contextThreshold) {
+        if (dialogues.length >= SessionDataStructure.contextThreshold) {
 
-          updateDiscussionContext(dialogues);
+          updateSessionContext(dialogues);
 
         }
 
@@ -320,13 +320,13 @@ class _DiscussionsState extends State<Discussions> implements NetworkInterface {
 
   }
 
-  Future updateDiscussionContext(List<DocumentSnapshot> dialogues) async {
+  Future updateSessionContext(List<DocumentSnapshot> dialogues) async {
 
     // Send Dialogues To AI and Ask for Summary and Title
-    final discussionTitle = '';
-    final discussionSummary = '';
+    final sessionTitle = '';
+    final sessionSummary = '';
 
-    _discussionsDI.insertQueries.updateDiscussionContext(_discussionsDI.firebaseUser!, widget.discussionId, discussionTitle, discussionSummary);
+    _sessionsDI.insertQueries.updateSessionContext(_sessionsDI.firebaseUser!, widget.sessionId, sessionTitle, sessionSummary);
 
   }
 

@@ -4,8 +4,8 @@ import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
-import 'package:Eresse/database/structures/DiscussionDataStructure.dart';
-import 'package:Eresse/database/structures/DiscussionSqlDataStructure.dart';
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
+import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,78 +19,78 @@ class InsertQueries {
 
   final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
-  /// content = discussionJsonContent
-  Future<DiscussionSqlDataStructure> insertDialogues(User firebaseUser, String discussionId, ContentType contentType, String content) async {
+  /// content = sessionJsonContent
+  Future<SessionSqlDataStructure> insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var discussionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, discussionId);
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
 
 
-    if (discussionSqlDataStructure != null) {
+    if (sessionSqlDataStructure != null) {
 
-      discussionSqlDataStructure.setDiscussionJsonContent(content);
-      discussionSqlDataStructure.setUpdatedTimestamp(now().toString());
+      sessionSqlDataStructure.setSessionJsonContent(content);
+      sessionSqlDataStructure.setUpdatedTimestamp(now().toString());
 
-      await databaseInstance.update(DiscussionSqlDataStructure.discussionsTable(), discussionSqlDataStructure.toMap());
+      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
     } else {
 
-      discussionSqlDataStructure = DiscussionSqlDataStructure(
-          discussionId: discussionId,
+      sessionSqlDataStructure = SessionSqlDataStructure(
+          sessionId: sessionId,
           createdTimestamp: now().toString(),
           updatedTimestamp: now().toString(),
-          discussionTitle: '',
-          discussionSummary: '',
-          discussionStatus: DiscussionStatus.discussionOpen.name,
-          discussionJsonContent: content
+          sessionTitle: '',
+          sessionSummary: '',
+          sessionStatus: SessionStatus.sessionOpen.name,
+          sessionJsonContent: content
       );
 
-      await databaseInstance.insert(DiscussionSqlDataStructure.discussionsTable(),
-          discussionSqlDataStructure.toMap(),
+      await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),
+          sessionSqlDataStructure.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
 
     }
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
-    return discussionSqlDataStructure;
+    return sessionSqlDataStructure;
 
   }
 
-  Future<DocumentReference> _insertDialogues(User firebaseUser, String discussionId, ContentType contentType, String content) async {
+  Future<DocumentReference> _insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content) async {
 
-      final documentReference = await FirebaseFirestore.instance.collection(_databaseEndpoints.discussionContentCollection(firebaseUser, discussionId))
+      final documentReference = await FirebaseFirestore.instance.collection(_databaseEndpoints.sessionContentCollection(firebaseUser, sessionId))
           .add(dialogueDataStructure(contentType, content));
 
       return documentReference;
   }
 
-  Future<dynamic> insertDiscussionMetadata(User firebaseUser, String discussionId) async {
+  Future<dynamic> insertSessionMetadata(User firebaseUser, String sessionId) async {
 
-    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
-        .set(discussionMetadata(
-          discussionId,
-          DiscussionStatus.discussionOpen
+    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
+        .set(sessionMetadata(
+          sessionId,
+          SessionStatus.sessionOpen
     ));
 
     return resultCallback;
   }
 
-  Future<dynamic> updateDiscussionMetadata(User firebaseUser, String discussionId) async {
+  Future<dynamic> updateSessionMetadata(User firebaseUser, String sessionId) async {
 
-    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
-        .update(discussionUpdateMetadata());
+    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
+        .update(sessionUpdateMetadata());
 
     return resultCallback;
   }
 
-  Future<dynamic> updateDiscussionContext(User firebaseUser, String discussionId, String discussionTitle, String discussionSummary) async {
+  Future<dynamic> updateSessionContext(User firebaseUser, String sessionId, String sessionTitle, String sessionSummary) async {
 
-    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.discussionMetadataDocument(firebaseUser, discussionId))
-        .update(discussionUpdateContext(
-          discussionTitle: discussionTitle,
-          discussionSummary: discussionSummary
+    final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
+        .update(sessionUpdateContext(
+          sessionTitle: sessionTitle,
+          sessionSummary: sessionSummary
         ));
 
     return resultCallback;
