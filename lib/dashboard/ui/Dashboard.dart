@@ -318,6 +318,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
       if (allSessions.isNotEmpty) {
 
+        sessions.clear();
+
         for (final element in allSessions) {
 
           _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, element[SessionDataStructure.sessionIdKey]);
