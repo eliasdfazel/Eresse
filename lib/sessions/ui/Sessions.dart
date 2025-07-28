@@ -303,7 +303,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       if (retrievedDialogues.isEmpty) {
 
-        _sessionsDI.insertQueries.insertSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId);
+        // Set Initial Session Metadata
+        _sessionsDI.insertQueries.insertSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, SessionStatus.sessionOpen);
 
       } else {
 

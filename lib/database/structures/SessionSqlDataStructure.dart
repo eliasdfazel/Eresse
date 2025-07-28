@@ -69,6 +69,18 @@ class SessionSqlDataStructure {
     );
   }
 
+  void setSessionTitle(String sessionTitle) {
+
+    this.sessionTitle = sessionTitle;
+
+  }
+
+  void setSessionSummary(String sessionSummary) {
+
+    this.sessionSummary = sessionSummary;
+
+  }
+
   void setSessionJsonContent(String sessionJsonContent) {
 
     this.sessionJsonContent = sessionJsonContent;
@@ -76,6 +88,18 @@ class SessionSqlDataStructure {
   }
 
   void setUpdatedTimestamp(String updatedTimestamp) {
+
+    this.updatedTimestamp = updatedTimestamp;
+
+  }
+
+  void setSessionStatus(String sessionStatus) {
+
+    this.sessionStatus = sessionStatus;
+
+  }
+
+  void setUpdateTimestamp(String updatedTimestamp) {
 
     this.updatedTimestamp = updatedTimestamp;
 

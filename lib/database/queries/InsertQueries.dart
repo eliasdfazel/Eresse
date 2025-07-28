@@ -26,7 +26,6 @@ class InsertQueries {
 
     var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
 
-
     if (sessionSqlDataStructure != null) {
 
       sessionSqlDataStructure.setSessionJsonContent(content);
@@ -66,18 +65,53 @@ class InsertQueries {
       return documentReference;
   }
 
-  Future<dynamic> insertSessionMetadata(User firebaseUser, String sessionId) async {
+  Future<dynamic> insertSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      sessionSqlDataStructure.setSessionStatus(sessionStatus.name);
+
+      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
+
+    }
+
+    await _setupDatabase.closeDatabase(databaseInstance);
+
+  }
+
+  Future<dynamic> _insertSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .set(sessionMetadata(
           sessionId,
-          SessionStatus.sessionOpen
+          sessionStatus
     ));
 
     return resultCallback;
   }
 
   Future<dynamic> updateSessionMetadata(User firebaseUser, String sessionId) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      sessionSqlDataStructure.setUpdatedTimestamp(now().toString());
+
+      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
+
+    }
+
+    await _setupDatabase.closeDatabase(databaseInstance);
+  }
+
+  Future<dynamic> _updateSessionMetadata(User firebaseUser, String sessionId) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .update(sessionUpdateMetadata());
@@ -86,6 +120,25 @@ class InsertQueries {
   }
 
   Future<dynamic> updateSessionContext(User firebaseUser, String sessionId, String sessionTitle, String sessionSummary) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      sessionSqlDataStructure.setSessionTitle(sessionTitle);
+      sessionSqlDataStructure.setSessionSummary(sessionSummary);
+
+      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
+
+    }
+
+    await _setupDatabase.closeDatabase(databaseInstance);
+
+  }
+
+  Future<dynamic> _updateSessionContext(User firebaseUser, String sessionId, String sessionTitle, String sessionSummary) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .update(sessionUpdateContext(
