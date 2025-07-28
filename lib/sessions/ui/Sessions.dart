@@ -153,7 +153,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                   /* START - Content */
                   ListView.builder(
                       controller: _scrollController,
-                      padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
+                      padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: dialogues.length,
@@ -237,7 +237,12 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                         insertDialogues(ContentType.decisionType, content);
 
-                      }
+                      },
+                      inputPressed: () {
+
+                        scrollToEnd(_scrollController);
+
+                      },
                   ),
                   /* END - Actions Bar */
 
@@ -285,9 +290,9 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     if (_sessionsDI.firebaseUser != null) {
 
-      final documentReference = await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType, content);
+      await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType, content);
 
-      // processLastDialogue(await documentReference.get());
+      processLastDialogue(dialogueDataStructure(contentType, content));
 
     }
 
@@ -333,11 +338,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  Future processLastDialogue(DialogueSqlDataStructure documentSnapshot) async {
+  Future processLastDialogue(DialogueSqlDataStructure dialogueSqlDataStructure) async {
 
     setState(() {
 
-      dialogues.add(documentSnapshot);
+      dialogues.add(dialogueSqlDataStructure);
 
     });
 

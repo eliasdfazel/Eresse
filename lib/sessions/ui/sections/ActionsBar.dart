@@ -6,13 +6,15 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 typedef QueryPressed = void Function(String element);
 typedef DecisionPressed = void Function(String element);
+typedef InputPressed = void Function();
 
 class ActionsBar extends StatelessWidget {
 
   final QueryPressed queryPressed;
   final DecisionPressed decisionPressed;
+  final InputPressed inputPressed;
 
-  ActionsBar({super.key, required this.queryPressed, required this.decisionPressed});
+  ActionsBar({super.key, required this.queryPressed, required this.decisionPressed, required this.inputPressed});
 
   final TextEditingController _textController = TextEditingController();
 
@@ -90,6 +92,11 @@ class ActionsBar extends StatelessWidget {
                                 cursorColor: ColorsResources.primaryColor,
                                 minLines: 1,
                                 maxLines: null,
+                                onTap: () {
+
+                                  inputPressed();
+
+                                },
                                 style: TextStyle(
                                   color: ColorsResources.premiumLight,
                                   fontSize: 19,
