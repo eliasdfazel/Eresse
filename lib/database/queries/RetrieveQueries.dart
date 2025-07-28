@@ -21,18 +21,9 @@ class RetrieveQueries {
 
     final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
 
-
-    print('>>> $allSessions');
-
     for (var element in allSessions) {
 
-      print('>>> element; ${element}');
-
-
     }
-
-
-
     // databaseInstance.query(table)
 
     return allSessions;

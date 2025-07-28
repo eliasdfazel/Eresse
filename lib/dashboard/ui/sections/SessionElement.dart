@@ -1,12 +1,12 @@
-import 'package:Eresse/database/structures/SessionDataStructure.dart';
+import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
-typedef SessionPressed = void Function(SessionDataStructure element);
+typedef SessionPressed = void Function(SessionSqlDataStructure element);
 
 class SessionElement extends StatelessWidget {
 
-  final SessionDataStructure sessionDataStructure;
+  final SessionSqlDataStructure sessionDataStructure;
 
   final SessionPressed sessionPressed;
 
@@ -36,7 +36,7 @@ class SessionElement extends StatelessWidget {
                         children: [
 
                           Text(
-                            sessionDataStructure.sessionTitle(),
+                            sessionDataStructure.getSessionTitle(),
                             maxLines: 1,
                             style: TextStyle(
                               color: ColorsResources.premiumLight,
@@ -58,7 +58,7 @@ class SessionElement extends StatelessWidget {
                               Expanded(
                                 flex: 1,
                                 child: Text(
-                                  sessionDataStructure.sessionSummary(),
+                                  sessionDataStructure.getSessionSummary(),
                                   textAlign: TextAlign.start,
                                   maxLines: 3,
                                   style: TextStyle(
@@ -80,7 +80,7 @@ class SessionElement extends StatelessWidget {
                                           image: AssetImage("assets/squarcle.png"),
                                           height: 23,
                                           width: 23,
-                                          color: sessionDataStructure.statusIndicator(),
+                                          color: sessionDataStructure.statusIndicatorColor(),
                                         )
                                     )
                                 )

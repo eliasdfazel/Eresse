@@ -15,6 +15,7 @@ import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
 import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
 import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
+import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/sessions/ui/Sessions.dart';
@@ -23,7 +24,6 @@ import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
   String successTipContent = '';
 
-  List<DocumentSnapshot> sessions = [];
+  List<SessionSqlDataStructure> sessions = [];
 
   Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
       size: 51,
@@ -165,13 +165,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
                             itemCount: sessions.length,
                             itemBuilder: (context, index) {
 
-                              SessionDataStructure sessionDataStructure = SessionDataStructure(sessions[index]);
-
-                              return SessionElement(sessionDataStructure: sessionDataStructure, sessionPressed: (data) {
+                              return SessionElement(sessionDataStructure: sessions[index], sessionPressed: (data) {
 
                                 if (_dashboardDI.firebaseUser != null) {
 
-                                  navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.documentId()));
+                                  navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId()));
 
                                 }
 
@@ -308,29 +306,27 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
 
     if (_dashboardDI.firebaseUser != null) {
 
-      final querySnapshot = await _dashboardDI.retrieveQueries.retrieveSessions(_dashboardDI.firebaseUser!);
+      final allSessions = await _dashboardDI.retrieveQueries.retrieveSessions(_dashboardDI.firebaseUser!);
 
-      // final querySnapshot = await _dashboardDI.retrieveQueries.retrieveSessions(_dashboardDI.firebaseUser!);
-      //
-      // if (querySnapshot.docs.isNotEmpty) {
-      //
-      //   for (final element in querySnapshot.docs) {
-      //
-      //     _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, element.id);
-      //
-      //     sessions.add(element);
-      //
-      //   }
-      //
-      //   setState(() {
-      //
-      //     sessions;
-      //
-      //     loadingAnimation = Container();
-      //
-      //   });
-      //
-      // }
+      if (allSessions.isNotEmpty) {
+
+        for (final element in allSessions) {
+
+          _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, element[SessionDataStructure.sessionIdKey]);
+
+          sessions.add(SessionSqlDataStructure.fromMap(element));
+
+        }
+
+        setState(() {
+
+          sessions;
+
+          loadingAnimation = Container();
+
+        });
+
+      }
 
     }
 

@@ -1,3 +1,8 @@
+import 'dart:ui';
+
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
+import 'package:Eresse/resources/colors_resources.dart';
+
 class SessionSqlDataStructure {
 
   static const String databaseTableName = "sessions";
@@ -42,37 +47,52 @@ class SessionSqlDataStructure {
 
   Map<String, dynamic> toMap() {
     return {
-      'sessionId': sessionId,
+      SessionDataStructure.sessionIdKey: sessionId,
 
-      'createdTimestamp': createdTimestamp,
-      'updatedTimestamp': updatedTimestamp,
+      SessionDataStructure.createdTimestampKey: createdTimestamp,
+      SessionDataStructure.updatedTimestampKey: updatedTimestamp,
 
-      'sessionTitle': sessionTitle,
-      'sessionSummary': sessionSummary,
+      SessionDataStructure.sessionTitleKey: sessionTitle,
+      SessionDataStructure.sessionSummaryKey: sessionSummary,
 
-      'sessionStatus': sessionStatus,
+      SessionDataStructure.sessionStatusKey: sessionStatus,
 
-      'sessionJsonContent': sessionJsonContent
+      SessionDataStructure.sessionJsonContentKey: sessionJsonContent
     };
   }
 
   static SessionSqlDataStructure fromMap(Map<String, Object?> inputMap) {
 
     return SessionSqlDataStructure(
-        sessionId: inputMap['sessionId'].toString(),
-        createdTimestamp: inputMap['createdTimestamp'].toString(),
-        updatedTimestamp: inputMap['updatedTimestamp'].toString(),
-        sessionTitle: inputMap['sessionTitle'].toString(),
-        sessionSummary: inputMap['sessionSummary'].toString(),
-        sessionStatus: inputMap['sessionStatus'].toString(),
-        sessionJsonContent: inputMap['sessionJsonContent'].toString()
+        sessionId: inputMap[SessionDataStructure.sessionIdKey].toString(),
+        createdTimestamp: inputMap[SessionDataStructure.createdTimestampKey].toString(),
+        updatedTimestamp: inputMap[SessionDataStructure.updatedTimestampKey].toString(),
+        sessionTitle: inputMap[SessionDataStructure.sessionTitleKey].toString(),
+        sessionSummary: inputMap[SessionDataStructure.sessionSummaryKey].toString(),
+        sessionStatus: inputMap[SessionDataStructure.sessionStatusKey].toString(),
+        sessionJsonContent: inputMap[SessionDataStructure.sessionJsonContentKey].toString()
     );
+  }
+
+  String getSessionId() {
+
+    return sessionId;
+  }
+
+  String getSessionTitle() {
+
+    return sessionTitle;
   }
 
   void setSessionTitle(String sessionTitle) {
 
     this.sessionTitle = sessionTitle;
 
+  }
+
+  String getSessionSummary() {
+
+    return sessionSummary;
   }
 
   void setSessionSummary(String sessionSummary) {
@@ -93,10 +113,61 @@ class SessionSqlDataStructure {
 
   }
 
+  String getSessionStatus() {
+
+    return sessionStatus;
+  }
+
   void setSessionStatus(String sessionStatus) {
 
     this.sessionStatus = sessionStatus;
 
+  }
+
+  SessionStatus sessionStatusIndicator() {
+
+    SessionStatus statusType = SessionStatus.sessionOpen;
+
+    switch (getSessionStatus()) {
+      case "sessionOpen": {
+
+        statusType = SessionStatus.sessionOpen;
+
+        break;
+      }
+      case "sessionSuccess": {
+
+        statusType = SessionStatus.sessionSuccess;
+
+        break;
+      }
+      case "sessionFailed": {
+
+        statusType = SessionStatus.sessionFailed;
+
+        break;
+      }
+    }
+
+    return statusType;
+  }
+
+  Color statusIndicatorColor() {
+
+    switch (sessionStatusIndicator()) {
+      case SessionStatus.sessionOpen: {
+
+        return ColorsResources.openColor;
+      }
+      case SessionStatus.sessionSuccess: {
+
+        return ColorsResources.successColor;
+      }
+      case SessionStatus.sessionFailed: {
+
+        return ColorsResources.failedColor;
+      }
+    }
   }
 
   void setUpdateTimestamp(String updatedTimestamp) {

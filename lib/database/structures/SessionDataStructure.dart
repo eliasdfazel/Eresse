@@ -46,6 +46,8 @@ class SessionDataStructure {
 
   static const String sessionStatusKey = "sessionStatus";
 
+  static const String sessionJsonContentKey = "sessionJsonContent";
+
   static const int contextThreshold = 7;
 
   DocumentSnapshot? _documentSnapshot;
