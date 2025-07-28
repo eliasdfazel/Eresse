@@ -16,6 +16,7 @@ import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
 import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
+import 'package:Eresse/database/sync/SyncManager.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/sessions/ui/Sessions.dart';
@@ -36,7 +37,7 @@ class Dashboard extends StatefulWidget {
   @override
   State<Dashboard> createState() => _DashboardState();
 }
-class _DashboardState extends State<Dashboard> implements NetworkInterface {
+class _DashboardState extends State<Dashboard> implements NetworkInterface, Syncing {
 
   final DashboardDI _dashboardDI = DashboardDI();
 
@@ -271,6 +272,8 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
   @override
   void networkEnabled() {
 
+    _dashboardDI.syncManager.sync(this);
+
     setState(() {
 
       _networkShield = Container();
@@ -291,6 +294,13 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface {
       });
 
     });
+
+  }
+
+  @override
+  void databaseUpdated() {
+
+    retrieveSessions();
 
   }
 

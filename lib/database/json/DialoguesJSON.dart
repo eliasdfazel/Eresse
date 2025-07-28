@@ -7,8 +7,6 @@ class DialoguesJSON {
 
   Future<String> insertDialogueJson(String sessionJsonContent, ContentType contentType, String content) async {
 
-    print('>>> ' + sessionJsonContent);
-
     final iterableJson = jsonDecode(sessionJsonContent);
 
     final dialogueJsonArray = List.from(iterableJson);

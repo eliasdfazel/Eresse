@@ -1,5 +1,6 @@
 import 'package:Eresse/arwen/ask/AskQuery.dart';
 import 'package:Eresse/database/queries/RetrieveQueries.dart';
+import 'package:Eresse/database/sync/SyncManager.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -12,5 +13,7 @@ class DashboardDI {
   RetrieveQueries retrieveQueries = RetrieveQueries();
 
   AskQuery askQuery = AskQuery();
+
+  SyncManager syncManager = SyncManager();
 
 }

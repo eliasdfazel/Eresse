@@ -1,0 +1,31 @@
+import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
+import 'package:Eresse/database/queries/InsertQueries.dart';
+import 'package:Eresse/database/queries/RetrieveQueries.dart';
+
+abstract class Syncing {
+  void databaseUpdated();
+}
+
+class SyncManager {
+
+  /* at the first check emptiness
+  * if local empty then check backup
+  *
+  * if local not empty check timestamp of each sessions
+  * update sessions accordingly */
+
+  final RetrieveQueries _retrieveQueries = RetrieveQueries();
+
+  final InsertQueries _insertQueries = InsertQueries();
+
+  final SetupDatabase _setupDatabase = SetupDatabase();
+
+  Future sync(Syncing syncing) async {
+
+
+    // if local database updated
+    // syncing.databaseUpdated();
+
+  }
+
+}

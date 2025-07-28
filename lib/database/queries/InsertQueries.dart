@@ -57,7 +57,7 @@ class InsertQueries {
 
   }
 
-  Future<DocumentReference> _insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content) async {
+  Future<DocumentReference> insertDialoguesSync(User firebaseUser, String sessionId, ContentType contentType, String content) async {
 
       final documentReference = await FirebaseFirestore.instance.collection(_databaseEndpoints.sessionContentCollection(firebaseUser, sessionId))
           .add(dialogueDataStructure(contentType, content));
@@ -83,7 +83,7 @@ class InsertQueries {
 
   }
 
-  Future<dynamic> _insertSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
+  Future<dynamic> insertSessionMetadataSync(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .set(sessionMetadata(
@@ -111,7 +111,7 @@ class InsertQueries {
     await _setupDatabase.closeDatabase(databaseInstance);
   }
 
-  Future<dynamic> _updateSessionMetadata(User firebaseUser, String sessionId) async {
+  Future<dynamic> updateSessionMetadataSync(User firebaseUser, String sessionId) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .update(sessionUpdateMetadata());
@@ -138,7 +138,7 @@ class InsertQueries {
 
   }
 
-  Future<dynamic> _updateSessionContext(User firebaseUser, String sessionId, String sessionTitle, String sessionSummary) async {
+  Future<dynamic> updateSessionContextSync(User firebaseUser, String sessionId, String sessionTitle, String sessionSummary) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .update(sessionUpdateContext(

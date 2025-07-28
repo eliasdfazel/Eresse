@@ -15,7 +15,7 @@ class RetrieveQueries {
   final SetupDatabase _setupDatabase = SetupDatabase();
 
   final DialoguesJSON _dialoguesJSON = DialoguesJSON();
-  
+
   Future<List<Map<String, dynamic>>> retrieveSessions(User firebaseUser) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
@@ -25,7 +25,7 @@ class RetrieveQueries {
     return allSessions;
   }
   
-  Future<QuerySnapshot> _retrieveSessions(User firebaseUser) async {
+  Future<QuerySnapshot> retrieveSessionsSync(User firebaseUser) async {
 
     final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.sessionsCollection(firebaseUser))
       .limit(7)
@@ -52,7 +52,7 @@ class RetrieveQueries {
     return dialogues;
   }
 
-  Future<List<DocumentSnapshot>> _retrieveDialogues(User firebaseUser, String sessionId) async {
+  Future<List<DocumentSnapshot>> retrieveDialoguesSync(User firebaseUser, String sessionId) async {
 
     List<DocumentSnapshot> dialogues = [];
 
