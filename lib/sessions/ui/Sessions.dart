@@ -67,9 +67,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       color: ColorsResources.premiumLight.withAlpha(73)
   );
 
-  Widget toolbar = Container();
+  late Toolbar toolbar;
 
-  DialogueDataStructure? selectedDataStructure;
+  double toolbarOpacity = 0;
+
+  DialogueDataStructure? selectedDialogue;
 
   @override
   void initState() {
@@ -92,6 +94,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
     processDialogues();
 
     toolbar = Toolbar(
+        toolbarOpacity: toolbarOpacity,
         askPressed: (question) {
 
           // Call AI
@@ -165,12 +168,17 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                             element = QueryElement(queryPressed: (data) {
 
+                              selectDialogue(data);
+
                             }, queryDataStructure: dialogueDataStructure);
 
                           }
                           case ContentType.decisionType: {
 
+
                             element = DecisionElement(decisionPressed: (data) {
+
+                              selectDialogue(data);
 
                             }, queryDataStructure: dialogueDataStructure);
 
@@ -350,7 +358,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   Future askingProcess() async {
 
-    if (selectedDataStructure != null) {
+    if (selectedDialogue != null) {
 
     } else {
 
@@ -360,11 +368,23 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   Future archivingProcess() async {
 
-    if (selectedDataStructure != null) {
+    if (selectedDialogue != null) {
 
     } else {
 
     }
+
+  }
+
+  void selectDialogue(DialogueDataStructure dialogueDataStructure) {
+
+    selectedDialogue = dialogueDataStructure;
+
+    setState(() {
+
+      toolbarOpacity = (toolbarOpacity == 1) ? 0 : 1;
+
+    });
 
   }
 

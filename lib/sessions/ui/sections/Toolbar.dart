@@ -9,7 +9,9 @@ class Toolbar extends StatefulWidget {
   final ArchivePressed archivePressed;
   final AskPressed askPressed;
 
-  const Toolbar({super.key, required this.archivePressed, required this.askPressed});
+  double toolbarOpacity = 0;
+
+  Toolbar({super.key, required this.archivePressed, required this.askPressed, required this.toolbarOpacity});
 
   @override
   State<Toolbar> createState() => _Toolbar();
@@ -18,7 +20,6 @@ class _Toolbar extends State<Toolbar> {
 
   final TextEditingController _textController = TextEditingController();
 
-  double toolbarOpacity = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _Toolbar extends State<Toolbar> {
                 children: [
 
                   AnimatedOpacity(
-                    opacity: toolbarOpacity,
+                    opacity: widget.toolbarOpacity,
                     duration: const Duration(milliseconds: 375),
                     curve: Curves.easeIn,
                     child: Row(
@@ -57,7 +58,7 @@ class _Toolbar extends State<Toolbar> {
 
                                     setState(() {
 
-                                      toolbarOpacity = 0;
+                                      widget.toolbarOpacity = 0;
 
                                     });
 
@@ -81,7 +82,7 @@ class _Toolbar extends State<Toolbar> {
 
                                     setState(() {
 
-                                      toolbarOpacity = 0;
+                                      widget.toolbarOpacity = 0;
 
                                     });
 
@@ -106,11 +107,7 @@ class _Toolbar extends State<Toolbar> {
                       child: InkWell(
                           onTap: () {
 
-                            setState(() {
-
-                              toolbarOpacity = (toolbarOpacity == 1) ? 0 : 1;
-
-                            });
+                            showToolbar();
 
                           },
                           child: SizedBox(
@@ -131,6 +128,16 @@ class _Toolbar extends State<Toolbar> {
         )
       )
     );
+  }
+
+  void showToolbar() {
+
+    setState(() {
+
+      widget.toolbarOpacity = (widget.toolbarOpacity == 1) ? 0 : 1;
+
+    });
+
   }
 
 }
