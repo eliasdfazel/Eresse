@@ -51,6 +51,8 @@ class InsertQueries {
 
     }
 
+    insertDialoguesSync(firebaseUser, sessionId, contentType, content);
+
     await _setupDatabase.closeDatabase(databaseInstance);
 
     return sessionSqlDataStructure;
@@ -78,6 +80,8 @@ class InsertQueries {
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
     }
+
+    insertSessionMetadataSync(firebaseUser, sessionId, sessionStatus);
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
@@ -108,6 +112,8 @@ class InsertQueries {
 
     }
 
+    updateSessionMetadataSync(firebaseUser, sessionId);
+
     await _setupDatabase.closeDatabase(databaseInstance);
   }
 
@@ -133,6 +139,8 @@ class InsertQueries {
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
     }
+
+    updateSessionContextSync(firebaseUser, sessionId, sessionTitle, sessionSummary);
 
     await _setupDatabase.closeDatabase(databaseInstance);
 

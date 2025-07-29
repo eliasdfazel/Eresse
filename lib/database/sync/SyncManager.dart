@@ -17,10 +17,10 @@ class SyncManager {
   Future sync(Syncing syncing) async {
 
     /* at the first check emptiness
-  * if local empty then check backup
-  *
-  * if local not empty check timestamp of each sessions
-  * update sessions accordingly */
+      * if local empty then check backup
+      *
+      * if local not empty check timestamp of each sessions
+      * update sessions accordingly */
 
 
     // if local database updated
