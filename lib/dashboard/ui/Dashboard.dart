@@ -331,6 +331,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
   @override
   void databaseUpdated() {
+    debugPrint('Local Database Updated');
 
     retrieveSessions();
 
