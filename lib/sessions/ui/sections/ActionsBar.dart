@@ -32,9 +32,9 @@ class ActionsBar extends StatelessWidget {
               border: GradientBoxBorder(
                 gradient: LinearGradient(
                     colors: [
-                      ColorsResources.premiumDark.withAlpha(179),
+                      ColorsResources.premiumDark.withAlpha(199),
                       ColorsResources.premiumDark.withAlpha(0),
-                      ColorsResources.premiumDark.withAlpha(179),
+                      ColorsResources.premiumDark.withAlpha(199),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight
