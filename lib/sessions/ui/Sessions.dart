@@ -358,8 +358,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   Future updateSessionContext(List<DialogueSqlDataStructure> dialogues) async {
 
     // Send Dialogues To AI and Ask for Summary and Title
-    final sessionTitle = '';
-    final sessionSummary = '';
+    final sessionTitle = 'N/A';
+    final sessionSummary = 'N/A';
 
     _sessionsDI.insertQueries.updateSessionContext(_sessionsDI.firebaseUser!, widget.sessionId, sessionTitle, sessionSummary);
 

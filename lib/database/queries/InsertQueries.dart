@@ -175,9 +175,9 @@ class InsertQueries {
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-      updateSessionMetadataSync(firebaseUser, sessionId);
-
     }
+
+    updateSessionMetadataSync(firebaseUser, sessionId);
 
     await _setupDatabase.closeDatabase(databaseInstance);
   }
