@@ -7,13 +7,7 @@ abstract class Syncing {
 }
 
 class SyncManager {
-
-  /* at the first check emptiness
-  * if local empty then check backup
-  *
-  * if local not empty check timestamp of each sessions
-  * update sessions accordingly */
-
+  
   final RetrieveQueries _retrieveQueries = RetrieveQueries();
 
   final InsertQueries _insertQueries = InsertQueries();
@@ -21,6 +15,12 @@ class SyncManager {
   final SetupDatabase _setupDatabase = SetupDatabase();
 
   Future sync(Syncing syncing) async {
+
+    /* at the first check emptiness
+  * if local empty then check backup
+  *
+  * if local not empty check timestamp of each sessions
+  * update sessions accordingly */
 
 
     // if local database updated

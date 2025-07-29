@@ -57,7 +57,7 @@ class SuccessTip extends StatelessWidget {
                             style: TextStyle(
                               color: ColorsResources.premiumLight,
                               fontSize: 15,
-                              letterSpacing: 1.73,
+                              letterSpacing: 1,
                             ),
                           ),
 
