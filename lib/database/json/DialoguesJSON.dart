@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
+import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DialoguesJSON {
@@ -12,7 +13,7 @@ class DialoguesJSON {
 
     final dialogueJsonArray = List.from(iterableJson);
 
-    dialogueJsonArray.add(dialogueDataStructure(contentType, content));
+    dialogueJsonArray.add("${now().toString()}: ${dialogueDataStructure(contentType, content)}");
 
     return jsonEncode(dialogueJsonArray);
   }

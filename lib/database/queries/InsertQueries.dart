@@ -49,7 +49,7 @@ class InsertQueries {
 
     for (final dialogueElement in localDialogues) {
 
-      insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent());
+      insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent(), dialogueElement.getTimestamp());
 
     }
 
@@ -79,7 +79,7 @@ class InsertQueries {
 
     for (final dialogueElement in localDialogues) {
 
-      insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent());
+      insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent(), dialogueElement.getTimestamp());
 
     }
 
@@ -117,7 +117,7 @@ class InsertQueries {
 
     }
 
-    insertDialoguesSync(firebaseUser, sessionId, contentType, content);
+    insertDialoguesSync(firebaseUser, sessionId, contentType, content, now().toString());
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
@@ -125,12 +125,11 @@ class InsertQueries {
 
   }
 
-  Future<DocumentReference> insertDialoguesSync(User firebaseUser, String sessionId, ContentType contentType, String content) async {
+  Future insertDialoguesSync(User firebaseUser, String sessionId, ContentType contentType, String content, String dialogueId) async {
 
-      final documentReference = await FirebaseFirestore.instance.collection(_databaseEndpoints.sessionContentCollection(firebaseUser, sessionId))
-          .add(dialogueDataStructure(contentType, content));
+      await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionElementDocument(firebaseUser, sessionId, dialogueId))
+          .set(dialogueDataStructure(contentType, content));
 
-      return documentReference;
   }
 
   Future<dynamic> insertSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
