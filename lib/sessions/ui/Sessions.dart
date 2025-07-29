@@ -67,8 +67,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       color: ColorsResources.premiumLight.withAlpha(73)
   );
 
-  late Toolbar toolbar;
-
   double toolbarOpacity = 0;
 
   DialogueSqlDataStructure? selectedDialogue;
@@ -92,24 +90,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
      */
 
     processDialogues();
-
-    toolbar = Toolbar(
-        toolbarOpacity: toolbarOpacity,
-        askPressed: (question) {
-
-          // Call AI
-          // and Store Answer
-          askingProcess();
-
-        },
-        archivePressed: (content) {
-
-          // check for result
-          // archive it with success/failed result
-          archivingProcess();
-
-        }
-    );
 
   }
 
@@ -250,7 +230,23 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                   /* END - Actions Bar */
 
                   /* START - Actions Bar */
-                  toolbar,
+                  Toolbar(
+                      toolbarOpacity: toolbarOpacity,
+                      askPressed: (question) {
+
+                        // Call AI
+                        // and Store Answer
+                        askingProcess();
+
+                      },
+                      archivePressed: (content) {
+
+                        // check for result
+                        // archive it with success/failed result
+                        archivingProcess();
+
+                      }
+                  ),
                   /* END - Actions Bar */
 
                   /* START - Network */
