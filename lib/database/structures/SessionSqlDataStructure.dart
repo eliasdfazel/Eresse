@@ -46,6 +46,7 @@ class SessionSqlDataStructure {
   });
 
   Map<String, dynamic> toMap() {
+
     return {
       SessionDataStructure.sessionIdKey: sessionId,
 
@@ -192,6 +193,11 @@ class SessionSqlDataStructure {
 
     this.updatedTimestamp = updatedTimestamp;
 
+  }
+
+  int getUpdateTimestamp() {
+
+    return int.parse(updatedTimestamp);
   }
 
 }

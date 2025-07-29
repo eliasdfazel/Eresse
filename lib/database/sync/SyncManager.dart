@@ -1,6 +1,8 @@
+import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/queries/InsertQueries.dart';
 import 'package:Eresse/database/queries/RetrieveQueries.dart';
+import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,9 @@ abstract class Syncing {
 }
 
 class SyncManager {
-  
+
+  final SetupDatabase _setupDatabase = SetupDatabase();
+
   final RetrieveQueries _retrieveQueries = RetrieveQueries();
 
   final InsertQueries _insertQueries = InsertQueries();
@@ -23,15 +27,12 @@ class SyncManager {
 
     final cloudSessions = await _retrieveQueries.retrieveSessionsSync(firebaseUser);
 
-    if (localSessions.isEmpty) {
+    if (localSessions.isEmpty
+      && cloudSessions.docs.isNotEmpty) {
 
-      if (cloudSessions.docs.isNotEmpty) {
+      await _updateLocalDatabase(cloudSessions, firebaseUser);
 
-        await _updateLocalDatabase(cloudSessions, firebaseUser);
-
-        syncing.databaseUpdated();
-
-      }
+      syncing.databaseUpdated();
 
     } else {
 
@@ -41,7 +42,7 @@ class SyncManager {
 
       } else {
 
-
+        _mergeDatabase(syncing, localSessions, cloudSessions, firebaseUser);
 
       }
 
@@ -78,6 +79,95 @@ class SyncManager {
       SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
       await _insertQueries.insertSessionSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
+
+    }
+
+  }
+
+  Future _mergeDatabase(Syncing syncing, List<Map<String, dynamic>> localSessions, QuerySnapshot<Object?> cloudSessions, User firebaseUser) async {
+
+    if (localSessions.length >= cloudSessions.size) {
+
+      for (final element in localSessions) {
+
+        final sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
+
+        final cloudSession = cloudSessions.docs.firstWhere((documentSnapshot) => SessionDataStructure(documentSnapshot).sessionId() == sessionSqlDataStructure.getSessionId());
+
+        final sessionDataStructure = SessionDataStructure(cloudSession);
+
+        if (cloudSession.exists) {
+
+          if (sessionSqlDataStructure.getUpdateTimestamp() > sessionDataStructure.updatedTimestamp()) {
+
+            _insertQueries.updateSessionElementSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
+
+          } else {
+
+            final dialoguesSessions = await _retrieveQueries.retrieveDialoguesSync(firebaseUser, sessionDataStructure.sessionId());
+
+            final dialoguesJsonArray = await _dialoguesJSON.documentsToJson(dialoguesSessions);
+
+            await _insertQueries.updateSessionElement(firebaseUser, cloudSession.id, SessionSqlDataStructure.fromMapSync(cloudSession.data() as Map<String, dynamic>, dialoguesJsonArray));
+
+          }
+
+        } else {
+
+          _insertQueries.insertSessionSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
+
+        }
+
+      }
+
+    } else {
+
+      for (final element in cloudSessions.docs) {
+
+        if (element.exists) {
+
+          final sessionDataStructure = SessionDataStructure(element);
+
+          final dialoguesSessions = await _retrieveQueries.retrieveDialoguesSync(firebaseUser, element.id);
+
+          if (dialoguesSessions.isNotEmpty) {
+
+            final dialoguesJsonArray = await _dialoguesJSON.documentsToJson(dialoguesSessions);
+
+            final databaseInstance = await _setupDatabase.initializeDatabase();
+
+            var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionDataStructure.sessionId());
+
+            if (sessionSqlDataStructure != null) {
+
+              if (sessionSqlDataStructure.getUpdateTimestamp() > sessionDataStructure.updatedTimestamp()) {
+
+                _insertQueries.updateSessionElementSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
+
+              } else {
+
+                final dialoguesSessions = await _retrieveQueries.retrieveDialoguesSync(firebaseUser, sessionDataStructure.sessionId());
+
+                final dialoguesJsonArray = await _dialoguesJSON.documentsToJson(dialoguesSessions);
+
+                await _insertQueries.updateSessionElement(firebaseUser, element.id, SessionSqlDataStructure.fromMapSync(element.data() as Map<String, dynamic>, dialoguesJsonArray));
+
+              }
+
+            } else {
+
+              _insertQueries.insertSession(firebaseUser, sessionDataStructure.sessionId(), SessionSqlDataStructure.fromMapSync(element.data() as Map<String, dynamic>, dialoguesJsonArray));
+
+            }
+
+          }
+
+        }
+
+        syncing.databaseUpdated();
+
+      }
+
 
     }
 

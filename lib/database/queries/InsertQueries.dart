@@ -43,7 +43,37 @@ class InsertQueries {
 
   Future insertSessionSync(User firebaseUser, String sessionId, SessionSqlDataStructure sessionSqlDataStructure) async {
 
-    await insertSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure.sessionStatusIndicator());
+    await insertSessionMetadataSync(firebaseUser, sessionId, sessionSqlDataStructure.sessionStatusIndicator());
+
+    final localDialogues = await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
+
+    for (final dialogueElement in localDialogues) {
+
+      insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent());
+
+    }
+
+  }
+
+  Future updateSessionElement(User firebaseUser, String sessionId, SessionSqlDataStructure cloudSessionSqlDataStructure) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), cloudSessionSqlDataStructure.toMap());
+
+    }
+
+    await _setupDatabase.closeDatabase(databaseInstance);
+
+  }
+
+  Future updateSessionElementSync(User firebaseUser, String sessionId, SessionSqlDataStructure sessionSqlDataStructure) async {
+
+    await updateSessionMetadataSync(firebaseUser, sessionId);
 
     final localDialogues = await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
 

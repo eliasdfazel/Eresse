@@ -135,4 +135,9 @@ class SessionDataStructure {
     return _queryDocumentData[SessionDataStructure.createdTimestampKey];
   }
 
+  int updatedTimestamp() {
+
+    return int.parse(_queryDocumentData[SessionDataStructure.updatedTimestampKey]);
+  }
+
 }
