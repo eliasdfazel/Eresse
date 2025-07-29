@@ -86,16 +86,16 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
      */
 
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 999),
+      duration: const Duration(milliseconds: 1579),
       vsync: this
     );
 
     _animationControllerCenter = AnimationController(
-      duration: const Duration(milliseconds: 999),
+      duration: const Duration(milliseconds: 1579),
       vsync: this
     );
 
-    tipColorAnimation = ColorTween(begin: ColorsResources.premiumDark.withAlpha(159), end: ColorsResources.premiumLight.withAlpha(159)).animate(_animationController);
+    tipColorAnimation = ColorTween(begin: ColorsResources.premiumDark.withAlpha(137), end: ColorsResources.premiumLight.withAlpha(137)).animate(_animationController);
     tipCenterColorAnimation = ColorTween(begin: Colors.transparent, end: Colors.transparent).animate(_animationControllerCenter);
 
     retrieveSuccessTip();
@@ -153,9 +153,9 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                       children: [
 
                         SuccessTip(
-                          topLeftColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(179),
+                          topLeftColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
                           centerColor: tipCenterColorAnimation.value ?? Colors.transparent,
-                          bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(179),
+                          bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
                           content: successTipContent,
                           successTipPressed: (data) {
 
@@ -297,6 +297,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
   @override
   void networkEnabled() {
+    debugPrint('Network Enabled');
 
     if (_dashboardDI.firebaseUser != null) {
 
@@ -314,6 +315,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
   @override
   void networkDisabled() {
+    debugPrint('Network Disabled');
 
     Future.delayed(const Duration(milliseconds: 777), () {
 
