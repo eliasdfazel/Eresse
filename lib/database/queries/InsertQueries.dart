@@ -19,6 +19,28 @@ class InsertQueries {
 
   final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
+  Future insertSession(User firebaseUser, String sessionId, SessionSqlDataStructure cloudSessionSqlDataStructure) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), cloudSessionSqlDataStructure.toMap());
+
+    } else {
+
+      await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),
+          cloudSessionSqlDataStructure.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+
+    }
+
+    await _setupDatabase.closeDatabase(databaseInstance);
+
+  }
+
   /// content = sessionJsonContent
   Future<SessionSqlDataStructure> insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content) async {
 
@@ -79,9 +101,9 @@ class InsertQueries {
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-    }
+      insertSessionMetadataSync(firebaseUser, sessionId, sessionStatus);
 
-    insertSessionMetadataSync(firebaseUser, sessionId, sessionStatus);
+    }
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
@@ -110,9 +132,9 @@ class InsertQueries {
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-    }
+      updateSessionMetadataSync(firebaseUser, sessionId);
 
-    updateSessionMetadataSync(firebaseUser, sessionId);
+    }
 
     await _setupDatabase.closeDatabase(databaseInstance);
   }
@@ -138,9 +160,9 @@ class InsertQueries {
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-    }
+      updateSessionContextSync(firebaseUser, sessionId, sessionTitle, sessionSummary);
 
-    updateSessionContextSync(firebaseUser, sessionId, sessionTitle, sessionSummary);
+    }
 
     await _setupDatabase.closeDatabase(databaseInstance);
 

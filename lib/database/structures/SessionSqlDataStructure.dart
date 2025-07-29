@@ -74,6 +74,19 @@ class SessionSqlDataStructure {
     );
   }
 
+  static SessionSqlDataStructure fromMapSync(Map<String, Object?> inputMap, String sessionJsonContentKey) {
+
+    return SessionSqlDataStructure(
+        sessionId: inputMap[SessionDataStructure.sessionIdKey].toString(),
+        createdTimestamp: inputMap[SessionDataStructure.createdTimestampKey].toString(),
+        updatedTimestamp: inputMap[SessionDataStructure.updatedTimestampKey].toString(),
+        sessionTitle: inputMap[SessionDataStructure.sessionTitleKey].toString(),
+        sessionSummary: inputMap[SessionDataStructure.sessionSummaryKey].toString(),
+        sessionStatus: inputMap[SessionDataStructure.sessionStatusKey].toString(),
+        sessionJsonContent: sessionJsonContentKey
+    );
+  }
+
   String getSessionId() {
 
     return sessionId;

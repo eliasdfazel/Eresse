@@ -1,6 +1,8 @@
-import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
+import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/queries/InsertQueries.dart';
 import 'package:Eresse/database/queries/RetrieveQueries.dart';
+import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class Syncing {
@@ -13,7 +15,7 @@ class SyncManager {
 
   final InsertQueries _insertQueries = InsertQueries();
 
-  final SetupDatabase _setupDatabase = SetupDatabase();
+  final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
   Future sync(Syncing syncing, User firebaseUser) async {
 
@@ -25,12 +27,7 @@ class SyncManager {
 
       if (cloudSessions.docs.isNotEmpty) {
 
-        // insert from cloud to local database
-        for (final element in cloudSessions.docs) {
-
-          _insertQueries.insertSession();
-
-        }
+        await _updateLocalDatabase(cloudSessions, firebaseUser);
 
       }
 
@@ -48,6 +45,28 @@ class SyncManager {
 
     // if local database updated
     // syncing.databaseUpdated();
+
+  }
+
+  Future _updateLocalDatabase(QuerySnapshot cloudSessions, User firebaseUser) async {
+
+    for (final elementSession in cloudSessions.docs) {
+
+      if (elementSession.exists) {
+
+        final dialoguesSessions = await _retrieveQueries.retrieveDialoguesSync(firebaseUser, elementSession.id);
+
+        if (dialoguesSessions.isNotEmpty) {
+
+          final dialoguesJsonArray = await _dialoguesJSON.documentsToJson(dialoguesSessions);
+
+          await _insertQueries.insertSession(firebaseUser, elementSession.id, SessionSqlDataStructure.fromMapSync(elementSession.data() as Map<String, dynamic>, dialoguesJsonArray));
+
+        }
+
+      }
+
+    }
 
   }
 
