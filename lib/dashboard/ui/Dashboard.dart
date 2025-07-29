@@ -272,7 +272,11 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
   @override
   void networkEnabled() {
 
-    _dashboardDI.syncManager.sync(this);
+    if (_dashboardDI.firebaseUser != null) {
+
+      _dashboardDI.syncManager.sync(this, _dashboardDI.firebaseUser!);
+
+    }
 
     setState(() {
 
@@ -332,9 +336,15 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
 
         for (final element in allSessions) {
 
-          _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, element[SessionDataStructure.sessionIdKey]);
+          SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
-          sessions.add(SessionSqlDataStructure.fromMap(element));
+          _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, sessionSqlDataStructure.sessionId);
+
+          if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
+
+            sessions.add(SessionSqlDataStructure.fromMap(element));
+
+          }
 
         }
 

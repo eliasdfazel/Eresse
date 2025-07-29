@@ -22,13 +22,12 @@ class RetrieveQueries {
 
     final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
 
-    return allSessions;
+    return allSessions.sublist(0);
   }
   
   Future<QuerySnapshot> retrieveSessionsSync(User firebaseUser) async {
 
     final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.sessionsCollection(firebaseUser))
-      .limit(7)
       .where(SessionDataStructure.sessionStatusKey, isEqualTo: SessionStatus.sessionOpen.name)
       .get(GetOptions(source: Source.server));
 
