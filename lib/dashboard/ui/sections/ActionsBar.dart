@@ -13,7 +13,7 @@ class ActionsBar extends StatelessWidget {
   final ArchivePressed archivePressed;
   final SearchPressed searchPressed;
 
-  ActionsBar({super.key, required this.startPressed, required this.archivePressed, required this.searchPressed});
+  const ActionsBar({super.key, required this.startPressed, required this.archivePressed, required this.searchPressed});
 
   @override
   Widget build(BuildContext context) {
