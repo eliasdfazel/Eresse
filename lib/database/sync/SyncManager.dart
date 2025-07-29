@@ -21,30 +21,31 @@ class SyncManager {
 
     final localSessions = await _retrieveQueries.retrieveSessions(firebaseUser);
 
-    if (localSessions.isEmpty) {
+    final cloudSessions = await _retrieveQueries.retrieveSessionsSync(firebaseUser);
 
-      final cloudSessions = await _retrieveQueries.retrieveSessionsSync(firebaseUser);
+    if (localSessions.isEmpty) {
 
       if (cloudSessions.docs.isNotEmpty) {
 
         await _updateLocalDatabase(cloudSessions, firebaseUser);
 
+        syncing.databaseUpdated();
+
       }
 
     } else {
 
+      if (cloudSessions.docs.isEmpty) {
 
+        _updateCloudDatabase(localSessions, firebaseUser);
+
+      } else {
+
+
+
+      }
 
     }
-    /* at the first check emptiness
-      * if local empty then check backup
-      *
-      * if local not empty check timestamp of each sessions
-      * update sessions accordingly */
-
-
-    // if local database updated
-    // syncing.databaseUpdated();
 
   }
 
@@ -65,6 +66,18 @@ class SyncManager {
         }
 
       }
+
+    }
+
+  }
+
+  Future _updateCloudDatabase(List<Map<String, dynamic>> localSessions, User firebaseUser) async {
+
+    for (final element in localSessions) {
+
+      SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
+
+      await _insertQueries.insertSessionSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
 
     }
 

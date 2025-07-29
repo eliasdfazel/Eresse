@@ -22,7 +22,7 @@ class RetrieveQueries {
 
     final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
 
-    return allSessions.sublist(0);
+    return allSessions;
   }
   
   Future<QuerySnapshot> retrieveSessionsSync(User firebaseUser) async {

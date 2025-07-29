@@ -41,6 +41,20 @@ class InsertQueries {
 
   }
 
+  Future insertSessionSync(User firebaseUser, String sessionId, SessionSqlDataStructure sessionSqlDataStructure) async {
+
+    await insertSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure.sessionStatusIndicator());
+
+    final localDialogues = await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
+
+    for (final dialogueElement in localDialogues) {
+
+      insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent());
+
+    }
+
+  }
+
   /// content = sessionJsonContent
   Future<SessionSqlDataStructure> insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content) async {
 

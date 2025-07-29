@@ -334,7 +334,15 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
 
         sessions.clear();
 
-        for (final element in allSessions) {
+        int endIndex = 7;
+
+        if (allSessions.length <= 7) {
+
+          endIndex = allSessions.length;
+
+        }
+
+        for (final element in allSessions.sublist(0, endIndex)) {
 
           SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
