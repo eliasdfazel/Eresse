@@ -11,17 +11,17 @@ class SuccessTip extends StatefulWidget {
 
   final String content;
 
-  const SuccessTip({super.key, required this.content, required this.successTipPressed});
+  Color topLeftColor = ColorsResources.premiumDark.withAlpha(179);
+  Color centerColor = ColorsResources.premiumDark.withAlpha(0);
+  Color bottomRightColor = ColorsResources.premiumDark.withAlpha(179);
+
+  SuccessTip({super.key, required this.content, required this.successTipPressed, required this.topLeftColor, required this.centerColor, required this.bottomRightColor});
 
   @override
   State<SuccessTip> createState() => _SuccessTipState();
 
 }
 class _SuccessTipState extends State<SuccessTip> {
-
-  Color topLeftColor = ColorsResources.premiumDark.withAlpha(179);
-  Color centerColor = ColorsResources.premiumDark.withAlpha(0);
-  Color bottomRightColor = ColorsResources.premiumDark.withAlpha(179);
 
   @override
   void initState() {
@@ -73,9 +73,9 @@ class _SuccessTipState extends State<SuccessTip> {
                               border: GradientBoxBorder(
                                   gradient: LinearGradient(
                                       colors: [
-                                        topLeftColor,
-                                        centerColor,
-                                        bottomRightColor,
+                                        widget.topLeftColor,
+                                        widget.centerColor,
+                                        widget.bottomRightColor,
                                       ],
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight

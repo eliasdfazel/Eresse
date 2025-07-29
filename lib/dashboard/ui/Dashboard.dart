@@ -37,7 +37,7 @@ class Dashboard extends StatefulWidget {
   @override
   State<Dashboard> createState() => _DashboardState();
 }
-class _DashboardState extends State<Dashboard> implements NetworkInterface, Syncing {
+class _DashboardState extends State<Dashboard> with TickerProviderStateMixin implements NetworkInterface, Syncing {
 
   final DashboardDI _dashboardDI = DashboardDI();
 
@@ -61,6 +61,12 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
       color: ColorsResources.premiumLight.withAlpha(73)
   );
 
+  late AnimationController _animationController;
+  late AnimationController _animationControllerCenter;
+
+  late Animation<Color?> tipColorAnimation;
+  late Animation<Color?> tipCenterColorAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -79,6 +85,19 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
      * End - Network Listener
      */
 
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 999),
+      vsync: this
+    );
+
+    _animationControllerCenter = AnimationController(
+      duration: const Duration(milliseconds: 999),
+      vsync: this
+    );
+
+    tipColorAnimation = ColorTween(begin: ColorsResources.premiumDark.withAlpha(159), end: ColorsResources.premiumLight.withAlpha(159)).animate(_animationController);
+    tipCenterColorAnimation = ColorTween(begin: Colors.transparent, end: Colors.transparent).animate(_animationControllerCenter);
+
     retrieveSuccessTip();
 
     retrieveSessions();
@@ -94,6 +113,10 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
     /*
      * End - Network Listener
      */
+
+    _animationController.dispose();
+    _animationControllerCenter.dispose();
+
     super.dispose();
   }
 
@@ -130,6 +153,9 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
                       children: [
 
                         SuccessTip(
+                          topLeftColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(179),
+                          centerColor: tipCenterColorAnimation.value ?? Colors.transparent,
+                          bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(179),
                           content: successTipContent,
                           successTipPressed: (data) {
 
@@ -318,7 +344,20 @@ class _DashboardState extends State<Dashboard> implements NetworkInterface, Sync
 
         successTipContent = successTip;
 
+        tipCenterColorAnimation = ColorTween(begin: ColorsResources.premiumLight.withAlpha(199), end: Colors.transparent).animate(_animationControllerCenter);
+
       });
+
+      tipColorAnimation.addListener(() {
+        setState(() {});
+      });
+
+      tipCenterColorAnimation.addListener(() {
+        setState(() {});
+      });
+
+      _animationController.forward();
+      _animationControllerCenter.forward();
 
     }
 
