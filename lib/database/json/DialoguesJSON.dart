@@ -2,18 +2,17 @@ import 'dart:convert';
 
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
-import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DialoguesJSON {
 
-  Future<String> insertDialogueJson(String sessionJsonContent, ContentType contentType, String content) async {
+  Future<String> insertDialogueJson(String sessionJsonContent, ContentType contentType, String dialogueId, String content) async {
 
     final iterableJson = jsonDecode(sessionJsonContent);
 
     final dialogueJsonArray = List.from(iterableJson);
 
-    dialogueJsonArray.add("${now().toString()}: ${dialogueDataStructure(contentType, content)}");
+    dialogueJsonArray.add("$dialogueId: ${dialogueDataStructure(contentType, dialogueId, content)}");
 
     return jsonEncode(dialogueJsonArray);
   }

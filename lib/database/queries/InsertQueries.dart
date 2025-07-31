@@ -94,21 +94,23 @@ class InsertQueries {
 
     if (sessionSqlDataStructure != null) {
 
-      sessionSqlDataStructure.setSessionJsonContent(await _dialoguesJSON.insertDialogueJson(sessionSqlDataStructure.getSessionJsonContent(), contentType, content));
+      sessionSqlDataStructure.setSessionJsonContent(await _dialoguesJSON.insertDialogueJson(sessionSqlDataStructure.getSessionJsonContent(), contentType, sessionSqlDataStructure.getSessionId(), content));
       sessionSqlDataStructure.setUpdatedTimestamp(now().toString());
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
     } else {
 
+      final dialogueId = now().toString();
+
       sessionSqlDataStructure = SessionSqlDataStructure(
           sessionId: sessionId,
-          createdTimestamp: now().toString(),
+          createdTimestamp: dialogueId,
           updatedTimestamp: now().toString(),
           sessionTitle: 'N/A',
           sessionSummary: 'N/A',
           sessionStatus: SessionStatus.sessionOpen.name,
-          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, content)
+          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, now().toString(), content)
       );
 
       await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),
@@ -128,7 +130,7 @@ class InsertQueries {
   Future insertDialoguesSync(User firebaseUser, String sessionId, ContentType contentType, String content, String dialogueId) async {
 
       await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionElementDocument(firebaseUser, sessionId, dialogueId))
-          .set(dialogueDataStructure(contentType, content));
+          .set(dialogueDataStructure(contentType, dialogueId, content));
 
   }
 

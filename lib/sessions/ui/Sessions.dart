@@ -23,6 +23,7 @@ import 'package:Eresse/sessions/ui/sections/ActionsBar.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
+import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/actions/ElementsActions.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
@@ -291,7 +292,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType, content);
 
-      processLastDialogue(dialogueDataStructure(contentType, content));
+      processLastDialogue(dialogueDataStructure(contentType, content, now().toString()));
 
     }
 

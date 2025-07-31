@@ -1,14 +1,14 @@
-import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum ContentType {
   queryType, decisionType, askType
 }
 
-dynamic dialogueDataStructure(ContentType contentType, String content) {
+dynamic dialogueDataStructure(ContentType contentType, String dialogueId, String content) {
 
   return {
-    DialogueDataStructure.timestampKey: now(),
+    DialogueDataStructure.dialogueIdKey: dialogueId,
+    DialogueDataStructure.timestampKey: dialogueId,
     DialogueDataStructure.contentTypeKey: contentType.name,
     DialogueDataStructure.contentKey: content,
   };
@@ -37,7 +37,7 @@ class DialogueDataStructure {
 
   String? documentId() {
 
-    return _documentSnapshot?.id;
+    return _queryDocumentData[DialogueDataStructure.dialogueIdKey];
   }
 
   ContentType contentType() {
