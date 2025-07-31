@@ -130,7 +130,7 @@ class InsertQueries {
   Future insertDialoguesSync(User firebaseUser, String sessionId, ContentType contentType, String content, String dialogueId) async {
 
       await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionElementDocument(firebaseUser, sessionId, dialogueId))
-          .set(dialogueDataStructure(contentType, dialogueId, content));
+          .set(dialogueDataStructure(contentType, dialogueId, content: content));
 
   }
 
