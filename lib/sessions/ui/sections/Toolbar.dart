@@ -2,18 +2,20 @@ import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
 typedef ArchivePressed = void Function();
+typedef ImageSelectorPressed = void Function();
 typedef AskPressed = void Function(String element);
 
 class Toolbar extends StatefulWidget {
 
   final ArchivePressed archivePressed;
+  final ImageSelectorPressed imageSelectorPressed;
   final AskPressed askPressed;
 
   double toolbarOpacity = 0;
 
   final TextEditingController textController;
 
-  Toolbar({super.key, required this.archivePressed, required this.askPressed, required this.textController, required this.toolbarOpacity});
+  Toolbar({super.key, required this.archivePressed, required this.imageSelectorPressed, required this.askPressed, required this.textController, required this.toolbarOpacity});
 
   @override
   State<Toolbar> createState() => _Toolbar();
@@ -68,6 +70,31 @@ class _Toolbar extends State<Toolbar> {
                                       height: 51,
                                       child: Image(
                                         image: AssetImage("assets/save.png"),
+                                      )
+                                  )
+                              )
+                          ),
+
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: InkWell(
+                                  borderRadius: BorderRadius.circular(19),
+                                  onTap: () {
+
+                                    widget.imageSelectorPressed();
+
+                                    setState(() {
+
+                                      widget.toolbarOpacity = 0;
+
+                                    });
+
+                                  },
+                                  child: SizedBox(
+                                      width: 51,
+                                      height: 51,
+                                      child: Image(
+                                        image: AssetImage("assets/image.png"),
                                       )
                                   )
                               )

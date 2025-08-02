@@ -9,6 +9,7 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
@@ -21,6 +22,7 @@ import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
 import 'package:Eresse/sessions/ui/sections/InputsBar.dart';
 import 'package:Eresse/sessions/ui/sections/SessionSummary.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
+import 'package:Eresse/utils/files/ImageSelector.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
@@ -248,6 +250,17 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                     if (textController.text.isNotEmpty) {
 
                       askingProcess(question);
+
+                    }
+
+                  },
+                  imageSelectorPressed: () async {
+
+                    File? imageFile = await selectImage();
+
+                    if (imageFile != null) {
+
+                      
 
                     }
 
