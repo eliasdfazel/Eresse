@@ -28,7 +28,8 @@ class _SessionSummaryState extends State<SessionSummary> {
   @override
   Widget build(BuildContext context) {
 
-    return Align(
+    return (widget.content.isEmpty)
+        ? Container() : Align(
         alignment: Alignment.topCenter,
         child: SizedBox(
             width: double.infinity,
