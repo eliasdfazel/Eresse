@@ -372,6 +372,12 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         processLastDialogue(dialogueDataStructure(ContentType.askType, content: queryResult, now().toString()));
 
+        setState(() {
+
+          toolbarOpacity = 0;
+
+        });
+
       }
 
     }
@@ -392,9 +398,18 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  void selectDialogue(DialogueSqlDataStructure dialogueDataStructure) {
+  Future selectDialogue(DialogueSqlDataStructure dialogueDataStructure) async {
 
     selectedDialogue = dialogueDataStructure;
+
+    setState(() {
+
+      loadingAnimation = LoadingAnimationWidget.dotsTriangle(
+          size: 51,
+          color: ColorsResources.premiumLight.withAlpha(73)
+      );
+
+    });
 
     setState(() {
 
