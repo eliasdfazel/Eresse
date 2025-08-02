@@ -19,6 +19,7 @@ import 'package:Eresse/sessions/ui/elements/AskElement.dart';
 import 'package:Eresse/sessions/ui/elements/DecisionElement.dart';
 import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
 import 'package:Eresse/sessions/ui/sections/InputsBar.dart';
+import 'package:Eresse/sessions/ui/sections/SessionSummary.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
@@ -72,6 +73,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   TextEditingController textController = TextEditingController();
   DialogueSqlDataStructure? selectedDialogue;
 
+  String sessionSummary = '';
+
   @override
   void initState() {
     super.initState();
@@ -123,47 +126,64 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
               /* END - Decoration */
 
               /* START - Content */
-              ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: dialogues.length,
-                  itemBuilder: (context, index) {
+              ListView(
+                controller: _scrollController,
+                padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                children: [
 
-                    Widget element = Container();
+                  SessionSummary(
+                      content: sessionSummary
+                  ),
 
-                    switch (dialogues[index].contentTypeIndicator()) {
-                      case ContentType.queryType: {
+                  Divider(
+                    height: 51,
+                    color: Colors.transparent,
+                  ),
 
-                        element = QueryElement(queryPressed: (data) {
+                  ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: dialogues.length,
+                      itemBuilder: (context, index) {
 
-                          selectDialogue(data);
+                        Widget element = Container();
 
-                        }, queryDataStructure: dialogues[index]);
+                        switch (dialogues[index].contentTypeIndicator()) {
+                          case ContentType.queryType: {
 
+                            element = QueryElement(queryPressed: (data) {
+
+                              selectDialogue(data);
+
+                            }, queryDataStructure: dialogues[index]);
+
+                          }
+                          case ContentType.decisionType: {
+
+
+                            element = DecisionElement(decisionPressed: (data) {
+
+                              selectDialogue(data);
+
+                            }, queryDataStructure: dialogues[index]);
+
+                          }
+                          case ContentType.askType: {
+
+                            element = AskElement(askPressed: (data) {
+
+                            }, queryDataStructure: dialogues[index]);
+
+                          }
+                        }
+
+                        return element;
                       }
-                      case ContentType.decisionType: {
+                  )
 
-
-                        element = DecisionElement(decisionPressed: (data) {
-
-                          selectDialogue(data);
-
-                        }, queryDataStructure: dialogues[index]);
-
-                      }
-                      case ContentType.askType: {
-
-                        element = AskElement(askPressed: (data) {
-
-                        }, queryDataStructure: dialogues[index]);
-
-                      }
-                    }
-
-                    return element;
-                  }
+                ]
               ),
               /* END - Content */
 
@@ -310,7 +330,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         });
 
-        scrollToEnd(_scrollController);
+        retrieveSessionSummary();
 
         _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId);
 
@@ -324,6 +344,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       }
 
     }
+
 
     setState(() {
 
@@ -416,6 +437,32 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       toolbarOpacity = (toolbarOpacity == 1) ? 0 : 1;
 
     });
+
+  }
+
+  Future retrieveSessionSummary() async {
+
+    if (_sessionsDI.firebaseUser != null) {
+
+      final sessionSqlDataStructure = await _sessionsDI.retrieveQueries.retrieveSession(_sessionsDI.firebaseUser!, widget.sessionId);
+
+      if (sessionSqlDataStructure != null) {
+
+        if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
+
+          scrollToEnd(_scrollController);
+
+        }
+
+        setState(() {
+
+          sessionSummary = sessionSqlDataStructure.getSessionSummary();
+
+        });
+
+      }
+
+    }
 
   }
 

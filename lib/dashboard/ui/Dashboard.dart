@@ -152,7 +152,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
               /* START - Content */
               ListView(
-                  padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
+                  padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
                   children: [

@@ -25,6 +25,11 @@ class StringsResources {
     return "Success Tip";
   }
 
+  static String summaryTitle() {
+
+    return "Summary";
+  }
+
   static String openSessionsTitle() {
 
     return "Open Sessions";

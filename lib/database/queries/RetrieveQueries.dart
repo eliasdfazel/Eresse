@@ -16,11 +16,22 @@ class RetrieveQueries {
 
   final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
+  Future<SessionSqlDataStructure?> retrieveSession(User firebaseUser, String sessionId) async {
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+
+    return sessionSqlDataStructure;
+  }
+
   Future<List<Map<String, dynamic>>> retrieveSessions(User firebaseUser) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
     final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
+
+    databaseInstance.close();
 
     return allSessions;
   }
@@ -47,6 +58,8 @@ class RetrieveQueries {
       dialogues.addAll(await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent()));
 
     }
+
+    databaseInstance.close();
 
     return dialogues;
   }
