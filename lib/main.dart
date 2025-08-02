@@ -96,10 +96,10 @@ void main() async {
               child: MaterialApp(
                   debugShowCheckedModeBanner: false,
                   title: StringsResources.applicationName(),
-                  color: ColorsResources.primaryColor,
+                  color: ColorsResources.black,
                   theme: ThemeData(
                     fontFamily: 'Ubuntu',
-                    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
+                    colorScheme: ColorScheme.fromSwatch().copyWith(primary: ColorsResources.primaryColor),
                     pageTransitionsTheme: const PageTransitionsTheme(builders: {
                       TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
                       TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),

@@ -40,7 +40,7 @@ Widget entryDecorations() {
   );
 }
 
-Widget decorations() {
+Widget decorations({double backgroundOpacity = 1, double brandingOpacity = 1}) {
 
   return Stack(
     children: [
@@ -50,12 +50,15 @@ Widget decorations() {
           child: SizedBox(
             height: double.infinity,
             width: double.infinity,
-            child: Image(
-              image: AssetImage('assets/decoration_background.png'),
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
+            child: Opacity(
+              opacity: backgroundOpacity,
+              child: Image(
+                  image: AssetImage('assets/decoration_background.png'),
+                  height: double.infinity,
+                  width: double.infinity,
+                  fit: BoxFit.cover
+              )
+            )
           )
       ),
 
@@ -68,9 +71,12 @@ Widget decorations() {
                 maxWidth: 313,
                 maxHeight: 313
             ),
-            child: Image(
-              image: AssetImage('assets/logo_blur.png'),
-            ),
+            child: Opacity(
+              opacity: brandingOpacity,
+              child: Image(
+                image: AssetImage('assets/logo_blur.png'),
+              )
+            )
           )
       )
 

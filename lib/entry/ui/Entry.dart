@@ -14,7 +14,6 @@ import 'package:Eresse/dashboard/ui/Dashboard.dart';
 import 'package:Eresse/entry/di/EntryDI.dart';
 import 'package:Eresse/profile/authentication/Interface/AuthenticationInterface.dart';
 import 'package:Eresse/resources/colors_resources.dart';
-import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/ui/Decorations.dart';
@@ -85,32 +84,19 @@ class _EntryState extends State<Entry> implements NetworkInterface, Authenticati
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: StringsResources.applicationName(),
-        color: ColorsResources.primaryColor,
-        theme: ThemeData(
-          fontFamily: 'Ubuntu',
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
-            TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
-          }),
-        ),
-        home: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: ColorsResources.primaryColor,
-            body: Stack(
-                children: [
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: ColorsResources.primaryColor,
+        body: Stack(
+            children: [
 
-                  /* START - Decoration */
-                  entryDecorations(),
-                  /* END - Decoration */
+              /* START - Decoration */
+              entryDecorations(),
+              /* END - Decoration */
 
-                  _networkShield
+              _networkShield
 
-                ]
-            )
+            ]
         )
     );
   }

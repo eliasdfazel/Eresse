@@ -140,101 +140,89 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: StringsResources.applicationName(),
-        color: ColorsResources.primaryColor,
-        theme: ThemeData(
-          fontFamily: 'Ubuntu',
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
-            TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
-          }),
-        ),
-        home: Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: ColorsResources.primaryColor,
-            body: Stack(
-                children: [
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: ColorsResources.primaryColor,
+        body: Stack(
+            children: [
 
-                  /* START - Decoration */
-                  decorations(),
-                  /* END - Decoration */
+              /* START - Decoration */
+              decorations(),
+              /* END - Decoration */
 
-                  /* START - Content */
-                  ListView(
-                      padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
+              /* START - Content */
+              ListView(
+                  padding: const EdgeInsets.fromLTRB(0, 151, 0, 151),
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  children: [
 
-                        SuccessTip(
-                          topLeftColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
-                          centerColor: tipCenterColorAnimation.value ?? Colors.transparent,
-                          bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
-                          content: successTipContent,
-                          successTipPressed: (data) {
+                    SuccessTip(
+                      topLeftColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
+                      centerColor: tipCenterColorAnimation.value ?? Colors.transparent,
+                      bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
+                      content: successTipContent,
+                      successTipPressed: (data) {
 
-                          },
-                        ),
+                      },
+                    ),
 
-                        Divider(
-                          height: 51,
-                          color: Colors.transparent,
-                        ),
+                    Divider(
+                      height: 51,
+                      color: Colors.transparent,
+                    ),
 
-                        /* END - Session Archive */
-                        Padding(
-                          padding: EdgeInsets.only(left: 37, right: 37),
-                          child: Text(
-                            StringsResources.openSessionsTitle().toUpperCase(),
-                            style: TextStyle(
+                    /* END - Session Archive */
+                    Padding(
+                        padding: EdgeInsets.only(left: 37, right: 37),
+                        child: Text(
+                          StringsResources.openSessionsTitle().toUpperCase(),
+                          style: TextStyle(
                               color: ColorsResources.premiumLight.withAlpha(179),
                               fontSize: 15,
                               letterSpacing: 3.7,
                               fontFamily: 'Anurati'
-                            ),
-                          )
-                        ),
+                          ),
+                        )
+                    ),
 
-                        Divider(
-                          height: 11,
-                          color: Colors.transparent,
-                        ),
+                    Divider(
+                      height: 11,
+                      color: Colors.transparent,
+                    ),
 
-                        ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: sessions.length,
-                            itemBuilder: (context, index) {
+                    ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: sessions.length,
+                        itemBuilder: (context, index) {
 
-                              return SessionElement(sessionDataStructure: sessions[index], sessionPressed: (data) {
+                          return SessionElement(sessionDataStructure: sessions[index], sessionPressed: (data) {
 
-                                if (_dashboardDI.firebaseUser != null) {
+                            if (_dashboardDI.firebaseUser != null) {
 
-                                  navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId())).then((data) {
+                              navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId())).then((data) {
 
-                                    retrieveSessions();
-
-                                  });
-
-                                }
+                                retrieveSessions();
 
                               });
+
                             }
-                        ),
-                        /* END - Session Archive */
 
-                      ]
-                  ),
-                  /* END - Content */
+                          });
+                        }
+                    ),
+                    /* END - Session Archive */
 
-                  /* START - Profile */
-                  Positioned(
-                    top: 51,
-                    left: 19,
-                    child: NextedButtons(
+                  ]
+              ),
+              /* END - Content */
+
+              /* START - Profile */
+              Positioned(
+                  top: 51,
+                  left: 19,
+                  child: NextedButtons(
                       buttonTag: "Profile",
                       imageNetwork: true,
                       imageResources: _dashboardDI.firebaseUser!.photoURL.toString(),
@@ -244,70 +232,69 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
 
                       }
-                    )
-                  ),
-                  /* END - Profile */
+                  )
+              ),
+              /* END - Profile */
 
-                  /* START - Preferences */
-                  Positioned(
-                      top: 51,
-                      right: 19,
-                      child: NextedButtons(
-                          buttonTag: "Preferences",
-                          imageNetwork: false,
-                          imageResources: "assets/settings.png",
-                          boxFit: BoxFit.contain,
-                          paddingInset: 5,
-                          onPressed: (data) {
-
-
+              /* START - Preferences */
+              Positioned(
+                  top: 51,
+                  right: 19,
+                  child: NextedButtons(
+                      buttonTag: "Preferences",
+                      imageNetwork: false,
+                      imageResources: "assets/settings.png",
+                      boxFit: BoxFit.contain,
+                      paddingInset: 5,
+                      onPressed: (data) {
 
 
-                          }
-                      )
-                  ),
-                  /* END - Preferences */
 
-                  Positioned(
-                      top: 51,
-                      left: 19,
-                      right: 19,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: loadingAnimation
-                      )
-                  ),
-
-                  /* START - Actions Bar */
-                  ActionsBar(
-                      startPressed: (_) {
-
-                        if (_dashboardDI.firebaseUser != null) {
-
-                          navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString())).then((data) {
-
-                            retrieveSessions();
-
-                          });
-
-                        }
-
-                      },
-                      searchPressed: (_) {
-
-                      },
-                      archivePressed: (_) {
 
                       }
-                  ),
-                  /* END - Actions Bar */
+                  )
+              ),
+              /* END - Preferences */
 
-                  /* START - Network */
-                  _networkShield
-                  /* END - Network */
+              Positioned(
+                  top: 51,
+                  left: 19,
+                  right: 19,
+                  child: Align(
+                      alignment: Alignment.topCenter,
+                      child: loadingAnimation
+                  )
+              ),
 
-                ]
-            )
+              /* START - Actions Bar */
+              ActionsBar(
+                  startPressed: (_) {
+
+                    if (_dashboardDI.firebaseUser != null) {
+
+                      navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString())).then((data) {
+
+                        retrieveSessions();
+
+                      });
+
+                    }
+
+                  },
+                  searchPressed: (_) {
+
+                  },
+                  archivePressed: (_) {
+
+                  }
+              ),
+              /* END - Actions Bar */
+
+              /* START - Network */
+              _networkShield
+              /* END - Network */
+
+            ]
         )
     );
   }

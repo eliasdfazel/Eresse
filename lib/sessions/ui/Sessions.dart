@@ -14,7 +14,6 @@ import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
-import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/sessions/di/SessionsDI.dart';
 import 'package:Eresse/sessions/ui/elements/AskElement.dart';
 import 'package:Eresse/sessions/ui/elements/DecisionElement.dart';
@@ -112,150 +111,137 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: StringsResources.applicationName(),
-        color: ColorsResources.primaryColor,
-        theme: ThemeData(
-          fontFamily: 'Ubuntu',
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorsResources.primaryColor),
-          pageTransitionsTheme: const PageTransitionsTheme(builders: {
-            TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
-            TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
-          }),
-        ),
-        home: Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: ColorsResources.primaryColor,
-            body: Stack(
-                children: [
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: ColorsResources.black,
+        body: Stack(
+            children: [
 
-                  /* START - Decoration */
-                  decorations(),
-                  /* END - Decoration */
+              /* START - Decoration */
+              decorations(backgroundOpacity: 0.37, brandingOpacity: 0.37),
+              /* END - Decoration */
 
-                  /* START - Content */
-                  ListView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: dialogues.length,
-                      itemBuilder: (context, index) {
+              /* START - Content */
+              ListView.builder(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: dialogues.length,
+                  itemBuilder: (context, index) {
 
-                        Widget element = Container();
+                    Widget element = Container();
 
-                        switch (dialogues[index].contentTypeIndicator()) {
-                          case ContentType.queryType: {
+                    switch (dialogues[index].contentTypeIndicator()) {
+                      case ContentType.queryType: {
 
-                            element = QueryElement(queryPressed: (data) {
+                        element = QueryElement(queryPressed: (data) {
 
-                              selectDialogue(data);
+                          selectDialogue(data);
 
-                            }, queryDataStructure: dialogues[index]);
-
-                          }
-                          case ContentType.decisionType: {
-
-
-                            element = DecisionElement(decisionPressed: (data) {
-
-                              selectDialogue(data);
-
-                            }, queryDataStructure: dialogues[index]);
-
-                          }
-                          case ContentType.askType: {
-
-                            element = AskElement(askPressed: (data) {
-
-                            }, queryDataStructure: dialogues[index]);
-
-                          }
-                        }
-
-                        return element;
-                      }
-                  ),
-                  /* END - Content */
-
-                  /* START - Back */
-                  Positioned(
-                      top: 51,
-                      left: 19,
-                      child: NextedButtons(
-                          buttonTag: "Back",
-                          onPressed: (data) {
-
-                            navigatePop(context);
-
-                          },
-                          imageResources: "assets/back.png",
-                          imageNetwork: false,
-                          boxFit: BoxFit.none,
-                          paddingInset: 0
-                      )
-                  ),
-                  /* END - Back */
-
-                  Positioned(
-                      top: 51,
-                      left: 19,
-                      right: 19,
-                      child: Align(
-                          alignment: Alignment.topCenter,
-                          child: loadingAnimation
-                      )
-                  ),
-
-                  /* START - Actions Bar */
-                  ActionsBar(
-                      queryPressed: (content) {
-                        debugPrint('Query: $content');
-
-                        insertDialogues(ContentType.queryType, content);
-
-                      },
-                      decisionPressed: (content) {
-                        debugPrint('Decision: $content');
-
-                        insertDialogues(ContentType.decisionType, content);
-
-                      },
-                      inputPressed: () {
-
-                        scrollToEnd(_scrollController);
-
-                      },
-                  ),
-                  /* END - Actions Bar */
-
-                  /* START - Actions Bar */
-                  Toolbar(
-                      toolbarOpacity: toolbarOpacity,
-                      askPressed: (question) {
-
-                        // Call AI
-                        // and Store Answer
-                        askingProcess();
-
-                      },
-                      archivePressed: (content) {
-
-                        // check for result
-                        // archive it with success/failed result
-                        archivingProcess();
+                        }, queryDataStructure: dialogues[index]);
 
                       }
-                  ),
-                  /* END - Actions Bar */
+                      case ContentType.decisionType: {
 
-                  /* START - Network */
-                  _networkShield
-                  /* END - Network */
 
-                ]
-            )
+                        element = DecisionElement(decisionPressed: (data) {
+
+                          selectDialogue(data);
+
+                        }, queryDataStructure: dialogues[index]);
+
+                      }
+                      case ContentType.askType: {
+
+                        element = AskElement(askPressed: (data) {
+
+                        }, queryDataStructure: dialogues[index]);
+
+                      }
+                    }
+
+                    return element;
+                  }
+              ),
+              /* END - Content */
+
+              /* START - Back */
+              Positioned(
+                  top: 51,
+                  left: 19,
+                  child: NextedButtons(
+                      buttonTag: "Back",
+                      onPressed: (data) {
+
+                        navigatePop(context);
+
+                      },
+                      imageResources: "assets/back.png",
+                      imageNetwork: false,
+                      boxFit: BoxFit.none,
+                      paddingInset: 0
+                  )
+              ),
+              /* END - Back */
+
+              Positioned(
+                  top: 51,
+                  left: 19,
+                  right: 19,
+                  child: Align(
+                      alignment: Alignment.topCenter,
+                      child: loadingAnimation
+                  )
+              ),
+
+              /* START - Actions Bar */
+              ActionsBar(
+                queryPressed: (content) {
+                  debugPrint('Query: $content');
+
+                  insertDialogues(ContentType.queryType, content);
+
+                },
+                decisionPressed: (content) {
+                  debugPrint('Decision: $content');
+
+                  insertDialogues(ContentType.decisionType, content);
+
+                },
+                inputPressed: () {
+
+                  scrollToEnd(_scrollController);
+
+                },
+              ),
+              /* END - Actions Bar */
+
+              /* START - Actions Bar */
+              Toolbar(
+                  toolbarOpacity: toolbarOpacity,
+                  askPressed: (question) {
+
+                    // Call AI
+                    // and Store Answer
+                    askingProcess();
+
+                  },
+                  archivePressed: (content) {
+
+                    // check for result
+                    // archive it with success/failed result
+                    archivingProcess();
+
+                  }
+              ),
+              /* END - Actions Bar */
+
+              /* START - Network */
+              _networkShield
+              /* END - Network */
+
+            ]
         )
     );
   }
