@@ -13,7 +13,7 @@ Widget entryDecorations() {
             height: double.infinity,
             width: double.infinity,
             child: Image(
-              image: AssetImage('assets/decoration_background.png'),
+              image: AssetImage('assets/decoration_background.jpg'),
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -53,7 +53,7 @@ Widget decorations({double backgroundOpacity = 1, double brandingOpacity = 1}) {
             child: Opacity(
               opacity: backgroundOpacity,
               child: Image(
-                  image: AssetImage('assets/decoration_background.png'),
+                  image: AssetImage('assets/decoration_background.jpg'),
                   height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.cover

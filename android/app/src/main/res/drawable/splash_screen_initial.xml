@@ -27,6 +27,12 @@
     </item>
 
     <item
+                android:gravity="center"
+                android:drawable="@drawable/decoration_background">
+
+    </item>
+
+    <item
         android:width="319dp"
         android:height="319dp"
         android:gravity="center"
