@@ -51,6 +51,7 @@ class _Toolbar extends State<Toolbar> {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: InkWell(
+                                  borderRadius: BorderRadius.circular(19),
                                   onTap: () {
 
                                     widget.archivePressed();
@@ -75,6 +76,7 @@ class _Toolbar extends State<Toolbar> {
                           Align(
                               alignment: Alignment.centerRight,
                               child: InkWell(
+                                  borderRadius: BorderRadius.circular(19),
                                   onTap: () {
 
                                     widget.askPressed(widget.textController.text);

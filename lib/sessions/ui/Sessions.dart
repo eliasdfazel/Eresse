@@ -381,6 +381,15 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
     if (_sessionsDI.firebaseUser != null) {
       debugPrint('Input Query: $inputQuery');
 
+      setState(() {
+
+        loadingAnimation = LoadingAnimationWidget.dotsTriangle(
+            size: 51,
+            color: ColorsResources.premiumLight.withAlpha(73)
+        );
+
+      });
+
       final queryResult = await _sessionsDI.askQuery.retrieveAnswer((selectedDialogue != null) ? selectedDialogue!.getContent() : inputQuery);
 
       if (queryResult != null) {
@@ -400,6 +409,12 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
         });
 
       }
+
+      setState(() {
+
+        loadingAnimation = Container();
+
+      });
 
     }
 
@@ -425,16 +440,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     setState(() {
 
-      loadingAnimation = LoadingAnimationWidget.dotsTriangle(
-          size: 51,
-          color: ColorsResources.premiumLight.withAlpha(73)
-      );
-
-    });
-
-    setState(() {
-
-      toolbarOpacity = (toolbarOpacity == 1) ? 0 : 1;
+      toolbarOpacity = 1;
 
     });
 
