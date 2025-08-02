@@ -6,9 +6,9 @@ class TimesIO {
 
   final PreferencesIO _preferencesIO = PreferencesIO();
 
-  Future storeTime(String typeTimePassed, int inputDay) async {
+  Future storeTime(String typeTimePassed, int currentTime, int inputDay) async {
     
-    await _preferencesIO.storeInt(typeTimePassed, inputDay);
+    await _preferencesIO.storeInt(typeTimePassed, currentTime + (oneDayMillisecond * inputDay));
 
   }
 
@@ -24,7 +24,7 @@ class TimesIO {
     if (currentTime > await _retrieveTime(typeTimePassed)) {
 
       // Future Time; currentTime + (oneDayMillisecond * inputPassedDays)
-      await storeTime(typeTimePassed, currentTime + (1 * inputPassedDays));
+      await storeTime(typeTimePassed, currentTime, inputPassedDays);
 
       return true;
 

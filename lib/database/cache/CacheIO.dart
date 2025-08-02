@@ -9,7 +9,6 @@ class CacheIO {
 
   Future store(String inputKey, String inputData, {int cacheTime = 7}) async {
 
-    await _timesIO.storeTime(inputKey, cacheTime);
     await _preferencesIO.store(inputKey, inputData);
 
   }
