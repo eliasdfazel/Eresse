@@ -45,7 +45,7 @@ class QueryElement extends StatelessWidget {
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft
                     ),
-                    width: 1.73,
+                    width: 1.37,
                   ),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(11),

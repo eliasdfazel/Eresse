@@ -45,7 +45,7 @@ class DecisionElement extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight
                     ),
-                    width: 1.73,
+                    width: 1.37,
                   ),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(19),
