@@ -21,10 +21,10 @@ class TimesIO {
 
     final currentTime = now();
 
-    if (currentTime > await _retrieveTime(typeTimePassed)) {
+    if (currentTime > await _retrieveTime('${typeTimePassed}_TIME')) {
 
       // Future Time; currentTime + (oneDayMillisecond * inputPassedDays)
-      await storeTime(typeTimePassed, currentTime, inputPassedDays);
+      await storeTime('${typeTimePassed}_TIME', currentTime, inputPassedDays);
 
       return true;
 

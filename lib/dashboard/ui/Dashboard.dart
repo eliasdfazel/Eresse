@@ -52,6 +52,15 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
    * End - Network Listener
    */
 
+  /*
+   * Start - Receive Shared Text
+   */
+  static const platform = MethodChannel('app.channel.shared.data');
+  String sharedData = '';
+  /*
+   * End - Receive Shared Text
+   */
+
   String successTipContent = '';
 
   List<SessionSqlDataStructure> sessions = [];
@@ -72,6 +81,14 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
     super.initState();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    /*
+     * Start - Receive Shared Text
+     */
+    receiveSharedText();
+    /*
+     * End - Receive Shared Text
+     */
 
     /*
      * Start - Network Listener
@@ -411,5 +428,26 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
     }
 
   }
+
+  /*
+   * Start - Receive Shared Text
+   */
+  Future<void> receiveSharedText() async {
+
+    var sharedData = await platform.invokeMethod('receiveSharedText');
+
+    if (sharedData != null) {
+
+      setState(() {
+
+        this.sharedData = sharedData as String;
+
+      });
+
+    }
+  }
+  /*
+   * End - Receive Shared Text
+   */
 
 }
