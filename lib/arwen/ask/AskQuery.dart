@@ -100,6 +100,8 @@ class AskQuery {
 
     } else {
 
+      await Future.delayed(const Duration(milliseconds: 777));
+
       return cachedSuccessTip;
 
     }

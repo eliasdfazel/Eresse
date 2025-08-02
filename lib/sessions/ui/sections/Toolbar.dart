@@ -101,26 +101,29 @@ class _Toolbar extends State<Toolbar> {
                     )
                   ),
 
-                  Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.only(top: 13, bottom: 13),
-                      child: InkWell(
-                          onTap: () {
+                  InkWell(
+                      borderRadius: BorderRadius.circular(19),
+                      splashFactory: InkSparkle.splashFactory,
+                      splashColor: ColorsResources.black,
+                      onTap: () {
 
-                            showToolbar();
+                        showToolbar();
 
-                          },
+                      },
+                      child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.only(top: 13, bottom: 13),
                           child: SizedBox(
-                            height: 5,
-                            child: Image(
-                              image: AssetImage("assets/menu.png"),
                               height: 5,
-                              fit: BoxFit.contain,
-                              color: ColorsResources.premiumDark,
-                            )
+                              child: Image(
+                                image: AssetImage("assets/menu.png"),
+                                height: 5,
+                                fit: BoxFit.contain,
+                                color: ColorsResources.premiumDark,
+                              )
                           )
                       )
-                  ),
+                  )
 
                 ],
               )

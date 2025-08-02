@@ -8,13 +8,13 @@ typedef QueryPressed = void Function(String element);
 typedef DecisionPressed = void Function(String element);
 typedef InputPressed = void Function();
 
-class ActionsBar extends StatelessWidget {
+class InputsBar extends StatelessWidget {
 
   final QueryPressed queryPressed;
   final DecisionPressed decisionPressed;
   final InputPressed inputPressed;
 
-  ActionsBar({super.key, required this.queryPressed, required this.decisionPressed, required this.inputPressed});
+  InputsBar({super.key, required this.queryPressed, required this.decisionPressed, required this.inputPressed});
 
   final TextEditingController _textController = TextEditingController();
 

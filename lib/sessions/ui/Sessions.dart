@@ -18,7 +18,7 @@ import 'package:Eresse/sessions/di/SessionsDI.dart';
 import 'package:Eresse/sessions/ui/elements/AskElement.dart';
 import 'package:Eresse/sessions/ui/elements/DecisionElement.dart';
 import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
-import 'package:Eresse/sessions/ui/sections/ActionsBar.dart';
+import 'package:Eresse/sessions/ui/sections/InputsBar.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
@@ -196,7 +196,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
               ),
 
               /* START - Actions Bar */
-              ActionsBar(
+              InputsBar(
                 queryPressed: (content) {
                   debugPrint('Query: $content');
 
