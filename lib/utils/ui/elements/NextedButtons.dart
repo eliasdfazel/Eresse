@@ -35,6 +35,7 @@ class NextedButtons extends StatelessWidget {
         height: 51,
         width: 51,
         child: InkWell(
+          borderRadius: BorderRadius.circular(19),
           onTap: () => onPressed(buttonTag),
           child: Stack(
               children: [
