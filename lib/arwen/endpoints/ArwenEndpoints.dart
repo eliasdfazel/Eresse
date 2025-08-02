@@ -15,7 +15,7 @@ class ArwenEndpoints {
 
       aiEndpoint = await retrieveRemoteConfig(endpointKey);
 
-      await _preferencesIO.save(endpointKey, aiEndpoint);
+      await _preferencesIO.store(endpointKey, aiEndpoint);
 
     }
 

@@ -5,15 +5,26 @@ class PreferencesIO {
 
   final Future<SharedPreferences> _sharedPreferences = SharedPreferences.getInstance();
 
-  Future save(String keyValue, String inputValue) async {
+  Future store(String keyValue, String inputValue) async {
 
     (await _sharedPreferences).setString(keyValue.encode(), inputValue);
     
   }
-  
+
+  Future storeInt(String keyValue, int inputValue) async {
+
+    (await _sharedPreferences).setInt(keyValue.encode(), inputValue);
+
+  }
+
   Future<String?> read(String keyValue) async {
 
     return (await _sharedPreferences).getString(keyValue.encode());
+  }
+
+  Future<int?> readInt(String keyValue) async {
+
+    return (await _sharedPreferences).getInt(keyValue.encode());
   }
 
 }

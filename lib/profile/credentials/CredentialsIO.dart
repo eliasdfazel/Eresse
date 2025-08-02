@@ -15,7 +15,7 @@ class CredentialsIO {
 
       aiApiKey = await retrieveRemoteConfig(CredentialsIO.apiKEY);
 
-      await _preferencesIO.save(CredentialsIO.apiKEY, aiApiKey);
+      await _preferencesIO.store(CredentialsIO.apiKEY, aiApiKey);
 
     }
 
