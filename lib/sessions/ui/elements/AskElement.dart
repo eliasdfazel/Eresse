@@ -38,7 +38,15 @@ class AskElement extends StatelessWidget {
                 width: 1.73,
               ),
               borderRadius: BorderRadius.all(Radius.circular(19)),
-              color: ColorsResources.premiumDark.withAlpha(199),
+              gradient: LinearGradient(
+                  colors: [
+                    ColorsResources.premiumDark.withAlpha(159),
+                    ColorsResources.premiumDark.withAlpha(137),
+                    ColorsResources.premiumDark.withAlpha(159),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight
+              )
           ),
           child: Padding(
               padding: EdgeInsets.all(11),

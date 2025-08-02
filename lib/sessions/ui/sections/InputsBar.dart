@@ -14,9 +14,10 @@ class InputsBar extends StatelessWidget {
   final DecisionPressed decisionPressed;
   final InputPressed inputPressed;
 
-  InputsBar({super.key, required this.queryPressed, required this.decisionPressed, required this.inputPressed});
+  final TextEditingController textController;
 
-  final TextEditingController _textController = TextEditingController();
+  InputsBar({super.key, required this.queryPressed, required this.decisionPressed, required this.inputPressed, required this.textController});
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class InputsBar extends StatelessWidget {
                             child: InkWell(
                                 onTap: () {
 
-                                  decisionPressed(_textController.text);
+                                  decisionPressed(textController.text);
 
                                 },
                                 child: SizedBox(
@@ -86,7 +87,7 @@ class InputsBar extends StatelessWidget {
                               padding: EdgeInsets.only(left: 13, right: 13),
                               alignment: Alignment.centerLeft,
                               child: TextField(
-                                controller: _textController,
+                                controller: textController,
                                 cursorRadius: Radius.circular(99),
                                 autofocus: false,
                                 cursorColor: ColorsResources.primaryColor,
@@ -123,7 +124,7 @@ class InputsBar extends StatelessWidget {
                             child: InkWell(
                                 onTap: () {
 
-                                  queryPressed(_textController.text);
+                                  queryPressed(textController.text);
 
                                 },
                                 child: SizedBox(

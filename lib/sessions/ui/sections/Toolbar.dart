@@ -1,7 +1,7 @@
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
-typedef ArchivePressed = void Function(String element);
+typedef ArchivePressed = void Function();
 typedef AskPressed = void Function(String element);
 
 class Toolbar extends StatefulWidget {
@@ -11,15 +11,14 @@ class Toolbar extends StatefulWidget {
 
   double toolbarOpacity = 0;
 
-  Toolbar({super.key, required this.archivePressed, required this.askPressed, required this.toolbarOpacity});
+  final TextEditingController textController;
+
+  Toolbar({super.key, required this.archivePressed, required this.askPressed, required this.textController, required this.toolbarOpacity});
 
   @override
   State<Toolbar> createState() => _Toolbar();
 }
 class _Toolbar extends State<Toolbar> {
-
-  final TextEditingController _textController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +53,7 @@ class _Toolbar extends State<Toolbar> {
                               child: InkWell(
                                   onTap: () {
 
-                                    widget.askPressed(_textController.text);
+                                    widget.archivePressed();
 
                                     setState(() {
 
@@ -78,7 +77,7 @@ class _Toolbar extends State<Toolbar> {
                               child: InkWell(
                                   onTap: () {
 
-                                    widget.askPressed(_textController.text);
+                                    widget.askPressed(widget.textController.text);
 
                                     setState(() {
 

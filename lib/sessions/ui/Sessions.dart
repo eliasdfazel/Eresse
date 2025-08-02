@@ -69,6 +69,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   double toolbarOpacity = 0;
 
+  TextEditingController textController = TextEditingController();
   DialogueSqlDataStructure? selectedDialogue;
 
   @override
@@ -197,6 +198,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
               /* START - Actions Bar */
               InputsBar(
+                textController: textController,
                 queryPressed: (content) {
                   debugPrint('Query: $content');
 
@@ -219,18 +221,19 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
               /* START - Actions Bar */
               Toolbar(
+                  textController: textController,
                   toolbarOpacity: toolbarOpacity,
                   askPressed: (question) {
 
-                    // Call AI
-                    // and Store Answer
-                    askingProcess();
+                    if (textController.text.isNotEmpty) {
+
+                      askingProcess(question);
+
+                    }
 
                   },
-                  archivePressed: (content) {
+                  archivePressed: () {
 
-                    // check for result
-                    // archive it with success/failed result
                     archivingProcess();
 
                   }
@@ -352,17 +355,32 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  Future askingProcess() async {
+  Future askingProcess(String inputQuery) async {
 
-    if (selectedDialogue != null) {
+    if (_sessionsDI.firebaseUser != null) {
+      debugPrint('Input Query: $inputQuery');
 
-    } else {
+      final queryResult = await _sessionsDI.askQuery.retrieveAnswer((selectedDialogue != null) ? selectedDialogue!.getContent() : inputQuery);
+
+      if (queryResult != null) {
+
+        await insertDialogues(ContentType.queryType, inputQuery);
+
+        await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult);
+
+        processLastDialogue(dialogueDataStructure(ContentType.askType, content: queryResult, now().toString()));
+
+      }
 
     }
 
   }
 
   Future archivingProcess() async {
+
+
+    // check for result
+    // archive it with success/failed result
 
     if (selectedDialogue != null) {
 
