@@ -268,7 +268,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                     if (imageFile != null) {
 
-                      // show preview
                       imageController = imageFile.path;
 
                     }
@@ -426,7 +425,15 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       });
 
-      final queryResult = await _sessionsDI.askQuery.retrieveAnswer((selectedDialogue != null) ? selectedDialogue!.getContent() : inputQuery);
+      String textMessage = inputQuery;
+
+      if (selectedDialogue != null) {
+
+        textMessage = _sessionsDI.dialoguesJSON.messageMap(selectedDialogue!.getContent())[MessageContent.textMessage.name] ?? inputQuery;
+
+      }
+
+      final queryResult = await _sessionsDI.askQuery.retrieveAnswer((selectedDialogue != null) ? textMessage : inputQuery);
 
       if (queryResult != null) {
 

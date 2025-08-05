@@ -79,7 +79,7 @@ class AskElement extends StatelessWidget {
                           ),
                         ),
 
-                        (imageMessage == null) ? Container() : Image(
+                        (imageMessage == null || imageMessage.isEmpty) ? Container() : Image(
                           image: FileImage(File(imageMessage)),
                           height: 199,
                           fit: BoxFit.cover,
