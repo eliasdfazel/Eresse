@@ -390,9 +390,9 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       } else {
 
-        dialogues.clear();
-
         setState(() {
+
+          dialogues.clear();
 
           dialogues.addAll(retrievedDialogues);
 
@@ -414,7 +414,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       }
 
     }
-
 
     setState(() {
 
