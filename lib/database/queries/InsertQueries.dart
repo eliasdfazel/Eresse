@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:io';
 
 import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
@@ -6,9 +7,11 @@ import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
+import 'package:Eresse/utils/files/FileIO.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sqflite/sql.dart';
 
 class InsertQueries {
@@ -119,7 +122,10 @@ class InsertQueries {
 
     }
 
-    insertDialoguesSync(firebaseUser, sessionId, contentType, content, now().toString());
+    final dialogueId = now().toString();
+
+    insertDialoguesSync(firebaseUser, sessionId, contentType, content, dialogueId);
+
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
@@ -132,6 +138,21 @@ class InsertQueries {
       await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionElementDocument(firebaseUser, sessionId, dialogueId))
           .set(dialogueDataStructure(contentType, dialogueId, content));
 
+  }
+
+  Future<File?> insertImageDialogue(User firebaseUser, String sessionId, ContentType contentType, File imageFile, String dialogueId) async {
+
+    final targetImageFile = await copyImageInternal(imageFile, dialogueId);
+
+    final firebaseStorage = FirebaseStorage.instance.ref().child(_databaseEndpoints.sessionElementImage(firebaseUser, sessionId, dialogueId));
+
+    if (targetImageFile != null) {
+
+      firebaseStorage.putFile(targetImageFile);
+
+    }
+
+    return targetImageFile;
   }
 
   Future<dynamic> insertSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {

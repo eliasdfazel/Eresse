@@ -22,6 +22,7 @@ import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
 import 'package:Eresse/sessions/ui/sections/InputsBar.dart';
 import 'package:Eresse/sessions/ui/sections/SessionSummary.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
+import 'package:Eresse/utils/files/FileIO.dart';
 import 'package:Eresse/utils/files/ImageSelector.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
@@ -266,10 +267,9 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                       setState(() {
 
-                        // copy to internal storage then
-                        // add to firebase storage
-
                         imageController = imageFile.path;
+
+                        // show preview
 
                       });
 
@@ -323,6 +323,26 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     if (_sessionsDI.firebaseUser != null) {
 
+      final dialogueId = now().toString();
+
+      print('1. ${imageMessage}');
+
+      if (imageMessage != null) {
+
+        final newImageFile = await _sessionsDI.insertQueries.insertImageDialogue(_sessionsDI.firebaseUser!, widget.sessionId, contentType, File(imageMessage), dialogueId);
+
+        if (newImageFile != null) {
+
+          print('2. ${imageMessage}');
+
+          imageMessage = newImageFile.path;
+
+
+
+        }
+
+      }
+
       await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType,
           _sessionsDI.dialoguesJSON.messageJson(
             textMessage: textMessage,
@@ -330,7 +350,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
           ));
 
       processLastDialogue(dialogueDataStructure(contentType,
-          now().toString(),
+          dialogueId,
           _sessionsDI.dialoguesJSON.messageJson(
               textMessage: textMessage,
               imageMessage: imageMessage
@@ -393,6 +413,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
     setState(() {
 
       textController.text = '';
+
+      imageController = '';
 
       toolbarOpacity = 0;
 
