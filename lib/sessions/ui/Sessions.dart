@@ -390,6 +390,10 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     setState(() {
 
+      textController.text = '';
+
+      toolbarOpacity = 0;
+
       dialogues.add(DialogueSqlDataStructure.fromMap(lastDialogue));
 
     });
@@ -430,18 +434,10 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult);
 
-        textController.clear();
-
         processLastDialogue(dialogueDataStructure(ContentType.askType, _sessionsDI.dialoguesJSON.messageJson(
             textMessage: queryResult,
             imageMessage: null
         ), now().toString()));
-
-        setState(() {
-
-          toolbarOpacity = 0;
-
-        });
 
       }
 

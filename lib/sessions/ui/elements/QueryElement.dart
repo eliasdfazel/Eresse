@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
@@ -21,6 +23,8 @@ class QueryElement extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final textMessage = dialoguesJSON.messageMap(queryDataStructure.getContent())[MessageContent.textMessage.name];
+
+    final imageMessage = dialoguesJSON.messageMap(queryDataStructure.getContent())[MessageContent.imageMessage.name];
 
     return Container(
       padding: EdgeInsets.only(right: 19, top: 11, bottom: 11),
@@ -89,8 +93,11 @@ class QueryElement extends StatelessWidget {
                               ),
                             ),
 
-                            // if content is image add image widget
-                            // or text
+                            (imageMessage == null) ? Container() : Image(
+                              image: FileImage(File(imageMessage)),
+                              height: 199,
+                              fit: BoxFit.cover,
+                            )
 
                           ]
                       )
