@@ -119,6 +119,12 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
     retrieveSessions();
 
+    if (_dashboardDI.firebaseUser != null) {
+
+      _dashboardDI.syncManager.sync(this, _dashboardDI.firebaseUser!);
+
+    }
+
   }
 
   @override
@@ -302,12 +308,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
   @override
   void networkEnabled() {
     debugPrint('Network Enabled');
-
-    if (_dashboardDI.firebaseUser != null) {
-
-      _dashboardDI.syncManager.sync(this, _dashboardDI.firebaseUser!);
-
-    }
 
     setState(() {
 

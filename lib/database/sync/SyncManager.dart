@@ -6,6 +6,7 @@ import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 abstract class Syncing {
   void databaseUpdated();
@@ -29,6 +30,7 @@ class SyncManager {
 
     if (localSessions.isEmpty
       && cloudSessions.docs.isNotEmpty) {
+      debugPrint('Local Is Empty - Update Local Database');
 
       await _updateLocalDatabase(cloudSessions, firebaseUser);
 
@@ -37,10 +39,12 @@ class SyncManager {
     } else {
 
       if (cloudSessions.docs.isEmpty) {
+        debugPrint('Cloud Is Empty - Update Cloud Database');
 
         _updateCloudDatabase(localSessions, firebaseUser);
 
       } else {
+        debugPrint('local/Cloud Merging');
 
         _mergeDatabase(syncing, localSessions, cloudSessions, firebaseUser);
 
@@ -89,6 +93,7 @@ class SyncManager {
   Future _mergeDatabase(Syncing syncing, List<Map<String, dynamic>> localSessions, QuerySnapshot<Object?> cloudSessions, User firebaseUser) async {
 
     if (localSessions.length >= cloudSessions.size) {
+      debugPrint('Merging: Update Cloud Database');
 
       for (final element in localSessions) {
 
@@ -123,6 +128,7 @@ class SyncManager {
       }
 
     } else {
+      debugPrint('Merging: Update Local Database');
 
       for (final element in cloudSessions.docs) {
 
