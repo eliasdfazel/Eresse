@@ -26,8 +26,8 @@ import 'package:Eresse/utils/files/ImageSelector.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
-import 'package:Eresse/utils/ui/Decorations.dart';
 import 'package:Eresse/utils/ui/actions/ElementsActions.dart';
+import 'package:Eresse/utils/ui/decorations/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -255,11 +255,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                   toolbarOpacity: toolbarOpacity,
                   askPressed: (question) {
 
-                    if (textController.text.isNotEmpty) {
-
-                      askingProcess(question);
-
-                    }
+                    askingProcess(question);
 
                   },
                   imageSelectorPressed: () async {
@@ -268,7 +264,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                     if (imageFile != null) {
 
-                      imageController = imageFile.path;
+                      setState(() {
+
+                        imageController = imageFile.path;
+
+                      });
 
                     }
 

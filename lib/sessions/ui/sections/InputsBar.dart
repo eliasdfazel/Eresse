@@ -135,6 +135,7 @@ class InputsBar extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                                 onTap: () {
+
                                   if (textController.text.isNotEmpty
                                       || imageController.isNotEmpty) {
 

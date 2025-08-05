@@ -23,7 +23,7 @@ import 'package:Eresse/sessions/ui/Sessions.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
-import 'package:Eresse/utils/ui/Decorations.dart';
+import 'package:Eresse/utils/ui/decorations/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';

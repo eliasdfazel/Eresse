@@ -93,11 +93,16 @@ class DecisionElement extends StatelessWidget {
                             ),
                           ),
 
-                          (imageMessage == null || imageMessage.isEmpty) ? Container() : Image(
-                            image: FileImage(File(imageMessage)),
-                            height: 199,
-                            fit: BoxFit.cover,
-                          )
+                          (imageMessage == null || imageMessage.isEmpty) ? Container() :
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(17),
+                                child: Image(
+                                  image: FileImage(File(imageMessage)),
+                                  height: 199,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                )
+                            )
 
                         ]
                       )

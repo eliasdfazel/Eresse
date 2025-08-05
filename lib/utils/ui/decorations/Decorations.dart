@@ -40,7 +40,7 @@ Widget entryDecorations() {
   );
 }
 
-Widget decorations({double backgroundOpacity = 1, double brandingOpacity = 1}) {
+Widget decorations({double backgroundOpacity = 0.73, double brandingOpacity = 0.73}) {
 
   return Stack(
     children: [
