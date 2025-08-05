@@ -314,7 +314,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType, content);
 
-      processLastDialogue(dialogueDataStructure(contentType, content: content, now().toString()));
+      processLastDialogue(dialogueDataStructure(contentType, content, now().toString()));
 
     }
 
@@ -413,7 +413,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         textController.clear();
 
-        processLastDialogue(dialogueDataStructure(ContentType.askType, content: queryResult, now().toString()));
+        processLastDialogue(dialogueDataStructure(ContentType.askType, queryResult, now().toString()));
 
         setState(() {
 

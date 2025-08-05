@@ -12,7 +12,7 @@ class DialoguesJSON {
 
     final dialogueJsonArray = List.from(iterableJson);
 
-    dialogueJsonArray.add("$dialogueId: ${dialogueDataStructure(contentType, dialogueId, content: content)}");
+    dialogueJsonArray.add("$dialogueId: ${dialogueDataStructure(contentType, dialogueId, content)}");
 
     return jsonEncode(dialogueJsonArray);
   }

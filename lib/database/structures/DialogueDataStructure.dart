@@ -4,7 +4,7 @@ enum ContentType {
   queryType, decisionType, askType
 }
 
-dynamic dialogueDataStructure(ContentType contentType, String dialogueId, {String? content, String? contentUrl}) {
+dynamic dialogueDataStructure(ContentType contentType, String dialogueId, String content) {
 
   return {
     DialogueDataStructure.dialogueIdKey: dialogueId,

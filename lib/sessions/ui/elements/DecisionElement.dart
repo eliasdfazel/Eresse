@@ -70,12 +70,23 @@ class DecisionElement extends StatelessWidget {
                         decisionPressed(queryDataStructure);
 
                       },
-                      child: Text(
-                        queryDataStructure.getContent(),
-                        style: TextStyle(
-                            color: ColorsResources.premiumLight,
-                            fontSize: 13
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            queryDataStructure.getContent(),
+                            style: TextStyle(
+                                color: ColorsResources.premiumLight,
+                                fontSize: 13
+                            ),
+                          ),
+
+                          // if content is image add image widget
+                          // or text
+
+                        ]
                       )
                   )
               )
