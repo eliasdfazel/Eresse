@@ -16,6 +16,9 @@ class EmailAuthentication {
 
     final GoogleSignIn signIn = GoogleSignIn.instance;
 
+    await signIn.disconnect();
+    await signIn.signOut();
+
     await signIn.initialize();
 
     signIn.authenticationEvents.listen((authEvent) async {
@@ -25,35 +28,39 @@ class EmailAuthentication {
           GoogleSignInAuthenticationEventSignOut() => null,
         };
 
-        final GoogleSignInAuthentication? googleAuthentication = googleSignInAccount?.authentication;
+        if (googleSignInAccount != null) {
 
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuthentication?.idToken,
-          idToken: googleAuthentication?.idToken,
-        );
+          final GoogleSignInAuthentication googleAuthentication = googleSignInAccount.authentication;
 
-        FirebaseAuth.instance.signInWithCredential(credential).then((userCredential) {
+          final googleCredential = GoogleAuthProvider.credential(
+            accessToken: googleAuthentication.idToken,
+            idToken: googleAuthentication.idToken,
+          );
 
-          authenticationInterface.authenticated(userCredential);
+          FirebaseAuth.instance.signInWithCredential(googleCredential).then((userCredential) {
 
-          String? emailAddress = userCredential.user?.email;
+            authenticationInterface.authenticated(userCredential);
 
-          if (emailAddress != null) {
+            String? emailAddress = userCredential.user?.email;
 
-            FirebaseFirestore.instance.doc(_authenticationDI.profileEndpoint.profileDocument(emailAddress))
-              .set({
-                emailAddress: emailAddress.toString()
-              });
+            if (emailAddress != null) {
 
-          }
+              FirebaseFirestore.instance.doc(_authenticationDI.profileEndpoint.profileDocument(emailAddress))
+                .set({
+                  emailAddress: emailAddress.toString()
+                });
 
-        });
+            }
+
+          });
+
+        }
 
     }).onError((error) => {
-
+      debugPrint(error)
     });
 
-    signIn.attemptLightweightAuthentication();
+    final googleSignInAccount = await signIn.attemptLightweightAuthentication();
 
   }
 

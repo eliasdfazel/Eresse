@@ -1,3 +1,4 @@
+import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:blur/blur.dart';
@@ -10,13 +11,16 @@ typedef InputPressed = void Function();
 
 class InputsBar extends StatelessWidget {
 
+  final DialoguesJSON dialoguesJSON;
+
   final QueryPressed queryPressed;
   final DecisionPressed decisionPressed;
   final InputPressed inputPressed;
 
   final TextEditingController textController;
+  final String? imageController;
 
-  InputsBar({super.key, required this.queryPressed, required this.decisionPressed, required this.inputPressed, required this.textController});
+  InputsBar({super.key, required this.dialoguesJSON, required this.queryPressed, required this.decisionPressed, required this.inputPressed, required this.textController, required this.imageController});
 
 
   @override
@@ -68,7 +72,10 @@ class InputsBar extends StatelessWidget {
                             child: InkWell(
                                 onTap: () {
 
-                                  decisionPressed(textController.text);
+                                  decisionPressed(dialoguesJSON.messageJson(
+                                    textMessage: textController.text,
+                                    imageMessage: imageController
+                                  ));
 
                                 },
                                 child: SizedBox(
@@ -123,8 +130,10 @@ class InputsBar extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                                 onTap: () {
-
-                                  queryPressed(textController.text);
+                                  queryPressed(dialoguesJSON.messageJson(
+                                      textMessage: textController.text,
+                                      imageMessage: imageController
+                                  ));
 
                                 },
                                 child: SizedBox(

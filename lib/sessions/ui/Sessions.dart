@@ -73,9 +73,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   double toolbarOpacity = 0;
 
   TextEditingController textController = TextEditingController();
+  String? imageController;
+
   DialogueSqlDataStructure? selectedDialogue;
 
-  String sessionSummary = '';
+  String sessionSummary = 'N/A';
 
   @override
   void initState() {
@@ -220,17 +222,23 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
               /* START - Actions Bar */
               InputsBar(
+                dialoguesJSON: _sessionsDI.dialoguesJSON,
                 textController: textController,
+                imageController: imageController,
                 queryPressed: (content) {
                   debugPrint('Query: $content');
 
-                  insertDialogues(ContentType.queryType, content);
+                  final messageContent = _sessionsDI.dialoguesJSON.messageMap(content);
+
+                  insertDialogues(ContentType.queryType, messageContent[MessageContent.textMessage.name], messageContent[MessageContent.imageMessage.name]);
 
                 },
                 decisionPressed: (content) {
                   debugPrint('Decision: $content');
 
-                  insertDialogues(ContentType.decisionType, content);
+                  final messageContent = _sessionsDI.dialoguesJSON.messageMap(content);
+
+                  insertDialogues(ContentType.decisionType, messageContent[MessageContent.textMessage.name], messageContent[MessageContent.imageMessage.name]);
 
                 },
                 inputPressed: () {
@@ -260,7 +268,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                     if (imageFile != null) {
 
-                      
+                      // show preview
+                      imageController = imageFile.path;
 
                     }
 
@@ -308,13 +317,22 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   }
 
-  Future insertDialogues(ContentType contentType, String content) async {
+  Future insertDialogues(ContentType contentType, String? textMessage, String? imageMessage) async {
 
     if (_sessionsDI.firebaseUser != null) {
 
-      await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType, content);
+      await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType,
+          _sessionsDI.dialoguesJSON.messageJson(
+            textMessage: textMessage,
+            imageMessage: imageMessage
+          ));
 
-      processLastDialogue(dialogueDataStructure(contentType, content, now().toString()));
+      processLastDialogue(dialogueDataStructure(contentType,
+          _sessionsDI.dialoguesJSON.messageJson(
+              textMessage: textMessage,
+              imageMessage: imageMessage
+          ),
+          now().toString()));
 
     }
 
@@ -407,13 +425,16 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       if (queryResult != null) {
 
-        await insertDialogues(ContentType.queryType, inputQuery);
+        await insertDialogues(ContentType.queryType, inputQuery, null);
 
         await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult);
 
         textController.clear();
 
-        processLastDialogue(dialogueDataStructure(ContentType.askType, queryResult, now().toString()));
+        processLastDialogue(dialogueDataStructure(ContentType.askType, _sessionsDI.dialoguesJSON.messageJson(
+            textMessage: queryResult,
+            imageMessage: null
+        ), now().toString()));
 
         setState(() {
 

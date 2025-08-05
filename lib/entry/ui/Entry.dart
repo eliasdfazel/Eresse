@@ -130,6 +130,7 @@ class _EntryState extends State<Entry> implements NetworkInterface, Authenticati
   @override
   void authenticated(UserCredential userCredential) {
 
+    navigateToWithPop(context, Dashboard());
 
   }
 

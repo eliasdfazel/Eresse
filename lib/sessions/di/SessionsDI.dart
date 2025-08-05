@@ -4,6 +4,8 @@ import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../database/json/DialoguesJSON.dart';
+
 class SessionsDI {
 
   User? firebaseUser = FirebaseAuth.instance.currentUser;
@@ -15,5 +17,7 @@ class SessionsDI {
   RetrieveQueries retrieveQueries = RetrieveQueries();
 
   AskQuery askQuery = AskQuery();
+
+  DialoguesJSON dialoguesJSON = DialoguesJSON();
 
 }

@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+enum MessageContent {
+  textMessage, imageMessage
+}
+
 enum ContentType {
   queryType, decisionType, askType
 }
 
+/// content - Json {textMessage, imageMessage}
 dynamic dialogueDataStructure(ContentType contentType, String dialogueId, String content) {
 
   return {
