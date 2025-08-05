@@ -39,93 +39,98 @@ class _Toolbar extends State<Toolbar> {
               alignment: Alignment.bottomCenter,
               padding: EdgeInsets.only(left: 11, right: 11),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
 
-                  AnimatedOpacity(
-                    opacity: widget.toolbarOpacity,
-                    duration: const Duration(milliseconds: 375),
-                    curve: Curves.easeIn,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                  Visibility(
+                    visible: (widget.toolbarOpacity == 0) ? false : true,
+                    child: AnimatedOpacity(
+                        opacity: widget.toolbarOpacity,
+                        duration: const Duration(milliseconds: 579),
+                        curve: Curves.easeIn,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
 
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(19),
-                                  onTap: () {
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: InkWell(
+                                      borderRadius: BorderRadius.circular(19),
+                                      onTap: () {
 
-                                    widget.archivePressed();
+                                        widget.archivePressed();
 
-                                    setState(() {
+                                        setState(() {
 
-                                      widget.toolbarOpacity = 0;
+                                          widget.toolbarOpacity = 0;
 
-                                    });
+                                        });
 
-                                  },
-                                  child: SizedBox(
-                                      width: 51,
-                                      height: 51,
-                                      child: Image(
-                                        image: AssetImage("assets/save.png"),
+                                      },
+                                      child: SizedBox(
+                                          width: 51,
+                                          height: 51,
+                                          child: Image(
+                                            image: AssetImage("assets/save.png"),
+                                          )
                                       )
                                   )
-                              )
-                          ),
+                              ),
 
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(19),
-                                  onTap: () {
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: InkWell(
+                                      borderRadius: BorderRadius.circular(19),
+                                      onTap: () {
 
-                                    widget.imageSelectorPressed();
+                                        widget.imageSelectorPressed();
 
-                                    setState(() {
+                                        setState(() {
 
-                                      widget.toolbarOpacity = 0;
+                                          widget.toolbarOpacity = 0;
 
-                                    });
+                                        });
 
-                                  },
-                                  child: SizedBox(
-                                      width: 51,
-                                      height: 51,
-                                      child: Image(
-                                        image: AssetImage("assets/image.png"),
+                                      },
+                                      child: SizedBox(
+                                          width: 51,
+                                          height: 51,
+                                          child: Image(
+                                            image: AssetImage("assets/image.png"),
+                                          )
                                       )
                                   )
-                              )
-                          ),
+                              ),
 
-                          Align(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(19),
-                                  onTap: () {
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: InkWell(
+                                      borderRadius: BorderRadius.circular(19),
+                                      onTap: () {
 
-                                    widget.askPressed(widget.textController.text);
+                                        widget.askPressed(widget.textController.text);
 
-                                    setState(() {
+                                        setState(() {
 
-                                      widget.toolbarOpacity = 0;
+                                          widget.toolbarOpacity = 0;
 
-                                    });
+                                        });
 
-                                  },
-                                  child: SizedBox(
-                                      width: 51,
-                                      height: 51,
-                                      child: Image(
-                                        image: AssetImage("assets/ask.png"),
+                                      },
+                                      child: SizedBox(
+                                          width: 51,
+                                          height: 51,
+                                          child: Image(
+                                            image: AssetImage("assets/ask.png"),
+                                          )
                                       )
                                   )
-                              )
-                          ),
+                              ),
 
-                        ]
+                            ]
+                        )
                     )
                   ),
 

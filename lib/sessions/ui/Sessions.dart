@@ -19,6 +19,7 @@ import 'package:Eresse/sessions/di/SessionsDI.dart';
 import 'package:Eresse/sessions/ui/elements/AskElement.dart';
 import 'package:Eresse/sessions/ui/elements/DecisionElement.dart';
 import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
+import 'package:Eresse/sessions/ui/sections/ImagePreview.dart';
 import 'package:Eresse/sessions/ui/sections/InputsBar.dart';
 import 'package:Eresse/sessions/ui/sections/SessionSummary.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
@@ -74,6 +75,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   TextEditingController textController = TextEditingController();
   String imageController = '';
+
+  double previewOpacity = 0;
 
   DialogueSqlDataStructure? selectedDialogue;
 
@@ -268,7 +271,9 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                         imageController = imageFile.path;
 
-                        // show preview
+                        toolbarOpacity = 0;
+
+                        previewOpacity = 1;
 
                       });
 
@@ -282,6 +287,24 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                   }
               ),
               /* END - Actions Bar */
+
+              /* START - Selected Image Preview */
+              ImagePreview(
+                  imageFile: imageController,
+                  previewOpacity: previewOpacity,
+                  previewPressed: (element) {
+
+                    setState(() {
+
+                      imageController = '';
+
+                      previewOpacity = 0;
+
+                    });
+
+                  }
+              ),
+              /* END - Selected Image Preview */
 
               /* START - Network */
               _networkShield
@@ -410,6 +433,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       imageController = '';
 
       toolbarOpacity = 0;
+
+      previewOpacity = 0;
 
       dialogues.add(DialogueSqlDataStructure.fromMap(lastDialogue));
 
