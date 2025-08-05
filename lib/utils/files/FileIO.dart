@@ -1,4 +1,6 @@
 import 'dart:io';
+
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 Future<File?> copyImageInternal(File inputFile, String inputFileName) async {
@@ -9,7 +11,9 @@ Future<File?> copyImageInternal(File inputFile, String inputFileName) async {
 
     String documentsPath = documentsDirectory.path;
 
-    String filePath = '$documentsPath/$inputFileName.PNG';
+    String fileExtension = p.extension(inputFile.path);
+
+    String filePath = '$documentsPath/$inputFileName$fileExtension';
 
     File targetFile = File(filePath)
       ..writeAsBytesSync(inputFile.readAsBytesSync());

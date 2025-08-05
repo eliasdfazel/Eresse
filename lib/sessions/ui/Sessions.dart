@@ -22,7 +22,6 @@ import 'package:Eresse/sessions/ui/elements/QueryElement.dart';
 import 'package:Eresse/sessions/ui/sections/InputsBar.dart';
 import 'package:Eresse/sessions/ui/sections/SessionSummary.dart';
 import 'package:Eresse/sessions/ui/sections/Toolbar.dart';
-import 'package:Eresse/utils/files/FileIO.dart';
 import 'package:Eresse/utils/files/ImageSelector.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
@@ -325,18 +324,16 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       final dialogueId = now().toString();
 
-      print('1. ${imageMessage}');
-
       if (imageMessage != null) {
 
         final newImageFile = await _sessionsDI.insertQueries.insertImageDialogue(_sessionsDI.firebaseUser!, widget.sessionId, contentType, File(imageMessage), dialogueId);
 
         if (newImageFile != null) {
-
-          print('2. ${imageMessage}');
+          print('1. ${imageMessage}');
 
           imageMessage = newImageFile.path;
 
+          print('2. ${imageMessage}');
 
 
         }
@@ -347,7 +344,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
           _sessionsDI.dialoguesJSON.messageJson(
             textMessage: textMessage,
             imageMessage: imageMessage
-          ));
+          ), dialogueId);
 
       processLastDialogue(dialogueDataStructure(contentType,
           dialogueId,
@@ -462,9 +459,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       if (queryResult != null) {
 
+        final dialogueId = now().toString();
+
         await insertDialogues(ContentType.queryType, inputQuery, null);
 
-        await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult);
+        await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult, dialogueId);
 
         processLastDialogue(dialogueDataStructure(ContentType.askType, _sessionsDI.dialoguesJSON.messageJson(
             textMessage: queryResult,

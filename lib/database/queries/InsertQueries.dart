@@ -89,7 +89,7 @@ class InsertQueries {
   }
 
   /// content = sessionJsonContent
-  Future<SessionSqlDataStructure> insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content) async {
+  Future<SessionSqlDataStructure> insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content, String dialogueId) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
@@ -122,10 +122,7 @@ class InsertQueries {
 
     }
 
-    final dialogueId = now().toString();
-
     insertDialoguesSync(firebaseUser, sessionId, contentType, content, dialogueId);
-
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
