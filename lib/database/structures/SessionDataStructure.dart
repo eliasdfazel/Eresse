@@ -8,11 +8,11 @@ enum SessionStatus {
   sessionOpen, sessionSuccess, sessionFailed,
 }
 
-dynamic sessionMetadata(String sessionId, SessionStatus sessionStatus) {
+dynamic sessionMetadata(String sessionId, String updateTimestamp, SessionStatus sessionStatus) {
 
   return {
-    SessionDataStructure.createdTimestampKey: now(),
-    SessionDataStructure.updatedTimestampKey: now(),
+    SessionDataStructure.createdTimestampKey: sessionId,
+    SessionDataStructure.updatedTimestampKey: updateTimestamp,
     SessionDataStructure.sessionIdKey: sessionId,
     SessionDataStructure.sessionTitleKey: 'N/A',
     SessionDataStructure.sessionSummaryKey: 'N/A',

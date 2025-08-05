@@ -40,13 +40,13 @@ class InsertQueries {
 
     }
 
+    await insertSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure?.sessionStatusIndicator() ?? SessionStatus.sessionOpen);
+
     await _setupDatabase.closeDatabase(databaseInstance);
 
   }
 
   Future insertSessionSync(User firebaseUser, String sessionId, SessionSqlDataStructure sessionSqlDataStructure) async {
-
-    await insertSessionMetadataSync(firebaseUser, sessionId, sessionSqlDataStructure.sessionStatusIndicator());
 
     final localDialogues = await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
 
@@ -110,10 +110,8 @@ class InsertQueries {
 
       sessionSqlDataStructure = SessionSqlDataStructure(
           sessionId: sessionId,
-          createdTimestamp: dialogueId,
-          updatedTimestamp: now().toString(),
-          sessionTitle: 'N/A',
-          sessionSummary: 'N/A',
+          createdTimestamp: dialogueId, updatedTimestamp: now().toString(),
+          sessionTitle: 'N/A', sessionSummary: 'N/A',
           sessionStatus: SessionStatus.sessionOpen.name,
           sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, now().toString(), content)
       );
@@ -173,29 +171,32 @@ class InsertQueries {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    final updateTimestamp = now().toString();
 
-    if (sessionSqlDataStructure != null) {
+    SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure(
+        sessionId: sessionId,
+        createdTimestamp: sessionId, updatedTimestamp: updateTimestamp,
+        sessionTitle: 'N/A', sessionSummary: 'N/A',
+        sessionStatus: SessionStatus.sessionOpen.name,
+        sessionJsonContent: '[]'
+    );
 
-      sessionSqlDataStructure.setSessionStatus(sessionStatus.name);
+    await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-      await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
-
-      insertSessionMetadataSync(firebaseUser, sessionId, sessionStatus);
-
-    }
+    insertSessionMetadataSync(firebaseUser, sessionId, updateTimestamp, sessionStatus);
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
   }
 
-  Future<dynamic> insertSessionMetadataSync(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
+  Future<dynamic> insertSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp, SessionStatus sessionStatus) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .set(sessionMetadata(
           sessionId,
+          updateTimestamp,
           sessionStatus
-    ));
+        ));
 
     return resultCallback;
   }

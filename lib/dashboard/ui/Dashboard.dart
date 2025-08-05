@@ -279,6 +279,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                     if (_dashboardDI.firebaseUser != null) {
 
                       navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString())).then((data) {
+                        debugPrint('Session Id: $data');
 
                         retrieveSessions();
 

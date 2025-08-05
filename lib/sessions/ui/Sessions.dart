@@ -30,6 +30,7 @@ import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:Eresse/utils/ui/actions/ElementsActions.dart';
 import 'package:Eresse/utils/ui/decorations/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -82,9 +83,18 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   String sessionSummary = '';
 
+  bool aInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+
+    navigatePopWithResult(context, widget.sessionId);
+
+    return true;
+  }
+
   @override
   void initState() {
     super.initState();
+
+    BackButtonInterceptor.add(aInterceptor);
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
@@ -115,6 +125,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
      */
 
     FocusManager.instance.primaryFocus?.unfocus();
+
+    BackButtonInterceptor.remove(aInterceptor);
 
     super.dispose();
   }
