@@ -266,6 +266,9 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                       setState(() {
 
+                        // copy to internal storage then
+                        // add to firebase storage
+
                         imageController = imageFile.path;
 
                       });
