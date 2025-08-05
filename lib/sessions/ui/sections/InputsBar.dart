@@ -18,7 +18,7 @@ class InputsBar extends StatelessWidget {
   final InputPressed inputPressed;
 
   final TextEditingController textController;
-  final String? imageController;
+  final String imageController;
 
   InputsBar({super.key, required this.dialoguesJSON, required this.queryPressed, required this.decisionPressed, required this.inputPressed, required this.textController, required this.imageController});
 
@@ -72,10 +72,15 @@ class InputsBar extends StatelessWidget {
                             child: InkWell(
                                 onTap: () {
 
-                                  decisionPressed(dialoguesJSON.messageJson(
-                                    textMessage: textController.text,
-                                    imageMessage: imageController
-                                  ));
+                                  if (textController.text.isNotEmpty
+                                    || imageController.isNotEmpty) {
+
+                                    decisionPressed(dialoguesJSON.messageJson(
+                                        textMessage: textController.text,
+                                        imageMessage: imageController
+                                    ));
+
+                                  }
 
                                 },
                                 child: SizedBox(
@@ -130,10 +135,15 @@ class InputsBar extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                                 onTap: () {
-                                  queryPressed(dialoguesJSON.messageJson(
-                                      textMessage: textController.text,
-                                      imageMessage: imageController
-                                  ));
+                                  if (textController.text.isNotEmpty
+                                      || imageController.isNotEmpty) {
+
+                                    queryPressed(dialoguesJSON.messageJson(
+                                        textMessage: textController.text,
+                                        imageMessage: imageController
+                                    ));
+
+                                  }
 
                                 },
                                 child: SizedBox(

@@ -53,11 +53,11 @@ class DialoguesJSON {
     return jsonEncode(dialogueJsonArray);
   }
 
-  String messageJson({String? textMessage, String? imageMessage}) {
+  String messageJson({String? textMessage , String? imageMessage}) {
 
     return jsonEncode({
-      textMessage: textMessage,
-      imageMessage: imageMessage
+      MessageContent.textMessage.name: textMessage ?? '',
+      MessageContent.imageMessage.name: imageMessage ?? ''
     });
   }
 
@@ -65,7 +65,7 @@ class DialoguesJSON {
 
     return {
       MessageContent.textMessage.name: jsonDecode(content)[MessageContent.textMessage.name],
-      MessageContent.textMessage.name: jsonDecode(content)[MessageContent.imageMessage.name]
+      MessageContent.imageMessage.name: jsonDecode(content)[MessageContent.imageMessage.name]
     };
   }
 

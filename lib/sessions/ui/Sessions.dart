@@ -73,11 +73,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   double toolbarOpacity = 0;
 
   TextEditingController textController = TextEditingController();
-  String? imageController;
+  String imageController = '';
 
   DialogueSqlDataStructure? selectedDialogue;
 
-  String sessionSummary = 'N/A';
+  String sessionSummary = '';
 
   @override
   void initState() {
@@ -157,7 +157,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                         switch (dialogues[index].contentTypeIndicator()) {
                           case ContentType.queryType: {
 
-                            element = QueryElement(queryPressed: (data) {
+                            element = QueryElement(dialoguesJSON: _sessionsDI.dialoguesJSON, queryPressed: (data) {
 
                               selectDialogue(data);
 
@@ -167,7 +167,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                           case ContentType.decisionType: {
 
 
-                            element = DecisionElement(decisionPressed: (data) {
+                            element = DecisionElement(dialoguesJSON: _sessionsDI.dialoguesJSON, decisionPressed: (data) {
 
                               selectDialogue(data);
 
@@ -176,7 +176,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                           }
                           case ContentType.askType: {
 
-                            element = AskElement(askPressed: (data) {
+                            element = AskElement(dialoguesJSON: _sessionsDI.dialoguesJSON, askPressed: (data) {
 
                             }, queryDataStructure: dialogues[index]);
 

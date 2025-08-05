@@ -1,3 +1,5 @@
+import 'package:Eresse/database/json/DialoguesJSON.dart';
+import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +9,18 @@ typedef AskPressed = void Function(DialogueSqlDataStructure queryDataStructure);
 
 class AskElement extends StatelessWidget {
 
+  final DialoguesJSON dialoguesJSON;
+
   final DialogueSqlDataStructure queryDataStructure;
 
   final AskPressed askPressed;
 
-  const AskElement({super.key, required this.askPressed, required this.queryDataStructure});
+  const AskElement({super.key, required this.askPressed, required this.queryDataStructure, required this.dialoguesJSON});
 
   @override
   Widget build(BuildContext context) {
+
+    final textMessage = dialoguesJSON.messageMap(queryDataStructure.getContent())[MessageContent.textMessage.name];
 
     return Container(
       padding: EdgeInsets.only(left: 19, right: 19, top: 11, bottom: 11),
@@ -56,12 +62,23 @@ class AskElement extends StatelessWidget {
                     askPressed(queryDataStructure);
 
                   },
-                  child: Text(
-                    queryDataStructure.getContent(),
-                    style: TextStyle(
-                        color: ColorsResources.premiumLight,
-                        fontSize: 13
-                    ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        (textMessage == null) ? Container() : Text(
+                          textMessage,
+                          style: TextStyle(
+                              color: ColorsResources.premiumLight,
+                              fontSize: 13
+                          ),
+                        ),
+
+                        // if content is image add image widget
+                        // or text
+
+                      ]
                   )
               )
           )

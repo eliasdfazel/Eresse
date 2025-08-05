@@ -1,3 +1,5 @@
+import 'package:Eresse/database/json/DialoguesJSON.dart';
+import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +9,18 @@ typedef DecisionPressed = void Function(DialogueSqlDataStructure queryDataStruct
 
 class DecisionElement extends StatelessWidget {
 
+  final DialoguesJSON dialoguesJSON;
+
   final DialogueSqlDataStructure queryDataStructure;
 
   final DecisionPressed decisionPressed;
 
-  const DecisionElement({super.key, required this.decisionPressed, required this.queryDataStructure});
+  const DecisionElement({super.key, required this.decisionPressed, required this.queryDataStructure, required this.dialoguesJSON});
 
   @override
   Widget build(BuildContext context) {
+
+    final textMessage = dialoguesJSON.messageMap(queryDataStructure.getContent())[MessageContent.textMessage.name];
 
     return Container(
       padding: EdgeInsets.only(left: 19, top: 11, bottom: 11),
@@ -75,8 +81,8 @@ class DecisionElement extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 
-                          Text(
-                            queryDataStructure.getContent(),
+                          (textMessage == null) ? Container() : Text(
+                            textMessage,
                             style: TextStyle(
                                 color: ColorsResources.premiumLight,
                                 fontSize: 13
