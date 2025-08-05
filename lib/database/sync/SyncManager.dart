@@ -93,7 +93,7 @@ class SyncManager {
   Future _mergeDatabase(Syncing syncing, List<Map<String, dynamic>> localSessions, QuerySnapshot<Object?> cloudSessions, User firebaseUser) async {
 
     if (localSessions.length >= cloudSessions.size) {
-      debugPrint('Merging: Update Cloud Database');
+      debugPrint('Merging');
 
       for (final element in localSessions) {
 
@@ -106,10 +106,12 @@ class SyncManager {
         if (cloudSession.exists) {
 
           if (sessionSqlDataStructure.getUpdateTimestamp() > sessionDataStructure.updatedTimestamp()) {
+            debugPrint('Merging: Update Cloud Database from Local');
 
             _insertQueries.updateSessionElementSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
 
-          } else {
+          } else if (sessionSqlDataStructure.getUpdateTimestamp() < sessionDataStructure.updatedTimestamp()) {
+            debugPrint('Merging: Update Local Database from Cloud');
 
             final dialoguesSessions = await _retrieveQueries.retrieveDialoguesSync(firebaseUser, sessionDataStructure.sessionId());
 
@@ -152,7 +154,7 @@ class SyncManager {
 
                 _insertQueries.updateSessionElementSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
 
-              } else {
+              } else if (sessionSqlDataStructure.getUpdateTimestamp() < sessionDataStructure.updatedTimestamp()) {
 
                 final dialoguesSessions = await _retrieveQueries.retrieveDialoguesSync(firebaseUser, sessionDataStructure.sessionId());
 
