@@ -95,7 +95,7 @@ class QueryElement extends StatelessWidget {
 
                             (imageMessage == null || imageMessage.isEmpty) ? Container() :
                               Padding(
-                                  padding: EdgeInsets.only(top: 13, left: 7, right: 7, bottom: 7),
+                                  padding: EdgeInsets.only(top: 13),
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(17),
                                       child: Image(
