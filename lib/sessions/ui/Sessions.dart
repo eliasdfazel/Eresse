@@ -326,15 +326,11 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       if (imageMessage != null) {
 
-        final newImageFile = await _sessionsDI.insertQueries.insertImageDialogue(_sessionsDI.firebaseUser!, widget.sessionId, contentType, File(imageMessage), dialogueId);
+        final newImageFile = await _sessionsDI.insertQueries.insertImageDialogueSync(_sessionsDI.firebaseUser!, widget.sessionId, contentType, File(imageMessage), dialogueId);
 
         if (newImageFile != null) {
-          print('1. ${imageMessage}');
 
           imageMessage = newImageFile.path;
-
-          print('2. ${imageMessage}');
-
 
         }
 

@@ -54,6 +54,8 @@ class InsertQueries {
 
       insertDialoguesSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getContent(), dialogueElement.getTimestamp());
 
+      insertImageDialogueIdSync(firebaseUser, sessionId, dialogueElement.contentTypeIndicator(), dialogueElement.getDialogueId());
+
     }
 
   }
@@ -137,7 +139,22 @@ class InsertQueries {
 
   }
 
-  Future<File?> insertImageDialogue(User firebaseUser, String sessionId, ContentType contentType, File imageFile, String dialogueId) async {
+  Future<File?> insertImageDialogueIdSync(User firebaseUser, String sessionId, ContentType contentType, String dialogueId) async {
+
+    File? targetImageFile = await prepareImageFile(dialogueId);
+
+    final firebaseStorage = FirebaseStorage.instance.ref().child(_databaseEndpoints.sessionElementImage(firebaseUser, sessionId, dialogueId));
+
+    if (targetImageFile != null) {
+
+      firebaseStorage.putFile(targetImageFile);
+
+    }
+
+    return targetImageFile;
+  }
+
+  Future<File?> insertImageDialogueSync(User firebaseUser, String sessionId, ContentType contentType, File imageFile, String dialogueId) async {
 
     final targetImageFile = await copyImageInternal(imageFile, dialogueId);
 

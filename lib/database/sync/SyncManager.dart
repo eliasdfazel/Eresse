@@ -64,6 +64,8 @@ class SyncManager {
 
           await _insertQueries.insertSession(firebaseUser, elementSession.id, SessionSqlDataStructure.fromMapSync(elementSession.data() as Map<String, dynamic>, dialoguesJsonArray));
 
+          _retrieveQueries.retrieveSessionImages(firebaseUser, elementSession.id);
+
         }
 
       }

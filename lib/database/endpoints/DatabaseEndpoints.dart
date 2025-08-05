@@ -23,6 +23,11 @@ class DatabaseEndpoints {
     return "Eresse/${firebaseUser.email!.toUpperCase()}/Sessions/$sessionId/Content/$elementId";
   }
 
+  String sessionImages(User firebaseUser, String sessionId) {
+
+    return 'Eresse/${firebaseUser.email!.toUpperCase()}/Sessions/$sessionId/Content';
+  }
+
   String sessionElementImage(User firebaseUser, String sessionId, String elementId) {
 
     return 'Eresse/${firebaseUser.email!.toUpperCase()}/Sessions/$sessionId/Content/$elementId';

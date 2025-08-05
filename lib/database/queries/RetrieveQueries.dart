@@ -5,8 +5,10 @@ import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
+import 'package:Eresse/utils/files/FileIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RetrieveQueries {
 
@@ -83,6 +85,27 @@ class RetrieveQueries {
     }
 
     return dialogues;
+  }
+
+  Future retrieveSessionImages(User firebaseUser, String sessionId) async {
+
+    final firebaseStorage = FirebaseStorage.instance.ref().child(_databaseEndpoints.sessionImages(firebaseUser, sessionId));
+    firebaseStorage.list().then((elements) async {
+
+      for (final imageElement in elements.items) {
+
+        final imageBytes = await imageElement.getData();
+
+        if (imageBytes != null) {
+
+          createImageInternal(imageBytes);
+
+        }
+
+      }
+
+    });
+
   }
 
   void cacheDialogues(User firebaseUser, String sessionId) async {
