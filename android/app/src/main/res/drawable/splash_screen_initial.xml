@@ -28,7 +28,7 @@
 
     <item
                 android:gravity="center"
-                android:alpha="0.51"
+                android:alpha="0.19"
                 android:drawable="@drawable/decoration_background">
 
     </item>

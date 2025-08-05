@@ -328,11 +328,12 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
           ));
 
       processLastDialogue(dialogueDataStructure(contentType,
+          now().toString(),
           _sessionsDI.dialoguesJSON.messageJson(
               textMessage: textMessage,
               imageMessage: imageMessage
-          ),
-          now().toString()));
+          )
+      ));
 
     }
 
