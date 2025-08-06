@@ -179,17 +179,20 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                     ),
 
                     /* END - Session Archive */
-                    Padding(
-                        padding: EdgeInsets.only(left: 37, right: 37),
-                        child: Text(
-                          StringsResources.openSessionsTitle().toUpperCase(),
-                          style: TextStyle(
-                              color: ColorsResources.premiumLight.withAlpha(179),
-                              fontSize: 15,
-                              letterSpacing: 3.7,
-                              fontFamily: 'Anurati'
-                          ),
-                        )
+                    Visibility(
+                      visible: (sessions.isEmpty) ? false : true,
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 37, right: 37),
+                          child: Text(
+                            StringsResources.openSessionsTitle().toUpperCase(),
+                            style: TextStyle(
+                                color: ColorsResources.premiumLight.withAlpha(179),
+                                fontSize: 15,
+                                letterSpacing: 3.7,
+                                fontFamily: 'Anurati'
+                            ),
+                          )
+                      )
                     ),
 
                     Divider(
@@ -413,11 +416,15 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
           sessions;
 
-          loadingAnimation = Container();
-
         });
 
       }
+
+      setState(() {
+
+        loadingAnimation = Container();
+
+      });
 
     }
 
