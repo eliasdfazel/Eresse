@@ -36,21 +36,4 @@ class SetupDatabase {
 
   }
 
-  Future<SessionSqlDataStructure?> rowExists(Database databaseInstance, String sessionId) async {
-
-    SessionSqlDataStructure? sessionSqlDataStructure;
-
-    final rowsResults = (await databaseInstance.rawQuery('SELECT * FROM ${SessionSqlDataStructure.sessionsTable()} WHERE sessionId = $sessionId'));
-
-    if (rowsResults.isNotEmpty) {
-
-      Map<String, Object?> sessionSqlDataStructureMap = rowsResults.first;
-
-      sessionSqlDataStructure = SessionSqlDataStructure.fromMap(sessionSqlDataStructureMap);
-
-    }
-
-    return sessionSqlDataStructure;
-  }
-
 }
