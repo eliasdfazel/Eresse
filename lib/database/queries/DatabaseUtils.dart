@@ -14,7 +14,26 @@ class DatabaseUtils {
 
   final dialoguesJSON = DialoguesJSON();
 
-  Future<SessionSqlDataStructure?> rowExists(String sessionId) async {
+  Future<SessionSqlDataStructure?> rowExists(Database databaseInstance, String sessionId) async {
+
+    Database databaseInstance = await _setupDatabase.initializeDatabase();
+
+    SessionSqlDataStructure? sessionSqlDataStructure;
+
+    final rowsResults = (await databaseInstance.rawQuery('SELECT * FROM ${SessionSqlDataStructure.sessionsTable()} WHERE sessionId = $sessionId'));
+
+    if (rowsResults.isNotEmpty) {
+
+      Map<String, Object?> sessionSqlDataStructureMap = rowsResults.first;
+
+      sessionSqlDataStructure = SessionSqlDataStructure.fromMap(sessionSqlDataStructureMap);
+
+    }
+
+    return sessionSqlDataStructure;
+  }
+
+  Future<SessionSqlDataStructure?> rowExistsById(String sessionId) async {
 
     Database databaseInstance = await _setupDatabase.initializeDatabase();
 
@@ -35,7 +54,7 @@ class DatabaseUtils {
 
   Future processEmptySession(User firebaseUser, String sessionId) async {
 
-    rowExists(sessionId).then((sessionSqlDataStructure) {
+    rowExistsById(sessionId).then((sessionSqlDataStructure) {
 
       if (sessionSqlDataStructure != null) {
 

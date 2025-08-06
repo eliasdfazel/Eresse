@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart';
+import 'package:Eresse/database/queries/DatabaseUtils.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
@@ -20,13 +21,15 @@ class InsertQueries {
 
   final SetupDatabase _setupDatabase = SetupDatabase();
 
+  final DatabaseUtils _databaseUtils = DatabaseUtils();
+
   final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
   Future insertSession(User firebaseUser, String sessionId, SessionSqlDataStructure cloudSessionSqlDataStructure) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 
@@ -64,7 +67,7 @@ class InsertQueries {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 
@@ -95,7 +98,7 @@ class InsertQueries {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 
@@ -205,7 +208,7 @@ class InsertQueries {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 
@@ -232,7 +235,7 @@ class InsertQueries {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 

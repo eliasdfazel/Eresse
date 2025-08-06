@@ -1,6 +1,7 @@
 import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart' show DialoguesJSON;
+import 'package:Eresse/database/queries/DatabaseUtils.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
@@ -16,13 +17,15 @@ class RetrieveQueries {
 
   final SetupDatabase _setupDatabase = SetupDatabase();
 
+  final DatabaseUtils _databaseUtils = DatabaseUtils();
+
   final DialoguesJSON _dialoguesJSON = DialoguesJSON();
 
   Future<SessionSqlDataStructure?> retrieveSession(User firebaseUser, String sessionId) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     return sessionSqlDataStructure;
   }
@@ -53,7 +56,7 @@ class RetrieveQueries {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
-    var sessionSqlDataStructure = await _setupDatabase.rowExists(databaseInstance, sessionId);
+    var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 
