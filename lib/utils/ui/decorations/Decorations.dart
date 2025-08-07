@@ -1,5 +1,3 @@
-
-
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +48,7 @@ Widget entryDecorations() {
   );
 }
 
-Widget decorations({int backgroundOpacity = 137, double textureOpacity = 0.73, double brandingOpacity = 0.73}) {
+Widget decorations({int backgroundOpacity = 199, double textureOpacity = 0.73, double brandingOpacity = 0.73}) {
 
   return Stack(
     children: [

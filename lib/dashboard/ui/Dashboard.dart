@@ -103,12 +103,12 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
      */
 
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1579),
+      duration: const Duration(milliseconds: 1799),
       vsync: this
     );
 
     _animationControllerCenter = AnimationController(
-      duration: const Duration(milliseconds: 1579),
+      duration: const Duration(milliseconds: 1799),
       vsync: this
     );
 
@@ -148,7 +148,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: ColorsResources.primaryColor,
+        backgroundColor: ColorsResources.black,
         body: Stack(
             children: [
 

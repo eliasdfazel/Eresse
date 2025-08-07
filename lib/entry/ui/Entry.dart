@@ -86,7 +86,7 @@ class _EntryState extends State<Entry> implements NetworkInterface, Authenticati
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: ColorsResources.primaryColor,
+        backgroundColor: ColorsResources.black,
         body: Stack(
             children: [
 
