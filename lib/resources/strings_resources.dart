@@ -40,6 +40,43 @@ class StringsResources {
     return "Express Idea";
   }
 
+  static String archivesTitle() {
+
+    return 'Archives';
+  }
+
+  static String archivesTooltip() {
+
+    return 'Sessions Archives';
+  }
+
+  static String searchTitle() {
+
+    return 'Search';
+  }
+
+  static String searchTooltip() {
+
+    return 'Search Sessions';
+  }
+
+  static String queryTooltip() {
+
+    return 'Query - Raw Data, Question';
+  }
+
+  static String decisionTooltip() {
+
+    return 'Decision - Result, Target';
+  }
+
+  static String shareSuccessTip(String inputText) {
+
+    return 'Eresse Success Tip: \n'
+        '$inputText \n'
+        '${applicationLink()}';
+  }
+
   static String applicationLink() {
 
     return "https://play.google.com/store/apps/details?id=co.geeksempire.eresse";

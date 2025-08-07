@@ -1,6 +1,7 @@
 import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/ui/elements/NextedTooltip.dart';
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
@@ -21,7 +22,6 @@ class InputsBar extends StatelessWidget {
   final String imageController;
 
   InputsBar({super.key, required this.dialoguesJSON, required this.queryPressed, required this.decisionPressed, required this.inputPressed, required this.textController, required this.imageController});
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +83,14 @@ class InputsBar extends StatelessWidget {
                                   }
 
                                 },
-                                child: SizedBox(
-                                    width: 51,
-                                    height: 51,
-                                    child: Image(
-                                      image: AssetImage("assets/decision.png"),
+                                child: nextedTooltip(
+                                    StringsResources.decisionTooltip(),
+                                    SizedBox(
+                                        width: 51,
+                                        height: 51,
+                                        child: Image(
+                                          image: AssetImage("assets/decision.png"),
+                                        )
                                     )
                                 )
                             )
@@ -147,11 +150,14 @@ class InputsBar extends StatelessWidget {
                                   }
 
                                 },
-                                child: SizedBox(
-                                    width: 51,
-                                    height: 51,
-                                    child: Image(
-                                      image: AssetImage("assets/query.png"),
+                                child: nextedTooltip(
+                                    StringsResources.queryTooltip(),
+                                    SizedBox(
+                                        width: 51,
+                                        height: 51,
+                                        child: Image(
+                                          image: AssetImage("assets/query.png"),
+                                        )
                                     )
                                 )
                             )

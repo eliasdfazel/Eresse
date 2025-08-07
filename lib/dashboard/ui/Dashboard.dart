@@ -29,6 +29,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -169,6 +170,13 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                       bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
                       content: successTipContent,
                       successTipPressed: (data) {
+
+                        SharePlus.instance.share(
+                            ShareParams(
+                                title: '${StringsResources.applicationName()} ${StringsResources.successTipTitle()}',
+                                text: StringsResources.shareSuccessTip(data),
+                            )
+                        );
 
                       },
                     ),

@@ -39,6 +39,7 @@ class _SuccessTipState extends State<SuccessTip> {
     return Align(
         alignment: Alignment.topCenter,
         child: InkWell(
+            splashFactory: NoSplash.splashFactory,
             onLongPress: () => widget.successTipPressed(widget.content),
             child: SizedBox(
                 width: double.infinity,
@@ -111,6 +112,7 @@ class _SuccessTipState extends State<SuccessTip> {
                                     width: 31,
                                     alignment: Alignment.centerRight,
                                     child: InkWell(
+                                        splashFactory: NoSplash.splashFactory,
                                         onTap: () => widget.successTipPressed(widget.content),
                                         child: Image(
                                           image: AssetImage('assets/share.png'),

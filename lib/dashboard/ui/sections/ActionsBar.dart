@@ -1,4 +1,6 @@
 import 'package:Eresse/resources/colors_resources.dart';
+import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/ui/elements/NextedTooltip.dart';
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
@@ -19,9 +21,9 @@ class ActionsBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Positioned(
-        bottom: 51,
-        left: 19,
-        right: 19,
+      bottom: 51,
+      left: 19,
+      right: 19,
       child: Container(
           height: 75,
           width: double.infinity,
@@ -62,13 +64,30 @@ class ActionsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerLeft,
                             child: InkWell(
+                                splashFactory: NoSplash.splashFactory,
                                 onTap: () => archivePressed(''),
-                                child: SizedBox(
-                                    width: 51,
-                                    height: 51,
-                                    child: Image(
-                                      image: AssetImage("assets/archive.png"),
-                                    )
+                                child: Tooltip(
+                                  message: StringsResources.archivesTooltip(),
+                                  preferBelow: false,
+                                  verticalOffset: 51,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                    color: ColorsResources.premiumDark.withAlpha(137)
+                                  ),
+                                  textStyle: TextStyle(
+                                    color: ColorsResources.premiumLight,
+                                    fontSize: 13
+                                  ),
+                                  child: nextedTooltip(
+                                      StringsResources.archivesTooltip(),
+                                      SizedBox(
+                                          width: 51,
+                                          height: 51,
+                                          child: Image(
+                                            image: AssetImage("assets/archive.png"),
+                                          )
+                                      )
+                                  )
                                 )
                             )
                         ),
@@ -76,6 +95,7 @@ class ActionsBar extends StatelessWidget {
                         Expanded(
                             flex: 1,
                             child: InkWell(
+                                splashFactory: NoSplash.splashFactory,
                                 onTap: () => startPressed(''),
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 19, right: 19),
@@ -99,13 +119,17 @@ class ActionsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
+                                splashFactory: NoSplash.splashFactory,
                                 onTap: () => archivePressed(''),
-                                child: SizedBox(
+                                child: nextedTooltip(
+                                    StringsResources.searchTooltip(),
+                                    SizedBox(
                                     width: 51,
                                     height: 51,
                                     child: Image(
                                       image: AssetImage("assets/search.png"),
                                     )
+                                )
                                 )
                             )
                         ),
