@@ -141,7 +141,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
             children: [
 
               /* START - Decoration */
-              decorations(backgroundOpacity: 0.37, brandingOpacity: 0.37),
+              decorations(textureOpacity: 0.37, brandingOpacity: 0.37),
               /* END - Decoration */
 
               /* START - Content */

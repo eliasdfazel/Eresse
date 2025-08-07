@@ -1,5 +1,6 @@
 
 
+import 'package:Eresse/resources/colors_resources.dart';
 import 'package:flutter/material.dart';
 
 Widget entryDecorations() {
@@ -9,11 +10,20 @@ Widget entryDecorations() {
 
       Align(
           alignment: Alignment.center,
-          child: SizedBox(
+          child: Container(
             height: double.infinity,
             width: double.infinity,
+            decoration: BoxDecoration(
+                gradient: SweepGradient(
+                    colors: [
+                      ColorsResources.primaryColor,
+                      ColorsResources.primaryColorLight
+                    ],
+                    center: Alignment.topLeft
+                )
+            ),
             child: Image(
-              image: AssetImage('assets/decoration_background.jpg'),
+              image: AssetImage('assets/texture.png'),
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -40,20 +50,29 @@ Widget entryDecorations() {
   );
 }
 
-Widget decorations({double backgroundOpacity = 0.73, double brandingOpacity = 0.73}) {
+Widget decorations({int backgroundOpacity = 137, double textureOpacity = 0.73, double brandingOpacity = 0.73}) {
 
   return Stack(
     children: [
 
       Align(
           alignment: Alignment.center,
-          child: SizedBox(
+          child: Container(
             height: double.infinity,
             width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: SweepGradient(
+                  colors: [
+                    ColorsResources.primaryColor.withAlpha(backgroundOpacity),
+                    ColorsResources.primaryColorLight.withAlpha(backgroundOpacity)
+                  ],
+                  center: Alignment.topLeft
+              )
+            ),
             child: Opacity(
-              opacity: backgroundOpacity,
+              opacity: textureOpacity,
               child: Image(
-                  image: AssetImage('assets/decoration_background.jpg'),
+                  image: AssetImage('assets/texture.png'),
                   height: double.infinity,
                   width: double.infinity,
                   fit: BoxFit.cover

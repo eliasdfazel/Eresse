@@ -17,8 +17,8 @@
 
             <gradient
                 android:type="sweep"
-                android:startColor="#38003C"
-                android:endColor="#5D0064"
+                android:startColor="#0A0040"
+                android:endColor="#12016C"
                 android:centerX="0.0"
                 android:centerY="0.0"/>
 
@@ -28,7 +28,7 @@
 
     <item
                 android:gravity="fill"
-                android:drawable="@drawable/decoration_background">
+                android:drawable="@drawable/texture">
 
     </item>
 

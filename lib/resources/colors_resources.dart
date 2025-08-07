@@ -12,8 +12,9 @@ import 'package:flutter/material.dart';
 
 class ColorsResources {
 
-  static const Color primaryColor = Color.fromARGB(255, 52, 0, 64);
-  static const Color primaryColorLight = Color.fromARGB(255, 93, 0, 100);
+  static const Color primaryColor = Color.fromARGB(255, 10, 0, 64);
+  static const Color primaryColorLight = Color.fromARGB(255, 18, 1, 108);
+  static const Color primaryColorDark = Color.fromARGB(255, 6, 0, 40);
 
   static const Color queryColor = Color.fromARGB(255, 186, 225, 255);
   static const Color decisionColor = Color.fromARGB(255, 186, 255, 201);
