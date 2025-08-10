@@ -8,11 +8,10 @@ extension StringEncrypter on String {
     final keyPhrase = await retrieveRemoteConfig('keyPhrase');
 
     final keyPhraseUtf8 = Key.fromUtf8(keyPhrase);
-    final iv = IV.fromLength(16);
 
     final encrypter = Encrypter(AES(keyPhraseUtf8));
 
-    final encryptedValue = encrypter.encrypt(this, iv: iv);
+    final encryptedValue = encrypter.encrypt(this, iv: IV.fromUtf8(keyPhrase));
 
     return encryptedValue.base64;
   }
@@ -22,13 +21,12 @@ extension StringEncrypter on String {
     final keyPhrase = await retrieveRemoteConfig('keyPhrase');
 
     final keyPhraseUtf8 = Key.fromUtf8(keyPhrase);
-    final iv = IV.fromLength(16);
 
     final encrypter = Encrypter(AES(keyPhraseUtf8));
 
-    final encryptedValue = encrypter.encrypt(this, iv: iv);
+    final encryptedValue = Encrypted.fromBase64(this);
 
-    final decryptedValue = encrypter.decrypt(encryptedValue);
+    final decryptedValue = encrypter.decrypt(encryptedValue, iv: IV.fromUtf8(keyPhrase));
 
     return decryptedValue;
   }
