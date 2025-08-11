@@ -120,8 +120,8 @@ class SyncManager {
 
       }
 
-    } else {
-      debugPrint('Merging: Update Local Database');
+    } else if (localSessions.length < cloudSessions.size) {
+      debugPrint('Merging');
 
       for (final element in cloudSessions.docs) {
 

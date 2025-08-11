@@ -115,7 +115,8 @@ class InsertQueries {
 
       sessionSqlDataStructure = SessionSqlDataStructure(
           sessionId: sessionId,
-          createdTimestamp: dialogueId, updatedTimestamp: now().toString(),
+          createdTimestamp: dialogueId,
+          updatedTimestamp: dialogueId,
           sessionTitle: 'N/A', sessionSummary: 'N/A',
           sessionStatus: SessionStatus.sessionOpen.name,
           sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, now().toString(), encryptedContent)
@@ -180,7 +181,8 @@ class InsertQueries {
 
     SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure(
         sessionId: sessionId,
-        createdTimestamp: sessionId, updatedTimestamp: updateTimestamp,
+        createdTimestamp: sessionId,
+        updatedTimestamp: updateTimestamp,
         sessionTitle: 'N/A', sessionSummary: 'N/A',
         sessionStatus: SessionStatus.sessionOpen.name,
         sessionJsonContent: '[]'
