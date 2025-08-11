@@ -41,7 +41,7 @@ class QueryElement extends StatelessWidget {
                                 bottomRight: Radius.circular(19),
                                 bottomLeft: Radius.circular(19)
                             ),
-                            color: ColorsResources.premiumDark.withAlpha(199)
+                            color: ColorsResources.premiumDark.withAlpha(37)
                         ),
                         child: Container(
                             constraints: BoxConstraints(

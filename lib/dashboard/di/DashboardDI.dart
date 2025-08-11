@@ -1,4 +1,5 @@
 import 'package:Eresse/arwen/ask/AskQuery.dart';
+import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart';
 import 'package:Eresse/database/queries/DatabaseUtils.dart';
 import 'package:Eresse/database/queries/RetrieveQueries.dart';
@@ -24,5 +25,7 @@ class DashboardDI {
   DatabaseUtils databaseUtils = DatabaseUtils();
 
   CredentialsIO credentialsIO = CredentialsIO();
+
+  ArwenEndpoints arwenEndpoints = ArwenEndpoints();
 
 }

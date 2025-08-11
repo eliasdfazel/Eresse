@@ -74,7 +74,7 @@ class _SessionSummaryState extends State<SessionSummary> {
                                 width: 1.73
                             ),
                             borderRadius: BorderRadius.circular(19),
-                            color: ColorsResources.premiumDark.withAlpha(103)
+                            color: ColorsResources.premiumDark.withAlpha(37)
                         ),
                         padding: EdgeInsets.only(left: 19, right: 19, top: 13, bottom: 13),
                         child: Column(

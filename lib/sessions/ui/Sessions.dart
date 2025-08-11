@@ -467,7 +467,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   Future askingProcess(String inputQuery) async {
 
     if (_sessionsDI.firebaseUser != null) {
-      debugPrint('Input Query: $inputQuery');
 
       setState(() {
 
@@ -486,7 +485,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       }
 
-      final queryResult = await _sessionsDI.askQuery.retrieveAnswer((selectedDialogue != null) ? textMessage : inputQuery);
+      final queryResult = await _sessionsDI.askQuery.retrieveAnswer(textMessage);
 
       if (queryResult != null) {
 
@@ -494,12 +493,18 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         await insertDialogues(ContentType.queryType, inputQuery, null);
 
-        await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult, dialogueId);
+        await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType,
+            await _sessionsDI.dialoguesJSON.messageInput(
+                textMessage: textMessage,
+                imageMessage: null
+            ), dialogueId);
 
-        processLastDialogue(dialogueDataStructure(ContentType.askType, await _sessionsDI.dialoguesJSON.messageInput(
-            textMessage: queryResult,
-            imageMessage: null
-        ), now().toString()));
+        processLastDialogue(dialogueDataStructure(ContentType.askType,
+            dialogueId,
+            await _sessionsDI.dialoguesJSON.messageInput(
+                textMessage: queryResult,
+                imageMessage: null
+        )));
 
       }
 

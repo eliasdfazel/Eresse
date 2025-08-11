@@ -10,6 +10,7 @@
 
 import 'dart:async';
 
+import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
 import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
@@ -154,7 +155,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
             children: [
 
               /* START - Decoration */
-              decorations(),
+              decorations(textureOpacity: 0.37, brandingOpacity: 0.37),
               /* END - Decoration */
 
               /* START - Content */
@@ -336,6 +337,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
     _dashboardDI.credentialsIO.generateApiKey();
 
     _dashboardDI.credentialsIO.cipherKeyPhrase();
+
+    _dashboardDI.arwenEndpoints.retrieveEndpoint(ArwenEndpoints.aiTextEndpoint);
 
   }
 

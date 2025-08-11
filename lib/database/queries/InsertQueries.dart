@@ -119,7 +119,7 @@ class InsertQueries {
           updatedTimestamp: dialogueId,
           sessionTitle: 'N/A', sessionSummary: 'N/A',
           sessionStatus: SessionStatus.sessionOpen.name,
-          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, now().toString(), encryptedContent)
+          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, dialogueId, encryptedContent)
       );
 
       await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),

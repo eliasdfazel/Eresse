@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Eresse/arwen/di/AskDI.dart';
 import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class AskQuery {
@@ -11,6 +12,7 @@ class AskQuery {
   final AskDI _askDI = AskDI();
 
   Future<String?> retrieveAnswer(String inputQuery) async {
+    debugPrint('Input Query: $inputQuery');
 
     var aiHeaders = {
       'Content-Type': 'application/json'
@@ -72,7 +74,7 @@ class AskQuery {
     });
     aiHttpRequest.headers.addAll(aiHeaders);
 
-    http.StreamedResponse aiGenerativeHttpResponse = await aiHttpRequest.send().timeout(Duration(seconds: 13));
+    http.StreamedResponse aiGenerativeHttpResponse = await aiHttpRequest.send().timeout(Duration(seconds: 19));
 
     if (aiGenerativeHttpResponse.statusCode == 200) {
 
@@ -84,9 +86,9 @@ class AskQuery {
 
       final aiGenerativeResult = List.from(aiGenerativeContent['parts']).first['text'];
 
-      final Map<String, dynamic> successTip = jsonDecode(aiGenerativeResult);
+      final Map<String, dynamic> result = jsonDecode(aiGenerativeResult);
 
-      return successTip['answer'];
+      return result['answer'];
 
     }
 
