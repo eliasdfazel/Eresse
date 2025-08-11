@@ -22,9 +22,9 @@ class QueryElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final textMessage = dialoguesJSON.messageMap(queryDataStructure.getContent())[MessageContent.textMessage.name];
+    final textMessage = dialoguesJSON.messageExtract(queryDataStructure.getContent())[MessageContent.textMessage.name];
 
-    final imageMessage = dialoguesJSON.messageMap(queryDataStructure.getContent())[MessageContent.imageMessage.name];
+    final imageMessage = dialoguesJSON.messageExtract(queryDataStructure.getContent())[MessageContent.imageMessage.name];
 
     return Container(
       padding: EdgeInsets.only(right: 19, top: 11, bottom: 11),

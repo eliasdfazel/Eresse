@@ -96,13 +96,15 @@ class InsertQueries {
   /// content = sessionJsonContent
   Future<SessionSqlDataStructure> insertDialogues(User firebaseUser, String sessionId, ContentType contentType, String content, String dialogueId) async {
 
+    final String encryptedContent = content;
+
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
     var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
     if (sessionSqlDataStructure != null) {
 
-      sessionSqlDataStructure.setSessionJsonContent(await _dialoguesJSON.insertDialogueJson(sessionSqlDataStructure.getSessionJsonContent(), contentType, sessionSqlDataStructure.getSessionId(), content));
+      sessionSqlDataStructure.setSessionJsonContent(await _dialoguesJSON.insertDialogueJson(sessionSqlDataStructure.getSessionJsonContent(), contentType, sessionSqlDataStructure.getSessionId(), encryptedContent));
       sessionSqlDataStructure.setUpdatedTimestamp(now().toString());
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
@@ -116,7 +118,7 @@ class InsertQueries {
           createdTimestamp: dialogueId, updatedTimestamp: now().toString(),
           sessionTitle: 'N/A', sessionSummary: 'N/A',
           sessionStatus: SessionStatus.sessionOpen.name,
-          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, now().toString(), content)
+          sessionJsonContent: await _dialoguesJSON.insertDialogueJson('[]', contentType, now().toString(), encryptedContent)
       );
 
       await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),
@@ -125,7 +127,7 @@ class InsertQueries {
 
     }
 
-    insertDialoguesSync(firebaseUser, sessionId, contentType, content, dialogueId);
+    insertDialoguesSync(firebaseUser, sessionId, contentType, encryptedContent, dialogueId);
 
     await _setupDatabase.closeDatabase(databaseInstance);
 

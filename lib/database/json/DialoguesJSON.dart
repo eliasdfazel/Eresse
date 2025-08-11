@@ -53,7 +53,7 @@ class DialoguesJSON {
     return jsonEncode(dialogueJsonArray);
   }
 
-  String messageJson({String? textMessage , String? imageMessage}) {
+  String messageInput({String? textMessage , String? imageMessage}) {
 
     return jsonEncode({
       MessageContent.textMessage.name: textMessage ?? '',
@@ -61,7 +61,7 @@ class DialoguesJSON {
     });
   }
 
-  Map<String, String> messageMap(String content) {
+  Map<String, String> messageExtract(String content) {
 
     return {
       MessageContent.textMessage.name: jsonDecode(content)[MessageContent.textMessage.name],

@@ -75,7 +75,7 @@ class InputsBar extends StatelessWidget {
                                   if (textController.text.isNotEmpty
                                     || imageController.isNotEmpty) {
 
-                                    decisionPressed(dialoguesJSON.messageJson(
+                                    decisionPressed(dialoguesJSON.messageInput(
                                         textMessage: textController.text,
                                         imageMessage: imageController
                                     ));
@@ -142,7 +142,7 @@ class InputsBar extends StatelessWidget {
                                   if (textController.text.isNotEmpty
                                       || imageController.isNotEmpty) {
 
-                                    queryPressed(dialoguesJSON.messageJson(
+                                    queryPressed(dialoguesJSON.messageInput(
                                         textMessage: textController.text,
                                         imageMessage: imageController
                                     ));
