@@ -84,7 +84,7 @@ class SyncManager {
   Future _mergeDatabase(Syncing syncing, List<Map<String, dynamic>> localSessions, QuerySnapshot<Object?> cloudSessions, User firebaseUser) async {
 
     if (localSessions.length >= cloudSessions.size) {
-      debugPrint('Merging');
+      debugPrint('Merging: localSessions.length >= cloudSessions.size');
 
       for (final element in localSessions) {
 
@@ -121,7 +121,7 @@ class SyncManager {
       }
 
     } else if (localSessions.length < cloudSessions.size) {
-      debugPrint('Merging');
+      debugPrint('Merging: localSessions.length < cloudSessions.size');
 
       for (final element in cloudSessions.docs) {
 
@@ -158,6 +158,7 @@ class SyncManager {
               }
 
             } else {
+              debugPrint('Merging: Insert Into Local Database');
 
               _syncDI.insertQueries.insertSession(firebaseUser, sessionDataStructure.sessionId(), SessionSqlDataStructure.fromMapSync(element.data() as Map<String, dynamic>, dialoguesJsonArray));
 

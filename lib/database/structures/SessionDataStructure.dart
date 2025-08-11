@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:Eresse/resources/colors_resources.dart';
-import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum SessionStatus {
@@ -20,10 +19,10 @@ dynamic sessionMetadata(String sessionId, String updateTimestamp, SessionStatus 
   };
 }
 
-dynamic sessionUpdateMetadata() {
+dynamic sessionUpdateMetadata(String updateTimestamp) {
 
   return {
-    SessionDataStructure.updatedTimestampKey: now(),
+    SessionDataStructure.updatedTimestampKey: updateTimestamp,
   };
 }
 

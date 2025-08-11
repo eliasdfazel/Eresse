@@ -41,9 +41,9 @@ class InsertQueries {
           cloudSessionSqlDataStructure.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
 
-    }
+      await insertSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure?.sessionStatusIndicator() ?? SessionStatus.sessionOpen);
 
-    await insertSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure?.sessionStatusIndicator() ?? SessionStatus.sessionOpen);
+    }
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
@@ -81,7 +81,7 @@ class InsertQueries {
 
   Future updateSessionElementSync(User firebaseUser, String sessionId, SessionSqlDataStructure sessionSqlDataStructure) async {
 
-    await updateSessionMetadataSync(firebaseUser, sessionId);
+    await updateSessionMetadataSync(firebaseUser, sessionId, sessionSqlDataStructure.getUpdateTimestamp().toString());
 
     final localDialogues = await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
 
@@ -214,23 +214,25 @@ class InsertQueries {
 
     var sessionSqlDataStructure = await _databaseUtils.rowExists(databaseInstance, sessionId);
 
+    String updateTimestamp = now().toString();
+
     if (sessionSqlDataStructure != null) {
 
-      sessionSqlDataStructure.setUpdatedTimestamp(now().toString());
+      sessionSqlDataStructure.setUpdatedTimestamp(updateTimestamp);
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
     }
 
-    updateSessionMetadataSync(firebaseUser, sessionId);
+    updateSessionMetadataSync(firebaseUser, sessionId, updateTimestamp);
 
     await _setupDatabase.closeDatabase(databaseInstance);
   }
 
-  Future<dynamic> updateSessionMetadataSync(User firebaseUser, String sessionId) async {
+  Future<dynamic> updateSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
-        .update(sessionUpdateMetadata());
+        .update(sessionUpdateMetadata(updateTimestamp));
 
     return resultCallback;
   }
