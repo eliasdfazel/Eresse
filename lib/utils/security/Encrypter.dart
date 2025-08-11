@@ -1,11 +1,11 @@
-import 'package:Eresse/utils/network/RemoteConfigurations.dart';
+import 'package:Eresse/profile/credentials/CredentialsIO.dart';
 import 'package:encrypt/encrypt.dart';
 
 extension StringEncrypter on String {
 
-  Future<String> encrypt() async {
+  Future<String> encrypt(CredentialsIO credentialsIO) async {
 
-    final keyPhrase = await retrieveRemoteConfig('keyPhrase');
+    final keyPhrase = await credentialsIO.cipherKeyPhrase();
 
     final keyPhraseUtf8 = Key.fromUtf8(keyPhrase);
 
@@ -16,9 +16,9 @@ extension StringEncrypter on String {
     return encryptedValue.base64;
   }
 
-  Future<String> decrypt() async {
+  Future<String> decrypt(CredentialsIO credentialsIO) async {
 
-    final keyPhrase = await retrieveRemoteConfig('keyPhrase');
+    final keyPhrase = await credentialsIO.cipherKeyPhrase();
 
     final keyPhraseUtf8 = Key.fromUtf8(keyPhrase);
 

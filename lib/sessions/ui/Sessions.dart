@@ -239,18 +239,18 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                 dialoguesJSON: _sessionsDI.dialoguesJSON,
                 textController: textController,
                 imageController: imageController,
-                queryPressed: (content) {
+                queryPressed: (content) async {
                   debugPrint('Query: $content');
 
-                  final messageContent = _sessionsDI.dialoguesJSON.messageExtract(content);
+                  final messageContent = await _sessionsDI.dialoguesJSON.messageExtract(content);
 
                   insertDialogues(ContentType.queryType, messageContent[MessageContent.textMessage.name], messageContent[MessageContent.imageMessage.name]);
 
                 },
-                decisionPressed: (content) {
+                decisionPressed: (content) async {
                   debugPrint('Decision: $content');
 
-                  final messageContent = _sessionsDI.dialoguesJSON.messageExtract(content);
+                  final messageContent = await _sessionsDI.dialoguesJSON.messageExtract(content);
 
                   insertDialogues(ContentType.decisionType, messageContent[MessageContent.textMessage.name], messageContent[MessageContent.imageMessage.name]);
 
@@ -371,14 +371,14 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       }
 
       await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, contentType,
-          _sessionsDI.dialoguesJSON.messageInput(
+          await _sessionsDI.dialoguesJSON.messageInput(
             textMessage: textMessage,
             imageMessage: imageMessage
           ), dialogueId);
 
       processLastDialogue(dialogueDataStructure(contentType,
           dialogueId,
-          _sessionsDI.dialoguesJSON.messageInput(
+          await _sessionsDI.dialoguesJSON.messageInput(
               textMessage: textMessage,
               imageMessage: imageMessage
           )
@@ -482,7 +482,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       if (selectedDialogue != null) {
 
-        textMessage = _sessionsDI.dialoguesJSON.messageExtract(selectedDialogue!.getContent())[MessageContent.textMessage.name] ?? inputQuery;
+        textMessage = (await _sessionsDI.dialoguesJSON.messageExtract(selectedDialogue!.getContent()))[MessageContent.textMessage.name] ?? inputQuery;
 
       }
 
@@ -496,7 +496,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType, queryResult, dialogueId);
 
-        processLastDialogue(dialogueDataStructure(ContentType.askType, _sessionsDI.dialoguesJSON.messageInput(
+        processLastDialogue(dialogueDataStructure(ContentType.askType, await _sessionsDI.dialoguesJSON.messageInput(
             textMessage: queryResult,
             imageMessage: null
         ), now().toString()));

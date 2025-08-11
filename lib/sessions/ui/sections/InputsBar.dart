@@ -70,12 +70,12 @@ class InputsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                                onTap: () {
+                                onTap: () async {
 
                                   if (textController.text.isNotEmpty
                                     || imageController.isNotEmpty) {
 
-                                    decisionPressed(dialoguesJSON.messageInput(
+                                    decisionPressed(await dialoguesJSON.messageInput(
                                         textMessage: textController.text,
                                         imageMessage: imageController
                                     ));
@@ -137,12 +137,12 @@ class InputsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
-                                onTap: () {
+                                onTap: () async {
 
                                   if (textController.text.isNotEmpty
                                       || imageController.isNotEmpty) {
 
-                                    queryPressed(dialoguesJSON.messageInput(
+                                    queryPressed(await dialoguesJSON.messageInput(
                                         textMessage: textController.text,
                                         imageMessage: imageController
                                     ));

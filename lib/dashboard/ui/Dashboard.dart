@@ -333,6 +333,10 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
     });
 
+    _dashboardDI.credentialsIO.generateApiKey();
+
+    _dashboardDI.credentialsIO.cipherKeyPhrase();
+
   }
 
   @override

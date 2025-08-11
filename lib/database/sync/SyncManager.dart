@@ -35,7 +35,7 @@ class SyncManager {
         _updateCloudDatabase(localSessions, firebaseUser);
 
       } else {
-        debugPrint('local/Cloud Merging');
+        debugPrint('Local/Cloud Merging');
 
         _mergeDatabase(syncing, localSessions, cloudSessions, firebaseUser);
 

@@ -22,98 +22,121 @@ class QueryElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final textMessage = dialoguesJSON.messageExtract(queryDataStructure.getContent())[MessageContent.textMessage.name];
+    return FutureBuilder(
+        future: _dataFuture(),
+        builder: (BuildContext context, AsyncSnapshot<Map<String, String?>> dataSnapshot) {
 
-    final imageMessage = dialoguesJSON.messageExtract(queryDataStructure.getContent())[MessageContent.imageMessage.name];
+          if (dataSnapshot.connectionState == ConnectionState.done) {
 
-    return Container(
-      padding: EdgeInsets.only(right: 19, top: 11, bottom: 11),
-      alignment: Alignment.centerRight,
-      child: FractionallySizedBox(
-        widthFactor: 0.7,
-        child: Container(
-          decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(11),
-                    topLeft: Radius.circular(19),
-                    bottomRight: Radius.circular(19),
-                    bottomLeft: Radius.circular(19)
-                ),
-                color: ColorsResources.premiumDark.withAlpha(199)
-            ),
-          child: Container(
-              constraints: BoxConstraints(
-                  minHeight: 73
-              ),
-              decoration: BoxDecoration(
-                  border: GradientBoxBorder(
-                    gradient: LinearGradient(
-                        colors: [
-                          ColorsResources.queryColor,
-                          ColorsResources.queryColor.withAlpha(0)
-                        ],
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft
-                    ),
-                    width: 1.37,
-                  ),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(11),
-                      topLeft: Radius.circular(19),
-                      bottomRight: Radius.circular(19),
-                      bottomLeft: Radius.circular(19)
-                  ),
-                  gradient: LinearGradient(
-                      colors: [
-                        ColorsResources.queryColor.withAlpha(37),
-                        ColorsResources.queryColor.withAlpha(0)
-                      ],
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft
-                  )
-              ),
-              child: Padding(
-                  padding: EdgeInsets.all(11),
-                  child: InkWell(
-                      onLongPress: () {
-
-                        queryPressed(queryDataStructure);
-
-                      },
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                            (textMessage == null) ? Container() : Text(
-                              textMessage,
-                              style: TextStyle(
-                                  color: ColorsResources.premiumLight,
-                                  fontSize: 13
-                              ),
+            return Container(
+                padding: EdgeInsets.only(right: 19, top: 11, bottom: 11),
+                alignment: Alignment.centerRight,
+                child: FractionallySizedBox(
+                    widthFactor: 0.7,
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(11),
+                                topLeft: Radius.circular(19),
+                                bottomRight: Radius.circular(19),
+                                bottomLeft: Radius.circular(19)
                             ),
+                            color: ColorsResources.premiumDark.withAlpha(199)
+                        ),
+                        child: Container(
+                            constraints: BoxConstraints(
+                                minHeight: 73
+                            ),
+                            decoration: BoxDecoration(
+                                border: GradientBoxBorder(
+                                  gradient: LinearGradient(
+                                      colors: [
+                                        ColorsResources.queryColor,
+                                        ColorsResources.queryColor.withAlpha(0)
+                                      ],
+                                      begin: Alignment.topRight,
+                                      end: Alignment.bottomLeft
+                                  ),
+                                  width: 1.37,
+                                ),
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(11),
+                                    topLeft: Radius.circular(19),
+                                    bottomRight: Radius.circular(19),
+                                    bottomLeft: Radius.circular(19)
+                                ),
+                                gradient: LinearGradient(
+                                    colors: [
+                                      ColorsResources.queryColor.withAlpha(37),
+                                      ColorsResources.queryColor.withAlpha(0)
+                                    ],
+                                    begin: Alignment.topRight,
+                                    end: Alignment.bottomLeft
+                                )
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(11),
+                                child: InkWell(
+                                    onLongPress: () {
 
-                            (imageMessage == null || imageMessage.isEmpty) ? Container() :
-                              Padding(
-                                  padding: EdgeInsets.only(top: 13),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(17),
-                                      child: Image(
-                                        image: FileImage(File(imageMessage)),
-                                        height: 199,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      )
-                                  )
-                              )
+                                      queryPressed(queryDataStructure);
 
-                          ]
-                      )
-                  )
-              )
-          )
-        )
-      )
+                                    },
+                                    child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+
+                                          (dataSnapshot.data?[MessageContent.textMessage.name] == null) ? Container() :
+                                          Text(
+                                            dataSnapshot.data![MessageContent.textMessage.name]!,
+                                            style: TextStyle(
+                                                color: ColorsResources.premiumLight,
+                                                fontSize: 13
+                                            ),
+                                          ),
+
+                                          (dataSnapshot.data?[MessageContent.imageMessage.name] == null || dataSnapshot.data![MessageContent.imageMessage.name]!.isEmpty) ? Container() :
+                                          Padding(
+                                              padding: EdgeInsets.only(top: 13),
+                                              child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(17),
+                                                  child: Image(
+                                                    image: FileImage(File(dataSnapshot.data![MessageContent.imageMessage.name]!)),
+                                                    height: 199,
+                                                    width: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                              )
+                                          )
+
+                                        ]
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+          } else {
+
+            return Container();
+          }
+        },
     );
   }
+
+  Future<Map<String, String?>> _dataFuture() async {
+
+    final textMessage = (await dialoguesJSON.messageExtract(queryDataStructure.getContent()))[MessageContent.textMessage.name];
+
+    final imageMessage = (await dialoguesJSON.messageExtract(queryDataStructure.getContent()))[MessageContent.imageMessage.name];
+
+    return {
+      MessageContent.textMessage.name: textMessage,
+      MessageContent.imageMessage.name: imageMessage
+    };
+  }
+
 }

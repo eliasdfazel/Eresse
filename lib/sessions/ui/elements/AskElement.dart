@@ -22,74 +22,105 @@ class AskElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final textMessage = dialoguesJSON.messageExtract(queryDataStructure.getContent())[MessageContent.textMessage.name];
+    return FutureBuilder(
+      future: _dataFuture(),
+      builder: (BuildContext context, AsyncSnapshot<Map<String, String?>> dataSnapshot) {
 
-    final imageMessage = dialoguesJSON.messageExtract(queryDataStructure.getContent())[MessageContent.imageMessage.name];
+        if (dataSnapshot.connectionState == ConnectionState.done) {
 
-    return Container(
-      padding: EdgeInsets.only(left: 19, right: 19, top: 11, bottom: 11),
-      alignment: Alignment.centerLeft,
-      child: Container(
-          width: double.infinity,
-          constraints: BoxConstraints(
-              minHeight: 73
-          ),
-          decoration: BoxDecoration(
-              border: GradientBoxBorder(
-                gradient: LinearGradient(
-                    colors: [
-                      ColorsResources.premiumDark,
-                      ColorsResources.premiumDark.withAlpha(0),
-                      ColorsResources.premiumDark,
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight
-                ),
-                width: 1.73,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(19)),
-              gradient: LinearGradient(
-                  colors: [
-                    ColorsResources.premiumDark.withAlpha(159),
-                    ColorsResources.premiumDark.withAlpha(137),
-                    ColorsResources.premiumDark.withAlpha(159),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight
-              )
-          ),
-          child: Padding(
-              padding: EdgeInsets.all(11),
-              child: InkWell(
-                  onLongPress: () {
-
-                    askPressed(queryDataStructure);
-
-                  },
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        (textMessage == null) ? Container() : Text(
-                          textMessage,
-                          style: TextStyle(
-                              color: ColorsResources.premiumLight,
-                              fontSize: 13
-                          ),
+          return  Container(
+              padding: EdgeInsets.only(left: 19, right: 19, top: 11, bottom: 11),
+              alignment: Alignment.centerLeft,
+              child: Container(
+                  width: double.infinity,
+                  constraints: BoxConstraints(
+                      minHeight: 73
+                  ),
+                  decoration: BoxDecoration(
+                      border: GradientBoxBorder(
+                        gradient: LinearGradient(
+                            colors: [
+                              ColorsResources.premiumDark,
+                              ColorsResources.premiumDark.withAlpha(0),
+                              ColorsResources.premiumDark,
+                            ],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight
                         ),
+                        width: 1.73,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(19)),
+                      gradient: LinearGradient(
+                          colors: [
+                            ColorsResources.premiumDark.withAlpha(159),
+                            ColorsResources.premiumDark.withAlpha(137),
+                            ColorsResources.premiumDark.withAlpha(159),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight
+                      )
+                  ),
+                  child: Padding(
+                      padding: EdgeInsets.all(11),
+                      child: InkWell(
+                          onLongPress: () {
 
-                        (imageMessage == null || imageMessage.isEmpty) ? Container() : Image(
-                          image: FileImage(File(imageMessage)),
-                          height: 199,
-                          fit: BoxFit.cover,
-                        )
+                            askPressed(queryDataStructure);
 
-                      ]
+                          },
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                (dataSnapshot.data?[MessageContent.textMessage.name] == null) ? Container() :
+                                Text(
+                                  dataSnapshot.data![MessageContent.textMessage.name]!,
+                                  style: TextStyle(
+                                      color: ColorsResources.premiumLight,
+                                      fontSize: 13
+                                  ),
+                                ),
+
+                                (dataSnapshot.data?[MessageContent.imageMessage.name] == null || dataSnapshot.data![MessageContent.imageMessage.name]!.isEmpty) ? Container() :
+                                Padding(
+                                    padding: EdgeInsets.only(top: 13),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(17),
+                                        child: Image(
+                                          image: FileImage(File(dataSnapshot.data![MessageContent.imageMessage.name]!)),
+                                          height: 199,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        )
+                                    )
+                                )
+
+                              ]
+                          )
+                      )
                   )
               )
-          )
-      )
+          );
+
+        } else {
+
+          return Container();
+        }
+      },
     );
   }
+
+  Future<Map<String, String?>> _dataFuture() async {
+
+    final textMessage = (await dialoguesJSON.messageExtract(queryDataStructure.getContent()))[MessageContent.textMessage.name];
+
+    final imageMessage = (await dialoguesJSON.messageExtract(queryDataStructure.getContent()))[MessageContent.imageMessage.name];
+
+    return {
+      MessageContent.textMessage.name: textMessage,
+      MessageContent.imageMessage.name: imageMessage
+    };
+  }
+
 }

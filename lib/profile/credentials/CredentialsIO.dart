@@ -4,6 +4,7 @@ import 'package:Eresse/utils/network/RemoteConfigurations.dart';
 class CredentialsIO {
 
   static const String apiKEY = 'aiKeyAPI';
+  static const String cipherPhraseKey = 'keyPhrase';
 
   final _preferencesIO = PreferencesIO();
 
@@ -20,6 +21,21 @@ class CredentialsIO {
     }
 
     return aiApiKey;
+  }
+
+  Future<String> cipherKeyPhrase() async {
+
+    String? keyPhrase = await _preferencesIO.read(CredentialsIO.cipherPhraseKey);
+
+    if (keyPhrase == null) {
+
+      keyPhrase = await retrieveRemoteConfig('keyPhrase');
+
+      await _preferencesIO.store(CredentialsIO.cipherPhraseKey, keyPhrase);
+
+    }
+
+    return keyPhrase;
   }
 
 }
