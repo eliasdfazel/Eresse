@@ -97,12 +97,12 @@ class SyncManager {
         if (cloudSession.exists) {
 
           if (sessionSqlDataStructure.getUpdateTimestamp() > sessionDataStructure.updatedTimestamp()) {
-            debugPrint('Merging: Update Cloud Database from Local');
+            debugPrint('Merging: Update Cloud Database');
 
             _syncDI.insertQueries.updateSessionElementSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
 
           } else if (sessionSqlDataStructure.getUpdateTimestamp() < sessionDataStructure.updatedTimestamp()) {
-            debugPrint('Merging: Update Local Database from Cloud');
+            debugPrint('Merging: Update Local Database');
 
             final dialoguesSessions = await _syncDI.retrieveQueries.retrieveDialoguesSync(firebaseUser, sessionDataStructure.sessionId());
 
@@ -142,10 +142,12 @@ class SyncManager {
             if (sessionSqlDataStructure != null) {
 
               if (sessionSqlDataStructure.getUpdateTimestamp() > sessionDataStructure.updatedTimestamp()) {
+                debugPrint('Merging: Update Cloud Database');
 
                 _syncDI.insertQueries.updateSessionElementSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
 
               } else if (sessionSqlDataStructure.getUpdateTimestamp() < sessionDataStructure.updatedTimestamp()) {
+                debugPrint('Merging: Update Local Database');
 
                 final dialoguesSessions = await _syncDI.retrieveQueries.retrieveDialoguesSync(firebaseUser, sessionDataStructure.sessionId());
 
@@ -168,7 +170,6 @@ class SyncManager {
         syncing.databaseUpdated();
 
       }
-
 
     }
 
