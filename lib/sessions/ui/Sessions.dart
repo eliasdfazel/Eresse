@@ -267,7 +267,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
               Toolbar(
                   textController: textController,
                   toolbarOpacity: toolbarOpacity,
-                  askPressed: (question) {
+                  askPressed: (question) async {
 
                     askingProcess(question);
 
@@ -291,7 +291,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                     }
 
                   },
-                  archivePressed: () {
+                  archivePressed: () async {
 
                     archivingProcess();
 
@@ -524,11 +524,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
     // check for result
     // archive it with success/failed result
 
-    if (selectedDialogue != null) {
 
-    } else {
-
-    }
 
   }
 
