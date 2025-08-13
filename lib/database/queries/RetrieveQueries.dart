@@ -67,6 +67,23 @@ class RetrieveQueries {
     return dialogues;
   }
 
+  Future<List<DialogueSqlDataStructure>> searchDialogues(User firebaseUser) async {
+
+    final List<DialogueSqlDataStructure> searchResult = [];
+
+    final databaseInstance = await _setupDatabase.initializeDatabase();
+
+    final List<Map<String, dynamic>> allSessions = await databaseInstance.query(SessionSqlDataStructure.sessionsTable());
+
+    databaseInstance.close();
+
+    for (final element in allSessions) {
+
+    }
+
+    return searchResult;
+  }
+
   Future<List<DocumentSnapshot>> retrieveDialoguesSync(User firebaseUser, String sessionId) async {
 
     List<DocumentSnapshot> dialogues = [];

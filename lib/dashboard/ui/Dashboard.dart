@@ -14,6 +14,7 @@ import 'package:Eresse/archive/ui/Archive.dart';
 import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
+import 'package:Eresse/dashboard/ui/sections/SearchBar.dart';
 import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
 import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
@@ -78,6 +79,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
   late Animation<Color?> tipColorAnimation;
   late Animation<Color?> tipCenterColorAnimation;
+
+  TextEditingController searchTextController = TextEditingController();
 
   @override
   void initState() {
@@ -317,6 +320,17 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                       retrieveSessions();
 
                     });
+
+
+                  }
+              ),
+              /* END - Actions Bar */
+
+              /* START - Actions Bar */
+              NextedSearchBar(
+                  textController: searchTextController,
+                  searchPressed: (searchQuery) async {
+
 
 
                   }
