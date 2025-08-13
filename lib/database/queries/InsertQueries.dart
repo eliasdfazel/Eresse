@@ -111,6 +111,9 @@ class InsertQueries {
 
     } else {
 
+      /*
+       * START - Insert The First Dialogue
+       */
       final dialogueId = now().toString();
 
       sessionSqlDataStructure = SessionSqlDataStructure(
@@ -125,6 +128,9 @@ class InsertQueries {
       await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(),
           sessionSqlDataStructure.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
+      /*
+       * END - Insert The First Dialogue
+       */
 
     }
 
@@ -184,7 +190,7 @@ class InsertQueries {
         createdTimestamp: sessionId,
         updatedTimestamp: updateTimestamp,
         sessionTitle: 'N/A', sessionSummary: 'N/A',
-        sessionStatus: SessionStatus.sessionOpen.name,
+        sessionStatus: sessionStatus.name,
         sessionJsonContent: '[]'
     );
 
