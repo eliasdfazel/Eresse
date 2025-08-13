@@ -67,6 +67,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
   String successTipContent = '';
 
+  String sessionArchiveTitle = StringsResources.openSessionsTitle().toUpperCase();
   List<SessionSqlDataStructure> sessions = [];
 
   Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
@@ -80,7 +81,14 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
   late Animation<Color?> tipColorAnimation;
   late Animation<Color?> tipCenterColorAnimation;
 
+  /*
+   * START - Search Bar
+   */
+  bool searchBarOpacity = false;
   TextEditingController searchTextController = TextEditingController();
+  /*
+   * END - Search Bar
+   */
 
   @override
   void initState() {
@@ -197,7 +205,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                       child: Padding(
                           padding: EdgeInsets.only(left: 37, right: 37),
                           child: Text(
-                            StringsResources.openSessionsTitle().toUpperCase(),
+                            sessionArchiveTitle,
                             style: TextStyle(
                                 color: ColorsResources.premiumLight.withAlpha(179),
                                 fontSize: 15,
@@ -312,6 +320,12 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                   },
                   searchPressed: () {
 
+                    setState(() {
+
+                      searchBarOpacity = !searchBarOpacity;
+
+                    });
+
                   },
                   archivePressed: () {
 
@@ -327,13 +341,63 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
               /* END - Actions Bar */
 
               /* START - Actions Bar */
-              NextedSearchBar(
-                  textController: searchTextController,
-                  searchPressed: (searchQuery) async {
+              Positioned(
+                bottom: 51,
+                left: 19,
+                right: 19,
+                child: AnimatedOpacity(
+                    opacity: searchBarOpacity ? 1 : 0,
+                    duration: const Duration(milliseconds: 999),
+                    curve: Curves.easeInOut,
+                    child: Visibility(
+                      visible: searchBarOpacity ,
+                      child: NextedSearchBar(
+                          textController: searchTextController,
+                          searchPressed: (searchQuery) async {
 
+                            if (searchQuery.isEmpty) {
 
+                              setState(() {
 
-                  }
+                                searchBarOpacity = !searchBarOpacity;
+
+                              });
+
+                            } else {
+
+                              if (_dashboardDI.firebaseUser != null) {
+
+                                final searchResults = await _dashboardDI.retrieveQueries.searchSessions(searchQuery);
+
+                                if (searchResults.isNotEmpty) {
+
+                                  setState(() {
+
+                                    sessionArchiveTitle = StringsResources.searchTooltip().toUpperCase();
+
+                                    sessions = searchResults;
+
+                                  });
+
+                                }
+
+                              }
+
+                            }
+
+                          },
+                          closePressed: () {
+
+                            setState(() {
+
+                              searchBarOpacity = false;
+
+                            });
+
+                          },
+                      )
+                    )
+                ),
               ),
               /* END - Actions Bar */
 

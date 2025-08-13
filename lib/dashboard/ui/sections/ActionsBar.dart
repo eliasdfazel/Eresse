@@ -66,28 +66,15 @@ class ActionsBar extends StatelessWidget {
                             child: InkWell(
                                 splashFactory: NoSplash.splashFactory,
                                 onTap: () => archivePressed(),
-                                child: Tooltip(
-                                  message: StringsResources.archivesTooltip(),
-                                  preferBelow: false,
-                                  verticalOffset: 51,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    color: ColorsResources.premiumDark.withAlpha(137)
-                                  ),
-                                  textStyle: TextStyle(
-                                    color: ColorsResources.premiumLight,
-                                    fontSize: 13
-                                  ),
-                                  child: nextedTooltip(
-                                      StringsResources.archivesTooltip(),
-                                      SizedBox(
-                                          width: 51,
-                                          height: 51,
-                                          child: Image(
-                                            image: AssetImage("assets/archive.png"),
-                                          )
-                                      )
-                                  )
+                                child: nextedTooltip(
+                                    StringsResources.archivesTooltip(),
+                                    SizedBox(
+                                        width: 51,
+                                        height: 51,
+                                        child: Image(
+                                          image: AssetImage("assets/archive.png"),
+                                        )
+                                    )
                                 )
                             )
                         ),

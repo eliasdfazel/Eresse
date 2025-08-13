@@ -60,6 +60,11 @@ class StringsResources {
     return 'Search Sessions';
   }
 
+  static String searchClose() {
+
+    return 'Close Search';
+  }
+
   static String queryTooltip() {
 
     return 'Query - Raw Data, Question';
