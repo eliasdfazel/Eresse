@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 typedef StartPressed = void Function(String element);
-typedef ArchivePressed = void Function(String element);
-typedef SearchPressed = void Function(String element);
+typedef ArchivePressed = void Function();
+typedef SearchPressed = void Function();
 
 class ActionsBar extends StatelessWidget {
 
@@ -65,7 +65,7 @@ class ActionsBar extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: InkWell(
                                 splashFactory: NoSplash.splashFactory,
-                                onTap: () => archivePressed(''),
+                                onTap: () => archivePressed(),
                                 child: Tooltip(
                                   message: StringsResources.archivesTooltip(),
                                   preferBelow: false,
@@ -120,7 +120,7 @@ class ActionsBar extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: InkWell(
                                 splashFactory: NoSplash.splashFactory,
-                                onTap: () => archivePressed(''),
+                                onTap: () => searchPressed(),
                                 child: nextedTooltip(
                                     StringsResources.searchTooltip(),
                                     SizedBox(

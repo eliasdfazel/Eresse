@@ -10,15 +10,12 @@
 
 import 'dart:async';
 
-import 'package:Eresse/archive/ui/Archive.dart';
 import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
 import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
 import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
-import 'package:Eresse/dashboard/ui/sections/SuccessTip.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
-import 'package:Eresse/database/sync/SyncManager.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/sessions/ui/Sessions.dart';
@@ -27,20 +24,20 @@ import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:Eresse/utils/ui/decorations/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:share_plus/share_plus.dart';
 
-class Dashboard extends StatefulWidget {
+class Archive extends StatefulWidget {
 
-  Dashboard({super.key});
+  Archive({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<Archive> createState() => _ArchiveState();
 }
-class _DashboardState extends State<Dashboard> with TickerProviderStateMixin implements NetworkInterface, Syncing {
+class _ArchiveState extends State<Archive> with TickerProviderStateMixin implements NetworkInterface {
 
   final DashboardDI _dashboardDI = DashboardDI();
 
@@ -55,17 +52,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
    * End - Network Listener
    */
 
-  /*
-   * Start - Receive Shared Text
-   */
-  static const platform = MethodChannel('app.channel.shared.data');
-  String sharedData = '';
-  /*
-   * End - Receive Shared Text
-   */
-
-  String successTipContent = '';
-
   List<SessionSqlDataStructure> sessions = [];
 
   Widget loadingAnimation = LoadingAnimationWidget.dotsTriangle(
@@ -73,25 +59,20 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
       color: ColorsResources.premiumLight.withAlpha(73)
   );
 
-  late AnimationController _animationController;
-  late AnimationController _animationControllerCenter;
+  bool aInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
 
-  late Animation<Color?> tipColorAnimation;
-  late Animation<Color?> tipCenterColorAnimation;
+    navigatePopWithResult(context, true);
+
+    return true;
+  }
 
   @override
   void initState() {
     super.initState();
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    BackButtonInterceptor.add(aInterceptor);
 
-    /*
-     * Start - Receive Shared Text
-     */
-    receiveSharedText();
-    /*
-     * End - Receive Shared Text
-     */
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     /*
      * Start - Network Listener
@@ -105,33 +86,15 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
      * End - Network Listener
      */
 
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 1799),
-      vsync: this
-    );
-
-    _animationControllerCenter = AnimationController(
-      duration: const Duration(milliseconds: 1799),
-      vsync: this
-    );
-
-    tipColorAnimation = ColorTween(begin: ColorsResources.premiumDark.withAlpha(137), end: ColorsResources.premiumLight.withAlpha(137)).animate(_animationController);
-    tipCenterColorAnimation = ColorTween(begin: Colors.transparent, end: Colors.transparent).animate(_animationControllerCenter);
-
-    retrieveSuccessTip();
-
     retrieveSessions();
-
-    if (_dashboardDI.firebaseUser != null) {
-
-      _dashboardDI.syncManager.sync(this, _dashboardDI.firebaseUser!);
-
-    }
 
   }
 
   @override
   void dispose() {
+
+    BackButtonInterceptor.remove(aInterceptor);
+
     /*
      * Start - Network Listener
      */
@@ -139,9 +102,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
     /*
      * End - Network Listener
      */
-
-    _animationController.dispose();
-    _animationControllerCenter.dispose();
 
     super.dispose();
   }
@@ -166,35 +126,13 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                   shrinkWrap: true,
                   children: [
 
-                    SuccessTip(
-                      topLeftColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
-                      centerColor: tipCenterColorAnimation.value ?? Colors.transparent,
-                      bottomRightColor: tipColorAnimation.value ?? ColorsResources.premiumDark.withAlpha(137),
-                      content: successTipContent,
-                      successTipPressed: (data) {
-
-                        SharePlus.instance.share(
-                            ShareParams(
-                                title: '${StringsResources.applicationName()} ${StringsResources.successTipTitle()}',
-                                text: StringsResources.shareSuccessTip(data),
-                            )
-                        );
-
-                      },
-                    ),
-
-                    Divider(
-                      height: 51,
-                      color: Colors.transparent,
-                    ),
-
                     /* END - Session Archive */
                     Visibility(
                       visible: (sessions.isEmpty) ? false : true,
                       child: Padding(
                           padding: EdgeInsets.only(left: 37, right: 37),
                           child: Text(
-                            StringsResources.openSessionsTitle().toUpperCase(),
+                            StringsResources.archivesTitle().toUpperCase(),
                             style: TextStyle(
                                 color: ColorsResources.premiumLight.withAlpha(179),
                                 fontSize: 15,
@@ -312,13 +250,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                   },
                   archivePressed: () {
 
-                    navigateTo(context, Archive()).then((data) {
-
-                      retrieveSessions();
-
-                    });
-
-
                   }
               ),
               /* END - Actions Bar */
@@ -366,43 +297,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
   }
 
-  @override
-  void databaseUpdated() {
-    debugPrint('Local Database Updated');
-
-    retrieveSessions();
-
-  }
-
-  void retrieveSuccessTip() async {
-
-    final successTip =  await _dashboardDI.askQuery.retrieveSuccessTips();
-
-    if (successTip != null) {
-
-      setState(() {
-
-        successTipContent = successTip;
-
-        tipCenterColorAnimation = ColorTween(begin: ColorsResources.premiumLight.withAlpha(199), end: Colors.transparent).animate(_animationControllerCenter);
-
-      });
-
-      tipColorAnimation.addListener(() {
-        setState(() {});
-      });
-
-      tipCenterColorAnimation.addListener(() {
-        setState(() {});
-      });
-
-      _animationController.forward();
-      _animationControllerCenter.forward();
-
-    }
-
-  }
-
   void retrieveSessions() async {
 
     if (_dashboardDI.firebaseUser != null) {
@@ -413,21 +307,13 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
         sessions.clear();
 
-        int endIndex = 7;
-
-        if (allSessions.length <= 7) {
-
-          endIndex = allSessions.length;
-
-        }
-
-        for (final element in allSessions.sublist(0, endIndex)) {
+        for (final element in allSessions) {
 
           SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
           _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, sessionSqlDataStructure.sessionId);
 
-          if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
+          if (sessionSqlDataStructure.sessionStatusIndicator() != SessionStatus.sessionOpen) {
 
             sessions.add(SessionSqlDataStructure.fromMap(element));
 
@@ -452,26 +338,5 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
     }
 
   }
-
-  /*
-   * Start - Receive Shared Text
-   */
-  Future<void> receiveSharedText() async {
-
-    var sharedData = await platform.invokeMethod('receiveSharedText');
-
-    if (sharedData != null) {
-
-      setState(() {
-
-        this.sharedData = sharedData as String;
-
-      });
-
-    }
-  }
-  /*
-   * End - Receive Shared Text
-   */
 
 }
