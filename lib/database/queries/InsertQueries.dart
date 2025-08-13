@@ -41,7 +41,7 @@ class InsertQueries {
           cloudSessionSqlDataStructure.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
 
-      await insertSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure?.sessionStatusIndicator() ?? SessionStatus.sessionOpen);
+      await updateSessionMetadata(firebaseUser, sessionId, sessionSqlDataStructure?.sessionStatusIndicator() ?? SessionStatus.sessionOpen);
 
     }
 
