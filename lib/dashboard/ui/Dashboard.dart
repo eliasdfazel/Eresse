@@ -297,46 +297,59 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
               ),
 
               /* START - Actions Bar */
-              ActionsBar(
-                  startPressed: () {
+              Positioned(
+                bottom: 51,
+                left: 19,
+                right: 19,
+                child: AnimatedOpacity(
+                  opacity: searchBarOpacity ? 0 : 1,
+                  duration: const Duration(milliseconds: 999),
+                  curve: Curves.easeInOut,
+                  child: Visibility(
+                    visible: !searchBarOpacity,
+                    child: ActionsBar(
+                        startPressed: () {
 
-                    if (_dashboardDI.firebaseUser != null) {
+                          if (_dashboardDI.firebaseUser != null) {
 
-                      navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString(), sessionStatus: SessionStatus.sessionOpen)).then((data) async {
-                        debugPrint('Session Id: $data');
+                            navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString(), sessionStatus: SessionStatus.sessionOpen)).then((data) async {
+                              debugPrint('Session Id: $data');
 
-                        if (_dashboardDI.firebaseUser != null) {
+                              if (_dashboardDI.firebaseUser != null) {
 
-                          _dashboardDI.databaseUtils.processEmptySession(_dashboardDI.firebaseUser!, data);
+                                _dashboardDI.databaseUtils.processEmptySession(_dashboardDI.firebaseUser!, data);
+
+                              }
+
+                              retrieveSessions();
+
+                            });
+
+                          }
+
+                        },
+                        searchPressed: () {
+
+                          setState(() {
+
+                            searchBarOpacity = !searchBarOpacity;
+
+                          });
+
+                        },
+                        archivePressed: () {
+
+                          navigateTo(context, Archive()).then((data) {
+
+                            retrieveSessions();
+
+                          });
+
 
                         }
-
-                        retrieveSessions();
-
-                      });
-
-                    }
-
-                  },
-                  searchPressed: () {
-
-                    setState(() {
-
-                      searchBarOpacity = !searchBarOpacity;
-
-                    });
-
-                  },
-                  archivePressed: () {
-
-                    navigateTo(context, Archive()).then((data) {
-
-                      retrieveSessions();
-
-                    });
-
-
-                  }
+                    ),
+                  ),
+                ),
               ),
               /* END - Actions Bar */
 
@@ -350,7 +363,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                     duration: const Duration(milliseconds: 999),
                     curve: Curves.easeInOut,
                     child: Visibility(
-                      visible: searchBarOpacity ,
+                      visible: searchBarOpacity,
                       child: NextedSearchBar(
                           textController: searchTextController,
                           searchPressed: (searchQuery) async {
