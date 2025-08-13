@@ -46,7 +46,12 @@ class DialoguesJSON {
 
     for (final element in inputDialogues) {
 
-      dialogueJsonArray.add(element.toMap());
+      final textMessage = (await messageExtract(element.getContent()))[MessageContent.textMessage.name];
+
+      dialogueJsonArray.add({
+        DialogueDataStructure.contentTypeKey: element.getContentType(),
+        DialogueDataStructure.contentKey: textMessage,
+      } as Map<String, dynamic>);
 
     }
 

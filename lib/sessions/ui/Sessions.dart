@@ -524,7 +524,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
     if (_sessionsDI.firebaseUser != null) {
 
       final dialoguesJsonArray = await _sessionsDI.dialoguesJSON.dialoguesJsonArray(dialogues);
-      print(dialoguesJsonArray);
 
       final bool sessionDecided = await _sessionsDI.askQuery.analysisSessionStatus(dialoguesJsonArray);
 
