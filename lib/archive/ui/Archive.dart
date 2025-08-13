@@ -12,7 +12,6 @@ import 'dart:async';
 
 import 'package:Eresse/arwen/endpoints/ArwenEndpoints.dart';
 import 'package:Eresse/dashboard/di/DashboardDI.dart';
-import 'package:Eresse/dashboard/ui/sections/ActionsBar.dart';
 import 'package:Eresse/dashboard/ui/sections/SessionElement.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
@@ -21,7 +20,6 @@ import 'package:Eresse/resources/strings_resources.dart';
 import 'package:Eresse/sessions/ui/Sessions.dart';
 import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
-import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:Eresse/utils/ui/decorations/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -175,43 +173,24 @@ class _ArchiveState extends State<Archive> with TickerProviderStateMixin impleme
               ),
               /* END - Content */
 
-              /* START - Profile */
+              /* START - Back */
               Positioned(
                   top: 51,
                   left: 19,
                   child: NextedButtons(
-                      buttonTag: "Profile",
-                      imageNetwork: true,
-                      imageResources: _dashboardDI.firebaseUser!.photoURL.toString(),
-                      boxFit: BoxFit.cover,
-                      paddingInset: 0,
+                      buttonTag: "Back",
                       onPressed: (data) {
 
+                        navigatePop(context);
 
-                      }
-                  )
-              ),
-              /* END - Profile */
-
-              /* START - Preferences */
-              Positioned(
-                  top: 51,
-                  right: 19,
-                  child: NextedButtons(
-                      buttonTag: "Preferences",
+                      },
+                      imageResources: "assets/back.png",
                       imageNetwork: false,
-                      imageResources: "assets/settings.png",
-                      boxFit: BoxFit.contain,
-                      paddingInset: 5,
-                      onPressed: (data) {
-
-
-
-
-                      }
+                      boxFit: BoxFit.none,
+                      paddingInset: 0
                   )
               ),
-              /* END - Preferences */
+              /* END - Back */
 
               Positioned(
                   top: 51,
@@ -222,37 +201,6 @@ class _ArchiveState extends State<Archive> with TickerProviderStateMixin impleme
                       child: loadingAnimation
                   )
               ),
-
-              /* START - Actions Bar */
-              ActionsBar(
-                  startPressed: (_) {
-
-                    if (_dashboardDI.firebaseUser != null) {
-
-                      navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString(), sessionStatus: SessionStatus.sessionOpen)).then((data) async {
-                        debugPrint('Session Id: $data');
-
-                        if (_dashboardDI.firebaseUser != null) {
-
-                          _dashboardDI.databaseUtils.processEmptySession(_dashboardDI.firebaseUser!, data);
-
-                        }
-
-                        retrieveSessions();
-
-                      });
-
-                    }
-
-                  },
-                  searchPressed: () {
-
-                  },
-                  archivePressed: () {
-
-                  }
-              ),
-              /* END - Actions Bar */
 
               /* START - Network */
               _networkShield

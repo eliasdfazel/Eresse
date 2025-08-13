@@ -5,7 +5,7 @@ import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
-typedef StartPressed = void Function(String element);
+typedef StartPressed = void Function();
 typedef ArchivePressed = void Function();
 typedef SearchPressed = void Function();
 
@@ -96,7 +96,7 @@ class ActionsBar extends StatelessWidget {
                             flex: 1,
                             child: InkWell(
                                 splashFactory: NoSplash.splashFactory,
-                                onTap: () => startPressed(''),
+                                onTap: () => startPressed(),
                                 child: Padding(
                                     padding: EdgeInsets.only(left: 19, right: 19),
                                     child: SizedBox(

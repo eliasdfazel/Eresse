@@ -287,7 +287,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
               /* START - Actions Bar */
               ActionsBar(
-                  startPressed: (_) {
+                  startPressed: () {
 
                     if (_dashboardDI.firebaseUser != null) {
 
