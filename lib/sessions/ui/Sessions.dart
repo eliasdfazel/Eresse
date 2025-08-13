@@ -523,8 +523,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     if (_sessionsDI.firebaseUser != null) {
 
-      // check for result
-      // archive it with success/failed result
       final dialoguesJsonArray = await _sessionsDI.dialoguesJSON.dialoguesJsonArray(dialogues);
       print(dialoguesJsonArray);
 

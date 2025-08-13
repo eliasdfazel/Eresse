@@ -4,7 +4,6 @@ import 'package:Eresse/database/json/DialoguesJSON.dart' show DialoguesJSON;
 import 'package:Eresse/database/queries/DatabaseUtils.dart';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
-import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:Eresse/utils/files/FileIO.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -44,7 +43,6 @@ class RetrieveQueries {
   Future<QuerySnapshot> retrieveSessionsSync(User firebaseUser) async {
 
     final querySnapshot = FirebaseFirestore.instance.collection(_databaseEndpoints.sessionsCollection(firebaseUser))
-      .where(SessionDataStructure.sessionStatusKey, isEqualTo: SessionStatus.sessionOpen.name)
       .get(GetOptions(source: Source.server));
 
     return querySnapshot;
