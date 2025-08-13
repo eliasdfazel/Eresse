@@ -81,7 +81,7 @@ class InsertQueries {
 
   Future updateSessionElementSync(User firebaseUser, String sessionId, SessionSqlDataStructure sessionSqlDataStructure) async {
 
-    await updateSessionMetadataSync(firebaseUser, sessionId, sessionSqlDataStructure.getUpdateTimestamp().toString());
+    await updateSessionMetadataSync(firebaseUser, sessionId, sessionSqlDataStructure.getUpdateTimestamp().toString(), sessionSqlDataStructure.sessionStatusIndicator());
 
     final localDialogues = await _dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
 
@@ -214,7 +214,7 @@ class InsertQueries {
     return resultCallback;
   }
 
-  Future<dynamic> updateSessionMetadata(User firebaseUser, String sessionId) async {
+  Future<dynamic> updateSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
 
@@ -224,21 +224,22 @@ class InsertQueries {
 
     if (sessionSqlDataStructure != null) {
 
+      sessionSqlDataStructure.setSessionStatus(sessionStatus.name);
       sessionSqlDataStructure.setUpdatedTimestamp(updateTimestamp);
 
       await databaseInstance.update(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-    }
+      updateSessionMetadataSync(firebaseUser, sessionId, updateTimestamp, sessionStatus);
 
-    updateSessionMetadataSync(firebaseUser, sessionId, updateTimestamp);
+    }
 
     await _setupDatabase.closeDatabase(databaseInstance);
   }
 
-  Future<dynamic> updateSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp) async {
+  Future<dynamic> updateSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp, SessionStatus sessionStatus) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
-        .update(sessionUpdateMetadata(updateTimestamp));
+        .update(sessionUpdateMetadata(updateTimestamp, sessionStatus.name));
 
     return resultCallback;
   }

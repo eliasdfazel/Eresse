@@ -79,7 +79,8 @@ class AskQuery {
 
   }
 
-  Future<String?> analysisSessionStatus(String inputJsonArray) async {
+  /// inputJsonArray = Array Of Dialogues with {contentType: '', content: ''}
+  Future<bool> analysisSessionStatus(String inputJsonArray) async {
     debugPrint('Input Query: $inputJsonArray');
 
     var aiHeaders = {
@@ -106,7 +107,7 @@ class AskQuery {
         "response_schema": {
           "type": "OBJECT",
           "properties": {
-            "answer": {
+            "decided": {
               "type": "BOOLEAN",
               "description": "Analysis Success Of Discussion."
             }
@@ -142,11 +143,11 @@ class AskQuery {
 
       final Map<String, dynamic> result = jsonDecode(aiGenerativeResult);
 
-      return result['answer'];
+      return bool.parse(result['decided']);
 
     }
 
-    return null;
+    return false;
 
   }
 

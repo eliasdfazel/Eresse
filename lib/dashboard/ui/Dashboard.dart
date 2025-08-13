@@ -219,7 +219,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
                             if (_dashboardDI.firebaseUser != null) {
 
-                              navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId())).then((data) {
+                              navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: data.getSessionId(), sessionStatus: data.sessionStatusIndicator())).then((data) {
 
                                 retrieveSessions();
 
@@ -290,7 +290,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
                     if (_dashboardDI.firebaseUser != null) {
 
-                      navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString())).then((data) async {
+                      navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString(), sessionStatus: SessionStatus.sessionOpen)).then((data) async {
                         debugPrint('Session Id: $data');
 
                         if (_dashboardDI.firebaseUser != null) {

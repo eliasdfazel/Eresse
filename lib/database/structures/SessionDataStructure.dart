@@ -19,10 +19,11 @@ dynamic sessionMetadata(String sessionId, String updateTimestamp, SessionStatus 
   };
 }
 
-dynamic sessionUpdateMetadata(String updateTimestamp) {
+dynamic sessionUpdateMetadata(String updateTimestamp, String sessionStatus) {
 
   return {
     SessionDataStructure.updatedTimestampKey: updateTimestamp,
+    SessionDataStructure.sessionStatusKey: sessionStatus
   };
 }
 

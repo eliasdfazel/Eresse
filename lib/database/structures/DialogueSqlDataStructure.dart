@@ -19,6 +19,7 @@ class DialogueSqlDataStructure {
   });
 
   Map<String, dynamic> toMap() {
+
     return {
       DialogueDataStructure.dialogueIdKey: dialogueId,
 

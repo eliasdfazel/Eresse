@@ -38,6 +38,21 @@ class DialoguesJSON {
     return dialogues;
   }
 
+  Future<String> dialoguesJsonArray(List<DialogueSqlDataStructure> inputDialogues) async {
+
+    final iterableJson = jsonDecode('[]');
+
+    final dialogueJsonArray = List.from(iterableJson);
+
+    for (final element in inputDialogues) {
+
+      dialogueJsonArray.add(element.toMap());
+
+    }
+
+    return jsonEncode(dialogueJsonArray);
+  }
+
   Future<String> documentsToJson(List<DocumentSnapshot> dialogueDocuments) async {
 
     final iterableJson = jsonDecode('[]');

@@ -42,8 +42,9 @@ class Sessions extends StatefulWidget {
   User firebaseUser;
 
   String sessionId;
+  SessionStatus sessionStatus;
 
-  Sessions({super.key, required this.firebaseUser, required this.sessionId});
+  Sessions({super.key, required this.firebaseUser, required this.sessionId, required this.sessionStatus});
 
   @override
   State<Sessions> createState() => _SessionsState();
@@ -413,7 +414,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         retrieveSessionSummary();
 
-        _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId);
+        _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, widget.sessionStatus);
 
         //  Summary and Title
         if (dialogues.length >= SessionDataStructure.contextThreshold) {
@@ -520,11 +521,18 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   Future archivingProcess() async {
 
+    if (_sessionsDI.firebaseUser != null) {
 
-    // check for result
-    // archive it with success/failed result
+      // check for result
+      // archive it with success/failed result
+      final dialoguesJsonArray = await _sessionsDI.dialoguesJSON.dialoguesJsonArray(dialogues);
+      print(dialoguesJsonArray);
 
+      final bool sessionDecided = await _sessionsDI.askQuery.analysisSessionStatus(dialoguesJsonArray);
 
+      _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, sessionDecided ? SessionStatus.sessionSuccess : SessionStatus.sessionFailed);
+
+    }
 
   }
 
