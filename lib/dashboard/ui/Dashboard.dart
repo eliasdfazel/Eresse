@@ -536,19 +536,15 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
       });
 
-      if (_dashboardDI.firebaseUser != null) {
+      _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!).then((dataLength) {
 
-        _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!).then((dataLength) {
+        if (sessions.length > dataLength) { // Empty Sessions Deleteed
 
-          if (sessions.length < dataLength) { // Empty Sessions Deleteed
+          retrieveSessions();
 
-            retrieveSessions();
+        }
 
-          }
-
-        });
-
-      }
+      });
 
     }
 
