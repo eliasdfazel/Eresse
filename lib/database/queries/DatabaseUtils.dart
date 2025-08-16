@@ -69,7 +69,7 @@ class DatabaseUtils {
 
         if (emptySession) {
 
-          dataLength--;
+          dataLength = dataLength - 1;
 
         }
 

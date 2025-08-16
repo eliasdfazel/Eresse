@@ -214,7 +214,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                       buttonTag: "Back",
                       onPressed: (data) {
 
-                        navigatePop(context);
+                        navigatePopWithResult(context, widget.sessionId);
 
                       },
                       imageResources: "assets/back.png",
