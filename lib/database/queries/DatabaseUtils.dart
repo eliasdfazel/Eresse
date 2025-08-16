@@ -1,6 +1,7 @@
 import 'package:Eresse/database/SQL/SetupSqlDatabase.dart';
 import 'package:Eresse/database/endpoints/DatabaseEndpoints.dart';
 import 'package:Eresse/database/json/DialoguesJSON.dart';
+import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,8 @@ class DatabaseUtils {
   final SetupDatabase _setupDatabase = SetupDatabase();
 
   final DatabaseEndpoints _databaseEndpoints = DatabaseEndpoints();
+
+  final RetrieveQueries _retrieveQueries = RetrieveQueries();
 
   final dialoguesJSON = DialoguesJSON();
 
@@ -52,29 +55,45 @@ class DatabaseUtils {
     return sessionSqlDataStructure;
   }
 
-  Future processEmptySession(User firebaseUser, String sessionId) async {
+  Future<int> cleanEmptySessions(User firebaseUser) async {
 
-    rowExistsById(sessionId).then((sessionSqlDataStructure) {
+    final allSessions = await _retrieveQueries.retrieveSessions(firebaseUser);
 
-      if (sessionSqlDataStructure != null) {
+    if (allSessions.isNotEmpty) {
 
-        dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent()).then((dialogues) {
+      for (final element in allSessions) {
 
-          if (dialogues.isEmpty) {
+        SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
-            deleteEmptySessions(firebaseUser, sessionId);
-
-          }
-
-        });
+        await _processEmptySession(firebaseUser, sessionSqlDataStructure.getSessionId());
 
       }
 
-    });
+      return allSessions.length;
+    }
+
+    return 0;
+  }
+
+  Future _processEmptySession(User firebaseUser, String sessionId) async {
+
+    final sessionSqlDataStructure = await rowExistsById(sessionId);
+
+    if (sessionSqlDataStructure != null) {
+
+      final dialogues = await dialoguesJSON.retrieveDialogues(sessionSqlDataStructure.getSessionJsonContent());
+
+      if (dialogues.isEmpty) {
+
+        _deleteEmptySessions(firebaseUser, sessionId);
+
+      }
+
+    }
 
   }
 
-  Future deleteEmptySessions(User firebaseUser, String sessionId) async {
+  Future _deleteEmptySessions(User firebaseUser, String sessionId) async {
 
     Database databaseInstance = await _setupDatabase.initializeDatabase();
 

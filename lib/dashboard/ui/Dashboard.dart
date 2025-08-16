@@ -315,12 +315,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                             navigateTo(context, Sessions(firebaseUser: _dashboardDI.firebaseUser!, sessionId: now().toString(), sessionStatus: SessionStatus.sessionOpen)).then((data) async {
                               debugPrint('Session Id: $data');
 
-                              if (_dashboardDI.firebaseUser != null) {
-
-                                _dashboardDI.databaseUtils.processEmptySession(_dashboardDI.firebaseUser!, data);
-
-                              }
-
                               retrieveSessions();
 
                             });
@@ -518,6 +512,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
           _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, sessionSqlDataStructure.sessionId);
 
+
+
           if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
 
             sessions.add(SessionSqlDataStructure.fromMap(element));
@@ -539,6 +535,20 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
         loadingAnimation = Container();
 
       });
+
+      if (_dashboardDI.firebaseUser != null) {
+
+        _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!).then((dataLength) {
+
+          if (sessions.length < dataLength) { // Empty Sessions Deleteed
+
+            retrieveSessions();
+
+          }
+
+        });
+
+      }
 
     }
 
