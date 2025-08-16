@@ -83,7 +83,7 @@ class NextedSearchBar extends StatelessWidget {
                               child: TextField(
                                 controller: textController,
                                 cursorRadius: Radius.circular(99),
-                                autofocus: false,
+                                autofocus: true,
                                 cursorColor: ColorsResources.primaryColor,
                                 minLines: 1,
                                 maxLines: null,

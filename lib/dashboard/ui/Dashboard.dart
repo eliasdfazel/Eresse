@@ -302,8 +302,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                 left: 19,
                 right: 19,
                 child: AnimatedOpacity(
-                  opacity: searchBarOpacity ? 0.73 : 1,
-                  duration: const Duration(milliseconds: 999),
+                  opacity: searchBarOpacity ? 0.87 : 1,
+                  duration: const Duration(milliseconds: 1357),
                   curve: Curves.easeInOut,
                   child: Visibility(
                     visible: !searchBarOpacity,
@@ -359,8 +359,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                 left: 19,
                 right: 19,
                 child: AnimatedOpacity(
-                    opacity: searchBarOpacity ? 1 : 0.73,
-                    duration: const Duration(milliseconds: 999),
+                    opacity: searchBarOpacity ? 1 : 0.87,
+                    duration: const Duration(milliseconds: 1357),
                     curve: Curves.easeInOut,
                     child: Visibility(
                       visible: searchBarOpacity,
