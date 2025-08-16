@@ -14,6 +14,7 @@ import 'dart:io';
 import 'package:Eresse/database/structures/DialogueDataStructure.dart';
 import 'package:Eresse/database/structures/DialogueSqlDataStructure.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
+import 'package:Eresse/database/utils/DatabaseUtils.dart';
 import 'package:Eresse/resources/colors_resources.dart';
 import 'package:Eresse/sessions/di/SessionsDI.dart';
 import 'package:Eresse/sessions/ui/elements/AskElement.dart';
@@ -417,7 +418,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
         _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, widget.sessionStatus);
 
         //  Summary and Title
-        if (dialogues.length >= SessionDataStructure.contextThreshold) {
+        if (databaseContextThreshold(dialogues.length)) {
 
           updateSessionContext(dialogues);
 
@@ -457,9 +458,10 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
   Future updateSessionContext(List<DialogueSqlDataStructure> dialogues) async {
 
-    // Send Dialogues To AI and Ask for Summary and Title
-    final sessionTitle = 'N/A';
-    final sessionSummary = 'N/A';
+    final dialoguesJsonArray = await _sessionsDI.dialoguesJSON.dialoguesJsonArray(dialogues);
+
+    final sessionTitle = await _sessionsDI.askQuery.analysisSessionTitle(dialoguesJsonArray);
+    final sessionSummary = await _sessionsDI.askQuery.analysisSessionSummary(dialoguesJsonArray);
 
     _sessionsDI.insertQueries.updateSessionContext(_sessionsDI.firebaseUser!, widget.sessionId, sessionTitle, sessionSummary);
 
@@ -564,10 +566,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
           sessionSummary = sessionSqlDataStructure.getSessionSummary();
 
         });
-
-      } else {
-
-
 
       }
 

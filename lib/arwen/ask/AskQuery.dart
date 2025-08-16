@@ -80,7 +80,7 @@ class AskQuery {
   }
 
   /// inputJsonArray = Array Of Dialogues with {contentType: '', content: ''}
-  Future<String> analysisSessionSummary(String inputJsonArray) async {
+  Future<String> analysisSessionTitle(String inputJsonArray) async {
 
     var aiHeaders = {
       'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ class AskQuery {
           "properties": {
             "summary": {
               "type": "STRING",
-              "description": "Analysis Success Of Discussion."
+              "description": "Analysis Session Summary"
             }
           }
         }
@@ -143,6 +143,76 @@ class AskQuery {
       final Map<String, dynamic> result = jsonDecode(aiGenerativeResult);
 
       return result['summary'].toString();
+
+    }
+
+    return 'N/A';
+
+  }
+
+  Future<String> analysisSessionSummary(String inputJsonArray) async {
+
+    var aiHeaders = {
+      'Content-Type': 'application/json'
+    };
+
+    final apiKey = await _askDI.credentialsIO.generateApiKey();
+    final apiEndpoint = await _askDI.arwenEndpoints.retrieveEndpoint(ArwenEndpoints.aiTextEndpoint) + apiKey;
+
+    final aiHttpRequest = http.Request('POST', Uri.parse(apiEndpoint));
+    aiHttpRequest.body = json.encode({
+      "system_instruction": await systemInstruction(),
+      "safetySettings": [
+        {
+          "threshold": "BLOCK_NONE",
+          "category": "HARM_CATEGORY_DANGEROUS_CONTENT"
+        }
+      ],
+      "generationConfig": {
+        "temperature": 1,
+        "topP": 0.5,
+        "topK": 20,
+        "responseMimeType": "application/json",
+        "response_schema": {
+          "type": "OBJECT",
+          "properties": {
+            "title": {
+              "type": "STRING",
+              "description": "Analysis Session Title"
+            }
+          }
+        }
+      },
+      "contents": [
+        {
+          "parts": [
+            {
+              "text": 'Give me contextual title of this discussion in one sentence.'
+            },
+            {
+              "text": inputJsonArray
+            },
+          ]
+        }
+      ]
+    });
+    aiHttpRequest.headers.addAll(aiHeaders);
+
+    http.StreamedResponse aiGenerativeHttpResponse = await aiHttpRequest.send().timeout(Duration(seconds: 19));
+
+    if (aiGenerativeHttpResponse.statusCode == 200) {
+
+      String aiGenerativeResponse = (await aiGenerativeHttpResponse.stream.bytesToString());
+
+      final aiGenerativeJson = jsonDecode(aiGenerativeResponse);
+
+      final aiGenerativeContent = List.from(aiGenerativeJson['candidates']).first['content'];
+
+      final aiGenerativeResult = List.from(aiGenerativeContent['parts']).first['text'];
+
+      final Map<String, dynamic> result = jsonDecode(aiGenerativeResult);
+
+      return result['title'].toString();
 
     }
 
