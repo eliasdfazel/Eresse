@@ -5,6 +5,7 @@ import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseUtils {
@@ -12,8 +13,6 @@ class DatabaseUtils {
   final SetupDatabase _setupDatabase = SetupDatabase();
 
   final DatabaseEndpoints _databaseEndpoints = DatabaseEndpoints();
-
-  final RetrieveQueries _retrieveQueries = RetrieveQueries();
 
   final dialoguesJSON = DialoguesJSON();
 
@@ -55,9 +54,10 @@ class DatabaseUtils {
     return sessionSqlDataStructure;
   }
 
-  Future<int> cleanEmptySessions(User firebaseUser) async {
+  Future<int> cleanEmptySessions(User firebaseUser, RetrieveQueries retrieveQueries, List<Map<String, dynamic>> allSessions) async {
+    debugPrint("Clean Empty Sessions");
 
-    final allSessions = await _retrieveQueries.retrieveSessions(firebaseUser);
+    int dataLength = allSessions.length;
 
     if (allSessions.isNotEmpty) {
 
@@ -65,17 +65,22 @@ class DatabaseUtils {
 
         SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
-        await _processEmptySession(firebaseUser, sessionSqlDataStructure.getSessionId());
+        final emptySession = await _processEmptySession(firebaseUser, sessionSqlDataStructure.getSessionId());
+
+        if (emptySession) {
+
+          dataLength--;
+
+        }
 
       }
 
-      return allSessions.length;
     }
 
-    return 0;
+    return dataLength;
   }
 
-  Future _processEmptySession(User firebaseUser, String sessionId) async {
+  Future<bool> _processEmptySession(User firebaseUser, String sessionId) async {
 
     final sessionSqlDataStructure = await rowExistsById(sessionId);
 
@@ -87,10 +92,12 @@ class DatabaseUtils {
 
         await _deleteEmptySessions(firebaseUser, sessionId);
 
+        return true;
       }
 
     }
 
+    return false;
   }
 
   Future _deleteEmptySessions(User firebaseUser, String sessionId) async {
@@ -102,6 +109,7 @@ class DatabaseUtils {
         where: 'sessionId = ?',
         whereArgs: [sessionId]
     );
+    debugPrint("Session $sessionId Deleted");
 
     final firestore = FirebaseFirestore.instance;
 

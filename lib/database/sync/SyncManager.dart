@@ -2,6 +2,7 @@ import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
 import 'package:Eresse/database/sync/di/SyncDI.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -20,7 +21,7 @@ class SyncManager {
     final cloudSessions = await _syncDI.retrieveQueries.retrieveSessionsSync(firebaseUser);
 
     if (localSessions.isEmpty
-      && cloudSessions.docs.isNotEmpty) {
+        && cloudSessions.docs.isNotEmpty) {
       debugPrint('Local Is Empty - Update Local Database');
 
       await _updateLocalDatabase(cloudSessions, firebaseUser);
@@ -90,11 +91,14 @@ class SyncManager {
 
         final sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
-        final cloudSession = cloudSessions.docs.firstWhere((documentSnapshot) => SessionDataStructure(documentSnapshot).sessionId() == sessionSqlDataStructure.getSessionId());
+        final cloudSession = cloudSessions.docs.firstWhereOrNull(
+                (documentSnapshot) => SessionDataStructure(documentSnapshot).sessionId() == sessionSqlDataStructure.getSessionId()
+        );
 
-        final sessionDataStructure = SessionDataStructure(cloudSession);
+        if (cloudSession != null
+            && cloudSession.exists) {
 
-        if (cloudSession.exists) {
+          final sessionDataStructure = SessionDataStructure(cloudSession);
 
           if (sessionSqlDataStructure.getUpdateTimestamp() > sessionDataStructure.updatedTimestamp()) {
             debugPrint('Merging: Update Cloud Database');

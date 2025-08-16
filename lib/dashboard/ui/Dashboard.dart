@@ -489,6 +489,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
   }
 
   void retrieveSessions() async {
+    debugPrint("Retrieve Sessions");
 
     if (_dashboardDI.firebaseUser != null) {
 
@@ -515,6 +516,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
 
           if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
+            debugPrint("Retrieve Sessions: Filter Open Session");
 
             sessions.add(SessionSqlDataStructure.fromMap(element));
 
@@ -536,9 +538,10 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
       });
 
-      _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!).then((dataLength) {
+      _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!, _dashboardDI.retrieveQueries, allSessions).then((dataLength) {
 
-        if (sessions.length > dataLength) { // Empty Sessions Deleteed
+        if (sessions.length > dataLength) { // Empty Sessions Deleted
+          debugPrint("Retrieve Sessions: Empty Sessions Deleted");
 
           retrieveSessions();
 
