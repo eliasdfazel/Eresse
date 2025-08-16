@@ -85,7 +85,7 @@ class DatabaseUtils {
 
       if (dialogues.isEmpty) {
 
-        _deleteEmptySessions(firebaseUser, sessionId);
+        await _deleteEmptySessions(firebaseUser, sessionId);
 
       }
 
@@ -97,7 +97,7 @@ class DatabaseUtils {
 
     Database databaseInstance = await _setupDatabase.initializeDatabase();
 
-    databaseInstance.delete(
+    await databaseInstance.delete(
         SessionSqlDataStructure.sessionsTable(),
         where: 'sessionId = ?',
         whereArgs: [sessionId]
