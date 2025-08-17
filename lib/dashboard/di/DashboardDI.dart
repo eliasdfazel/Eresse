@@ -5,6 +5,7 @@ import 'package:Eresse/database/queries/DatabaseUtils.dart';
 import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/database/sync/SyncManager.dart';
 import 'package:Eresse/profile/credentials/CredentialsIO.dart';
+import 'package:Eresse/shortcuts/DynamicShortcuts.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -27,5 +28,7 @@ class DashboardDI {
   CredentialsIO credentialsIO = CredentialsIO();
 
   ArwenEndpoints arwenEndpoints = ArwenEndpoints();
+
+  DynamicShortcuts dynamicShortcuts = DynamicShortcuts();
 
 }
