@@ -418,7 +418,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
         _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, widget.sessionStatus);
 
         //  Summary and Title
-        if (databaseContextThreshold(dialogues.length)) {
+        if (await databaseContextThreshold(dialogues.length, _sessionsDI.timesIO)) {
 
           updateSessionContext(dialogues);
 
