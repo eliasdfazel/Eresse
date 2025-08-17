@@ -549,7 +549,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
       });
 
-      _dashboardDI.dynamicShortcuts.setup(allSessions);
+      _dashboardDI.dynamicShortcuts.setup(context, _dashboardDI.retrieveQueries, allSessions);
 
     }
 

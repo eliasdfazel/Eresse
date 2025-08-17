@@ -8,25 +8,37 @@
  * https://opensource.org/licenses/MIT
  */
 
+import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/database/structures/SessionDataStructure.dart';
 import 'package:Eresse/database/structures/SessionSqlDataStructure.dart';
+import 'package:Eresse/sessions/ui/Sessions.dart';
+import 'package:Eresse/utils/navigations/navigation_commands.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
 
 
 class DynamicShortcuts {
 
-  void setup(List<Map<String, dynamic>> sessions) async {
+  void setup(BuildContext context, RetrieveQueries retrieveQueries, List<Map<String, dynamic>> sessions) async {
 
     const QuickActions quickActions = QuickActions();
 
     quickActions.initialize((shortcutType) {
       debugPrint("Shortcut Type: $shortcutType");
 
-      if (shortcutType == 'share') {
-        debugPrint("Quick Action: Share");
+      // shortcutType == sessionId
+      if (FirebaseAuth.instance.currentUser != null) {
 
+        retrieveQueries.retrieveSession(FirebaseAuth.instance.currentUser!, shortcutType).then((sessionSqlDataStructure) {
 
+          if (sessionSqlDataStructure != null) {
+
+            navigateTo(context, Sessions(firebaseUser: FirebaseAuth.instance.currentUser!, sessionId: shortcutType, sessionStatus: sessionSqlDataStructure.sessionStatusIndicator()));
+
+          }
+
+        });
 
       }
 
