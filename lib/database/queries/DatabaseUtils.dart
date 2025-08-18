@@ -100,6 +100,7 @@ class DatabaseUtils {
     return false;
   }
 
+  // Delete and Sync
   Future deleteSessions(User firebaseUser, String sessionId) async {
 
     final firestore = FirebaseFirestore.instance;
