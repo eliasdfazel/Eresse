@@ -561,11 +561,16 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         }
 
-        setState(() {
+        if (sessionSqlDataStructure.getSessionTitle().isNotEmpty
+            && !sessionSqlDataStructure.getSessionSummary().contains('N/A')) {
 
-          sessionSummary = sessionSqlDataStructure.getSessionSummary();
+          setState(() {
 
-        });
+            sessionSummary = sessionSqlDataStructure.getSessionSummary();
+
+          });
+
+        }
 
       }
 
