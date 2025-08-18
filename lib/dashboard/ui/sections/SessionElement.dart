@@ -22,6 +22,9 @@ class SessionElement extends StatelessWidget {
             padding: EdgeInsets.only(left: 19, right: 19, bottom: 19),
             child: InkWell(
                 splashFactory: NoSplash.splashFactory,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
                 onTap: () => sessionPressed(sessionDataStructure),
                 child: Container(
                     height: 139,

@@ -40,6 +40,9 @@ class _SuccessTipState extends State<SuccessTip> {
         alignment: Alignment.topCenter,
         child: InkWell(
             splashFactory: NoSplash.splashFactory,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            hoverColor: Colors.transparent,
             onLongPress: () => widget.successTipPressed(widget.content),
             child: SizedBox(
                 width: double.infinity,
@@ -113,6 +116,9 @@ class _SuccessTipState extends State<SuccessTip> {
                                     alignment: Alignment.centerRight,
                                     child: InkWell(
                                         splashFactory: NoSplash.splashFactory,
+                                        splashColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
                                         onTap: () => widget.successTipPressed(widget.content),
                                         child: Image(
                                           image: AssetImage('assets/share.png'),

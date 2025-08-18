@@ -84,6 +84,10 @@ class Networking {
       height: double.infinity,
       width: double.infinity,
       child: InkWell(
+        splashFactory: NoSplash.splashFactory,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
         onTap: () async {
 
 

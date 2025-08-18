@@ -46,6 +46,10 @@ class ImagePreview extends StatelessWidget{
                           color: ColorsResources.premiumDark.withAlpha(137)
                       ),
                       child: InkWell(
+                          splashFactory: NoSplash.splashFactory,
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
                           onTap: () {
 
                             previewPressed(imageFile);

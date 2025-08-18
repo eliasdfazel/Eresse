@@ -61,6 +61,9 @@ class NextedSearchBar extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: InkWell(
                               splashFactory: NoSplash.splashFactory,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
                               onTap: () => closePressed(),
                               child: nextedTooltip(
                                   StringsResources.searchClose(),
@@ -118,6 +121,9 @@ class NextedSearchBar extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: InkWell(
                               splashFactory: NoSplash.splashFactory,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
                               onTap: () => searchPressed(textController.text),
                               child: nextedTooltip(
                                   StringsResources.searchTooltip(),

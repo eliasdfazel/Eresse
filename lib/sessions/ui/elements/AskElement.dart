@@ -63,6 +63,10 @@ class AskElement extends StatelessWidget {
                   child: Padding(
                       padding: EdgeInsets.all(11),
                       child: InkWell(
+                          splashFactory: NoSplash.splashFactory,
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
                           onLongPress: () {
 
                             askPressed(queryDataStructure);

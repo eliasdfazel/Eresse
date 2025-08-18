@@ -35,6 +35,10 @@ class NextedButtons extends StatelessWidget {
         height: 51,
         width: 51,
         child: InkWell(
+            splashFactory: NoSplash.splashFactory,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            hoverColor: Colors.transparent,
           borderRadius: BorderRadius.circular(19),
           onTap: () => onPressed(buttonTag),
           child: Stack(

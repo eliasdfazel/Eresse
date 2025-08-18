@@ -57,6 +57,10 @@ class _Toolbar extends State<Toolbar> {
                               Align(
                                   alignment: Alignment.centerLeft,
                                   child: InkWell(
+                                      splashFactory: NoSplash.splashFactory,
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
                                       borderRadius: BorderRadius.circular(19),
                                       onTap: () {
 
@@ -82,6 +86,10 @@ class _Toolbar extends State<Toolbar> {
                               Align(
                                   alignment: Alignment.centerLeft,
                                   child: InkWell(
+                                      splashFactory: NoSplash.splashFactory,
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
                                       borderRadius: BorderRadius.circular(19),
                                       onTap: () {
 
@@ -107,6 +115,10 @@ class _Toolbar extends State<Toolbar> {
                               Align(
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
+                                      splashFactory: NoSplash.splashFactory,
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
                                       borderRadius: BorderRadius.circular(19),
                                       onTap: () {
 
@@ -136,8 +148,10 @@ class _Toolbar extends State<Toolbar> {
 
                   InkWell(
                       borderRadius: BorderRadius.circular(19),
-                      splashFactory: InkSparkle.splashFactory,
-                      splashColor: ColorsResources.black,
+                      splashFactory: NoSplash.splashFactory,
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
                       onTap: () {
 
                         showToolbar();

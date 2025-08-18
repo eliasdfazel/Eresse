@@ -61,6 +61,9 @@ class ActionsBar extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: InkWell(
                               splashFactory: NoSplash.splashFactory,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
                               onTap: () => archivePressed(),
                               child: nextedTooltip(
                                   StringsResources.archivesTooltip(),
@@ -79,6 +82,9 @@ class ActionsBar extends StatelessWidget {
                           flex: 1,
                           child: InkWell(
                               splashFactory: NoSplash.splashFactory,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
                               onTap: () => startPressed(),
                               child: Padding(
                                   padding: EdgeInsets.only(left: 19, right: 19),
@@ -103,6 +109,9 @@ class ActionsBar extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: InkWell(
                               splashFactory: NoSplash.splashFactory,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
                               onTap: () => searchPressed(),
                               child: nextedTooltip(
                                   StringsResources.searchTooltip(),

@@ -70,6 +70,10 @@ class InputsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerLeft,
                             child: InkWell(
+                                splashFactory: NoSplash.splashFactory,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
                                 onTap: () async {
 
                                   if (textController.text.isNotEmpty
@@ -137,6 +141,10 @@ class InputsBar extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: InkWell(
+                                splashFactory: NoSplash.splashFactory,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
                                 onTap: () async {
 
                                   if (textController.text.isNotEmpty
