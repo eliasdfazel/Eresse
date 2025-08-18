@@ -90,7 +90,7 @@ class DatabaseUtils {
 
       if (dialogues.isEmpty) {
 
-        await _deleteEmptySessions(firebaseUser, sessionId);
+        await deleteSessions(firebaseUser, sessionId);
 
         return true;
       }
@@ -100,7 +100,7 @@ class DatabaseUtils {
     return false;
   }
 
-  Future _deleteEmptySessions(User firebaseUser, String sessionId) async {
+  Future deleteSessions(User firebaseUser, String sessionId) async {
 
     Database databaseInstance = await _setupDatabase.initializeDatabase();
 

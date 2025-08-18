@@ -35,6 +35,21 @@ class StringsResources {
     return "Open Sessions";
   }
 
+  static String askTitle() {
+
+    return "Ask Arwen AI";
+  }
+
+  static String imageTitle() {
+
+    return "Add Image To Discussion";
+  }
+
+  static String deleteTitle() {
+
+    return "Delete Sessions";
+  }
+
   static String expressIdeaTitle() {
 
     return "Express Idea";

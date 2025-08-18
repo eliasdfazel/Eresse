@@ -149,7 +149,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
               /* START - Content */
               ListView(
                 controller: _scrollController,
-                padding: const EdgeInsets.fromLTRB(0, 159, 0, 159),
+                padding: const EdgeInsets.fromLTRB(0, 159, 0, 213),
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 children: [
@@ -297,7 +297,18 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                     archivingProcess();
 
-                  }
+                  },
+                  deletePressed: () async {
+
+                    if (_sessionsDI.firebaseUser != null) {
+
+                      _sessionsDI.databaseUtils.deleteSessions(_sessionsDI.firebaseUser!, widget.sessionId);
+
+                      navigatePopWithResult(context, widget.sessionId);
+
+                    }
+
+                  },
               ),
               /* END - Actions Bar */
 

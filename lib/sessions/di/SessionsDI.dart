@@ -1,4 +1,5 @@
 import 'package:Eresse/arwen/ask/AskQuery.dart';
+import 'package:Eresse/database/queries/DatabaseUtils.dart';
 import 'package:Eresse/database/queries/InsertQueries.dart';
 import 'package:Eresse/database/queries/RetrieveQueries.dart';
 import 'package:Eresse/utils/network/Networking.dart';
@@ -14,6 +15,8 @@ class SessionsDI {
   Networking networking = Networking();
 
   InsertQueries insertQueries = InsertQueries();
+
+  DatabaseUtils databaseUtils = DatabaseUtils();
 
   RetrieveQueries retrieveQueries = RetrieveQueries();
 

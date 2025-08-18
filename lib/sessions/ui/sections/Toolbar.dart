@@ -1,13 +1,17 @@
 import 'package:Eresse/resources/colors_resources.dart';
+import 'package:Eresse/resources/strings_resources.dart';
+import 'package:Eresse/utils/ui/elements/NextedTooltip.dart';
 import 'package:flutter/material.dart';
 
 typedef ArchivePressed = void Function();
+typedef DeletePressed = void Function();
 typedef ImageSelectorPressed = void Function();
 typedef AskPressed = void Function(String element);
 
 class Toolbar extends StatefulWidget {
 
   final ArchivePressed archivePressed;
+  final DeletePressed deletePressed;
   final ImageSelectorPressed imageSelectorPressed;
   final AskPressed askPressed;
 
@@ -15,7 +19,8 @@ class Toolbar extends StatefulWidget {
 
   final TextEditingController textController;
 
-  Toolbar({super.key, required this.archivePressed, required this.imageSelectorPressed, required this.askPressed, required this.textController, required this.toolbarOpacity});
+  Toolbar({super.key, required this.archivePressed, required this.imageSelectorPressed, required this.askPressed, required this.deletePressed,
+    required this.textController, required this.toolbarOpacity});
 
   @override
   State<Toolbar> createState() => _Toolbar();
@@ -47,15 +52,58 @@ class _Toolbar extends State<Toolbar> {
                     visible: (widget.toolbarOpacity == 0) ? false : true,
                     child: AnimatedOpacity(
                         opacity: widget.toolbarOpacity,
-                        duration: const Duration(milliseconds: 579),
+                        duration: const Duration(milliseconds: 777),
                         curve: Curves.easeIn,
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            spacing: 19,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
 
+                              /*
+                               * START - Delete
+                               */
                               Align(
                                   alignment: Alignment.centerLeft,
+                                  child: InkWell(
+                                      splashFactory: NoSplash.splashFactory,
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(19),
+                                      onTap: () {
+
+                                        widget.deletePressed();
+
+                                        setState(() {
+
+                                          widget.toolbarOpacity = 0;
+
+                                        });
+
+                                      },
+                                      child: nextedTooltip(
+                                          StringsResources.deleteTitle(),
+                                          SizedBox(
+                                              width: 51,
+                                              height: 51,
+                                              child: Image(
+                                                image: AssetImage("assets/close.png"),
+                                              )
+                                          )
+                                      )
+                                  )
+                              ),
+                              /*
+                               * END - Delete
+                               */
+
+                              Spacer(),
+
+                              /*
+                               * START - Archive
+                               */
+                              Align(
+                                  alignment: Alignment.centerRight,
                                   child: InkWell(
                                       splashFactory: NoSplash.splashFactory,
                                       splashColor: Colors.transparent,
@@ -73,18 +121,27 @@ class _Toolbar extends State<Toolbar> {
                                         });
 
                                       },
-                                      child: SizedBox(
-                                          width: 51,
-                                          height: 51,
-                                          child: Image(
-                                            image: AssetImage("assets/save.png"),
+                                      child: nextedTooltip(
+                                          StringsResources.archivesTitle(),
+                                          SizedBox(
+                                              width: 51,
+                                              height: 51,
+                                              child: Image(
+                                                image: AssetImage("assets/save.png"),
+                                              )
                                           )
                                       )
                                   )
                               ),
+                              /*
+                               * END - Archive
+                               */
 
+                              /*
+                               * START - Image
+                               */
                               Align(
-                                  alignment: Alignment.centerLeft,
+                                  alignment: Alignment.centerRight,
                                   child: InkWell(
                                       splashFactory: NoSplash.splashFactory,
                                       splashColor: Colors.transparent,
@@ -102,16 +159,25 @@ class _Toolbar extends State<Toolbar> {
                                         });
 
                                       },
-                                      child: SizedBox(
-                                          width: 51,
-                                          height: 51,
-                                          child: Image(
-                                            image: AssetImage("assets/image.png"),
+                                      child: nextedTooltip(
+                                          StringsResources.imageTitle(),
+                                          SizedBox(
+                                              width: 51,
+                                              height: 51,
+                                              child: Image(
+                                                image: AssetImage("assets/image.png"),
+                                              )
                                           )
                                       )
                                   )
                               ),
+                              /*
+                               * END - Image
+                               */
 
+                              /*
+                               * START - Ask
+                               */
                               Align(
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
@@ -131,15 +197,21 @@ class _Toolbar extends State<Toolbar> {
                                         });
 
                                       },
-                                      child: SizedBox(
-                                          width: 51,
-                                          height: 51,
-                                          child: Image(
-                                            image: AssetImage("assets/ask.png"),
+                                      child: nextedTooltip(
+                                          StringsResources.askTitle(),
+                                          SizedBox(
+                                              width: 51,
+                                              height: 51,
+                                              child: Image(
+                                                image: AssetImage("assets/ask.png"),
+                                              )
                                           )
                                       )
                                   )
                               ),
+                              /*
+                               * END - Ask
+                               */
 
                             ]
                         )
