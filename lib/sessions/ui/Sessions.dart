@@ -302,7 +302,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                     if (_sessionsDI.firebaseUser != null) {
 
-                      _sessionsDI.databaseUtils.deleteSessions(_sessionsDI.firebaseUser!, widget.sessionId);
+                      await _sessionsDI.databaseUtils.deleteSessions(_sessionsDI.firebaseUser!, widget.sessionId);
 
                       navigatePopWithResult(context, widget.sessionId);
 

@@ -102,15 +102,6 @@ class DatabaseUtils {
 
   Future deleteSessions(User firebaseUser, String sessionId) async {
 
-    Database databaseInstance = await _setupDatabase.initializeDatabase();
-
-    await databaseInstance.delete(
-        SessionSqlDataStructure.sessionsTable(),
-        where: 'sessionId = ?',
-        whereArgs: [sessionId]
-    );
-    debugPrint("Session $sessionId Deleted");
-
     final firestore = FirebaseFirestore.instance;
 
     firestore.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId)).delete();
@@ -124,6 +115,15 @@ class DatabaseUtils {
       }
 
     });
+
+    Database databaseInstance = await _setupDatabase.initializeDatabase();
+
+    await databaseInstance.delete(
+        SessionSqlDataStructure.sessionsTable(),
+        where: 'sessionId = ?',
+        whereArgs: [sessionId]
+    );
+    debugPrint("Session $sessionId Deleted");
 
   }
 
