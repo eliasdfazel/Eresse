@@ -495,11 +495,9 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
       final allSessions = await _dashboardDI.retrieveQueries.retrieveSessions(_dashboardDI.firebaseUser!);
 
-      print(">>> all sessions; ${allSessions.length}");
+      sessions.clear();
 
       if (allSessions.isNotEmpty) {
-
-        sessions.clear();
 
         int endIndex = 7;
 
@@ -514,8 +512,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
           SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
           _dashboardDI.retrieveQueries.cacheDialogues(_dashboardDI.firebaseUser!, sessionSqlDataStructure.sessionId);
-
-
 
           if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
             debugPrint("Retrieve Sessions: Filter Open Session");
@@ -544,6 +540,12 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
         });
 
         _dashboardDI.dynamicShortcuts.setup(context, _dashboardDI.retrieveQueries, allSessions);
+
+      } else {
+
+        setState(() {
+
+        });
 
       }
 
