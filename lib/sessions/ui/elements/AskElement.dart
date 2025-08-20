@@ -52,9 +52,9 @@ class AskElement extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(19)),
                       gradient: LinearGradient(
                           colors: [
-                            ColorsResources.premiumDark.withAlpha(159),
-                            ColorsResources.premiumDark.withAlpha(137),
-                            ColorsResources.premiumDark.withAlpha(159),
+                            ColorsResources.premiumDark.withAlpha(99),
+                            ColorsResources.premiumDark.withAlpha(37),
+                            ColorsResources.premiumDark.withAlpha(99),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight

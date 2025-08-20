@@ -267,7 +267,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
               /* END - Profile */
 
               /* START - Preferences */
-              Positioned(
+              /*Positioned(
                   top: 51,
                   right: 19,
                   child: NextedButtons(
@@ -283,7 +283,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
                       }
                   )
-              ),
+              ),*/
               /* END - Preferences */
 
               Positioned(

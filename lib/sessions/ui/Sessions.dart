@@ -290,6 +290,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
                       });
 
+                      scrollToEnd(_scrollController);
+
                     }
 
                   },
@@ -509,7 +511,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         await _sessionsDI.insertQueries.insertDialogues(_sessionsDI.firebaseUser!, widget.sessionId, ContentType.askType,
             await _sessionsDI.dialoguesJSON.messageInput(
-                textMessage: textMessage,
+                textMessage: queryResult,
                 imageMessage: null
             ), dialogueId);
 
@@ -528,6 +530,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
       });
 
+      scrollToEnd(_scrollController);
+
     }
 
   }
@@ -541,6 +545,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       final bool sessionDecided = await _sessionsDI.askQuery.analysisSessionStatus(dialoguesJsonArray);
 
       _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, sessionDecided ? SessionStatus.sessionSuccess : SessionStatus.sessionFailed);
+
+      scrollToEnd(_scrollController);
 
     }
 
