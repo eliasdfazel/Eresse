@@ -59,19 +59,15 @@ class DatabaseUtils {
 
     int dataLength = allSessions.length;
 
-    if (allSessions.isNotEmpty) {
+    for (final element in allSessions) {
 
-      for (final element in allSessions) {
+      SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
 
-        SessionSqlDataStructure sessionSqlDataStructure = SessionSqlDataStructure.fromMap(element);
+      final emptySession = await _processEmptySession(firebaseUser, sessionSqlDataStructure.getSessionId());
 
-        final emptySession = await _processEmptySession(firebaseUser, sessionSqlDataStructure.getSessionId());
+      if (emptySession) {
 
-        if (emptySession) {
-
-          dataLength = dataLength - 1;
-
-        }
+        dataLength = dataLength - 1;
 
       }
 

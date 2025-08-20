@@ -495,6 +495,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
       final allSessions = await _dashboardDI.retrieveQueries.retrieveSessions(_dashboardDI.firebaseUser!);
 
+      print(">>> all sessions; ${allSessions.length}");
+
       if (allSessions.isNotEmpty) {
 
         sessions.clear();
@@ -530,6 +532,19 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
         });
 
+        _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!, _dashboardDI.retrieveQueries, allSessions).then((dataLength) {
+
+          if (sessions.length > dataLength) { // Empty Sessions Deleted
+            debugPrint("Retrieve Sessions: Empty Sessions Deleted");
+
+            retrieveSessions();
+
+          }
+
+        });
+
+        _dashboardDI.dynamicShortcuts.setup(context, _dashboardDI.retrieveQueries, allSessions);
+
       }
 
       setState(() {
@@ -537,19 +552,6 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
         loadingAnimation = Container();
 
       });
-
-      _dashboardDI.databaseUtils.cleanEmptySessions(_dashboardDI.firebaseUser!, _dashboardDI.retrieveQueries, allSessions).then((dataLength) {
-
-        if (sessions.length > dataLength) { // Empty Sessions Deleted
-          debugPrint("Retrieve Sessions: Empty Sessions Deleted");
-
-          retrieveSessions();
-
-        }
-
-      });
-
-      _dashboardDI.dynamicShortcuts.setup(context, _dashboardDI.retrieveQueries, allSessions);
 
     }
 
