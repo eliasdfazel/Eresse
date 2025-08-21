@@ -29,8 +29,8 @@ import 'package:Eresse/utils/navigations/navigation_commands.dart';
 import 'package:Eresse/utils/network/Networking.dart';
 import 'package:Eresse/utils/time/TimesIO.dart';
 import 'package:Eresse/utils/ui/actions/ElementsActions.dart';
-import 'package:Eresse/utils/ui/decorations/Decorations.dart';
 import 'package:Eresse/utils/ui/elements/NextedButtons.dart';
+import 'package:Eresse/utils/ui/theme/Decorations.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,7 +143,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
             children: [
 
               /* START - Decoration */
-              decorations(textureOpacity: 0.37, brandingOpacity: 0.37),
+              decorations(textureOpacity: 0.19, brandingOpacity: 0.19),
               /* END - Decoration */
 
               /* START - Content */
