@@ -82,7 +82,7 @@ class _SessionSummaryState extends State<SessionSummary> {
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             color: ColorsResources.premiumLight,
-                            fontSize: 15,
+                            fontSize: 17,
                             letterSpacing: 1,
                           ),
                         )

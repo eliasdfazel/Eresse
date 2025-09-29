@@ -66,7 +66,7 @@ class _SuccessTipState extends State<SuccessTip> {
                     ),
 
                     Divider(
-                      height: 11,
+                      height: 19,
                       color: Colors.transparent,
                     ),
 

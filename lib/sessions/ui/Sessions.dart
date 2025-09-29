@@ -426,6 +426,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
         });
 
+        scrollToStart(_scrollController);
+
         retrieveSessionSummary();
 
         _sessionsDI.insertQueries.updateSessionMetadata(_sessionsDI.firebaseUser!, widget.sessionId, widget.sessionStatus);

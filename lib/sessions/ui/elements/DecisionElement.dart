@@ -96,7 +96,7 @@ class DecisionElement extends StatelessWidget {
                                           dataSnapshot.data![MessageContent.textMessage.name]!,
                                           style: TextStyle(
                                               color: ColorsResources.premiumLight,
-                                              fontSize: 13
+                                              fontSize: 15
                                           ),
                                         ),
 

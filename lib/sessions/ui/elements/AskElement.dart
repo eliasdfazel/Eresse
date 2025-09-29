@@ -28,7 +28,7 @@ class AskElement extends StatelessWidget {
 
         if (dataSnapshot.connectionState == ConnectionState.done) {
 
-          return  Container(
+          return Container(
               padding: EdgeInsets.only(left: 19, right: 19, top: 11, bottom: 11),
               alignment: Alignment.centerLeft,
               child: Container(
@@ -82,7 +82,7 @@ class AskElement extends StatelessWidget {
                                   dataSnapshot.data![MessageContent.textMessage.name]!,
                                   style: TextStyle(
                                       color: ColorsResources.premiumLight,
-                                      fontSize: 13
+                                      fontSize: 15
                                   ),
                                 ),
 

@@ -386,6 +386,16 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
                                   });
 
+                                } else {
+
+                                  setState(() {
+
+                                    sessionArchiveTitle = StringsResources.openSessionsTitle().toUpperCase();
+
+                                    sessions = [];
+
+                                  });
+
                                 }
 
                               }
