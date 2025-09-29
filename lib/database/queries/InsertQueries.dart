@@ -179,6 +179,7 @@ class InsertQueries {
     return targetImageFile;
   }
 
+  /// Insert Local/Cloud
   Future<dynamic> insertSessionMetadata(User firebaseUser, String sessionId, SessionStatus sessionStatus) async {
 
     final databaseInstance = await _setupDatabase.initializeDatabase();
@@ -196,13 +197,13 @@ class InsertQueries {
 
     await databaseInstance.insert(SessionSqlDataStructure.sessionsTable(), sessionSqlDataStructure.toMap());
 
-    insertSessionMetadataSync(firebaseUser, sessionId, updateTimestamp, sessionStatus);
+    _insertSessionMetadataSync(firebaseUser, sessionId, updateTimestamp, sessionStatus);
 
     await _setupDatabase.closeDatabase(databaseInstance);
 
   }
 
-  Future<dynamic> insertSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp, SessionStatus sessionStatus) async {
+  Future<dynamic> _insertSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp, SessionStatus sessionStatus) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
         .set(sessionMetadata(
@@ -239,7 +240,11 @@ class InsertQueries {
   Future<dynamic> updateSessionMetadataSync(User firebaseUser, String sessionId, String updateTimestamp, SessionStatus sessionStatus) async {
 
     final resultCallback = await FirebaseFirestore.instance.doc(_databaseEndpoints.sessionMetadataDocument(firebaseUser, sessionId))
-        .update(sessionUpdateMetadata(updateTimestamp, sessionStatus.name));
+        .set(sessionMetadata(
+        sessionId,
+        updateTimestamp,
+        sessionStatus
+    ));
 
     return resultCallback;
   }
