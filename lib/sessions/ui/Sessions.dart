@@ -364,7 +364,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   }
 
   Future insertDialogues(ContentType contentType, String? textMessage, String? imageMessage) async {
-    print("insert dialogues");
 
     if (_sessionsDI.firebaseUser != null) {
 
@@ -401,8 +400,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   }
 
   void processDialogues() async {
-
-    print("process Dialogues");
 
     if (_sessionsDI.firebaseUser != null) {
 
@@ -578,12 +575,6 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
       final sessionSqlDataStructure = await _sessionsDI.retrieveQueries.retrieveSession(_sessionsDI.firebaseUser!, widget.sessionId);
 
       if (sessionSqlDataStructure != null) {
-
-        if (sessionSqlDataStructure.sessionStatusIndicator() == SessionStatus.sessionOpen) {
-
-          scrollToEnd(_scrollController);
-
-        }
 
         if (sessionSqlDataStructure.getSessionTitle().isNotEmpty
             && !sessionSqlDataStructure.getSessionSummary().contains('N/A')) {
