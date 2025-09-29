@@ -158,12 +158,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
                       content: sessionSummary
                   ),
 
-                  Divider(
-                    height: 51,
-                    color: Colors.transparent,
-                  ),
-
                   ListView.builder(
+                      padding: EdgeInsets.only(top: 51),
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: dialogues.length,

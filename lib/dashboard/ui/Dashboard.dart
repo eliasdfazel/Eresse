@@ -216,12 +216,8 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
                       )
                     ),
 
-                    Divider(
-                      height: 11,
-                      color: Colors.transparent,
-                    ),
-
                     ListView.builder(
+                        padding: EdgeInsets.only(top: 19),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: sessions.length,
