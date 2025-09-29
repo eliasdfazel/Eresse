@@ -85,7 +85,7 @@ class SyncManager {
   Future _mergeDatabase(Syncing syncing, List<Map<String, dynamic>> localSessions, QuerySnapshot<Object?> cloudSessions, User firebaseUser) async {
 
     if (localSessions.length >= cloudSessions.size) {
-      debugPrint('Merging: localSessions.length >= cloudSessions.size');
+      debugPrint('Merging: Test Local Against Cloud');
 
       for (final element in localSessions) {
 
@@ -97,6 +97,7 @@ class SyncManager {
 
         if (cloudSession != null
             && cloudSession.exists) {
+          debugPrint('Merging: Test To Update');
 
           final sessionDataStructure = SessionDataStructure(cloudSession);
 
@@ -114,9 +115,13 @@ class SyncManager {
 
             await _syncDI.insertQueries.updateSessionElement(firebaseUser, cloudSession.id, SessionSqlDataStructure.fromMapSync(cloudSession.data() as Map<String, dynamic>, dialoguesJsonArray));
 
+          } else {
+            debugPrint('Merging: No Update Needed');
+
           }
 
         } else {
+          debugPrint('Merging: Insert Local Database');
 
           _syncDI.insertQueries.insertSessionSync(firebaseUser, sessionSqlDataStructure.getSessionId(), sessionSqlDataStructure);
 
@@ -125,7 +130,7 @@ class SyncManager {
       }
 
     } else if (localSessions.length < cloudSessions.size) {
-      debugPrint('Merging: localSessions.length < cloudSessions.size');
+      debugPrint('Merging: Cloud Against Local');
 
       for (final element in cloudSessions.docs) {
 
@@ -176,6 +181,8 @@ class SyncManager {
 
       }
 
+    } else {
+      debugPrint('Local/Cloud Merging Not Needed');
     }
 
   }

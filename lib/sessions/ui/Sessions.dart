@@ -364,6 +364,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   }
 
   Future insertDialogues(ContentType contentType, String? textMessage, String? imageMessage) async {
+    print("insert dialogues");
 
     if (_sessionsDI.firebaseUser != null) {
 
@@ -400,6 +401,8 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
   }
 
   void processDialogues() async {
+
+    print("process Dialogues");
 
     if (_sessionsDI.firebaseUser != null) {
 
