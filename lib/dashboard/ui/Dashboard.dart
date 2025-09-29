@@ -167,7 +167,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
             children: [
 
               /* START - Decoration */
-              decorations(textureOpacity: 0.19, brandingOpacity: 0.19),
+              decorations(textureOpacity: 0.13, brandingOpacity: 0.13),
               /* END - Decoration */
 
               /* START - Content */
@@ -267,7 +267,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
               /* END - Profile */
 
               /* START - Preferences */
-              /*Positioned(
+              Positioned(
                   top: 51,
                   right: 19,
                   child: NextedButtons(
@@ -283,7 +283,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin imp
 
                       }
                   )
-              ),*/
+              ),
               /* END - Preferences */
 
               Positioned(

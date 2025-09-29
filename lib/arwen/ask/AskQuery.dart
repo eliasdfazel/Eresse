@@ -117,7 +117,7 @@ class AskQuery {
         {
           "parts": [
             {
-              "text": 'Give me context and summary of this discussion in one paragraph.'
+              "text": 'Give me contextual title of this discussion in one sentence.'
             },
             {
               "text": inputJsonArray
@@ -187,7 +187,7 @@ class AskQuery {
         {
           "parts": [
             {
-              "text": 'Give me contextual title of this discussion in one sentence.'
+              "text": 'Give me context and summary of this discussion in one paragraph.'
             },
             {
               "text": inputJsonArray
@@ -258,11 +258,11 @@ class AskQuery {
         {
           "parts": [
             {
-              "text": 'Does this discussion ended up in a result?'
+              "text": 'Does this discussion ended up decisive or have a result?'
             },
             {
               "text": inputJsonArray
-            },
+            }
           ]
         }
       ]

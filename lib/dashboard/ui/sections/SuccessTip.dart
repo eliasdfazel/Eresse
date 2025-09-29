@@ -87,9 +87,9 @@ class _SuccessTipState extends State<SuccessTip> {
                                   width: 1
                               ),
                               borderRadius: BorderRadius.circular(19),
-                              color: ColorsResources.premiumDark.withAlpha(37)
+                              color: ColorsResources.premiumDark.withAlpha(19)
                           ),
-                          padding: EdgeInsets.only(left: 19, right: 19, top: 13, bottom: 13),
+                          padding: EdgeInsets.only(left: 31, right: 31, top: 51, bottom: 51),
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -100,31 +100,12 @@ class _SuccessTipState extends State<SuccessTip> {
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     color: ColorsResources.premiumLight,
-                                    fontSize: 15,
+                                    fontSize: 51,
                                     letterSpacing: 1,
+                                    height: 1,
+                                    fontFamily: 'Handwriting'
                                   ),
                                 ),
-
-                                Divider(
-                                  height: 13,
-                                  color: Colors.transparent,
-                                ),
-
-                                Container(
-                                    height: 31,
-                                    width: 31,
-                                    alignment: Alignment.centerRight,
-                                    child: InkWell(
-                                        splashFactory: NoSplash.splashFactory,
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        onTap: () => widget.successTipPressed(widget.content),
-                                        child: Image(
-                                          image: AssetImage('assets/share.png'),
-                                        )
-                                    )
-                                )
 
                               ]
                           )

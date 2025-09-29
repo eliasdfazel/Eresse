@@ -114,7 +114,7 @@ class _ArchiveState extends State<Archive> with TickerProviderStateMixin impleme
             children: [
 
               /* START - Decoration */
-              decorations(textureOpacity: 0.19, brandingOpacity: 0.19),
+              decorations(textureOpacity: 0.13, brandingOpacity: 0.13),
               /* END - Decoration */
 
               /* START - Content */

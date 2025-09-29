@@ -143,7 +143,7 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
             children: [
 
               /* START - Decoration */
-              decorations(textureOpacity: 0.19, brandingOpacity: 0.19),
+              decorations(textureOpacity: 0.13, brandingOpacity: 0.13),
               /* END - Decoration */
 
               /* START - Content */
@@ -473,10 +473,16 @@ class _SessionsState extends State<Sessions> implements NetworkInterface {
 
     final dialoguesJsonArray = await _sessionsDI.dialoguesJSON.dialoguesJsonArray(dialogues);
 
-    final sessionTitle = await _sessionsDI.askQuery.analysisSessionTitle(dialoguesJsonArray);
-    final sessionSummary = await _sessionsDI.askQuery.analysisSessionSummary(dialoguesJsonArray);
+    final generatedSessionTitle = await _sessionsDI.askQuery.analysisSessionTitle(dialoguesJsonArray);
+    final generatedSessionSummary = await _sessionsDI.askQuery.analysisSessionSummary(dialoguesJsonArray);
 
-    _sessionsDI.insertQueries.updateSessionContext(_sessionsDI.firebaseUser!, widget.sessionId, sessionTitle, sessionSummary);
+    setState(() {
+
+      sessionSummary = generatedSessionSummary;
+
+    });
+
+    _sessionsDI.insertQueries.updateSessionContext(_sessionsDI.firebaseUser!, widget.sessionId, generatedSessionTitle, sessionSummary);
 
   }
 

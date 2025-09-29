@@ -130,9 +130,9 @@ flutter:
     - family: Ubuntu
       fonts:
         - asset: fonts/ubuntu.ttf
-    - family: Electric
+    - family: Handwriting
       fonts:
-        - asset: fonts/electric.ttf
+        - asset: fonts/handwriting.otf
     - family: Anurati
       fonts:
         - asset: fonts/anurati.otf
