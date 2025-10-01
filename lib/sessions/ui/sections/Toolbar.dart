@@ -103,7 +103,7 @@ class _Toolbar extends State<Toolbar> {
                                * START - Archive
                                */
                               Align(
-                                  alignment: Alignment.centerRight,
+                                  alignment: Alignment.center,
                                   child: InkWell(
                                       splashFactory: NoSplash.splashFactory,
                                       splashColor: Colors.transparent,
@@ -141,7 +141,7 @@ class _Toolbar extends State<Toolbar> {
                                * START - Image
                                */
                               Align(
-                                  alignment: Alignment.centerRight,
+                                  alignment: Alignment.center,
                                   child: InkWell(
                                       splashFactory: NoSplash.splashFactory,
                                       splashColor: Colors.transparent,
@@ -174,6 +174,8 @@ class _Toolbar extends State<Toolbar> {
                               /*
                                * END - Image
                                */
+
+                              Spacer(),
 
                               /*
                                * START - Ask
